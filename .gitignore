@@ -1,0 +1,6 @@
+cinematic/node_modules/
+cinematic/.next/
+cinematic/out/
+cinematic/tsconfig.tsbuildinfo
+cinematic/test-results/
+cinematic/asset-source/
