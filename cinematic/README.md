@@ -22,17 +22,21 @@ Open http://127.0.0.1:3000. `npm run typecheck` checks TypeScript; `npm run buil
 
 The canvas renders on demand; progress changes invalidate it. Mobile uses fewer photo layers, simpler portal geometry and lower pixel density. Later scene textures are requested as the camera approaches; fetched textures remain cached for reverse scrolling. React Three Fiber disposes mounted geometry/materials on unmount; the five small texture files are cached by Drei for subsequent mode toggles. No perpetual animation loop is needed when idle.
 
+## Reservation access
+
+Book a Table is the sole primary action; View Menu is secondary. Both appear in the hero and final scene, with contextual menu links in food scenes. Desktop navigation and the mobile safe-area-aware bottom bar sit outside the canvas and scene transitions. Booking remains a regular link, independent of scroll progress or WebGL readiness. Controls have at least 44-pixel touch targets and visible keyboard focus. Viewports under 741 pixels high use normal scrolling so content cannot be clipped by the cinematic stage; reduced-motion preferences also select this edition. The final mobile scene can scroll if enlarged text exceeds its available space.
+
 ## Assets and facts
 
 All five WebP photographs originate from https://www.balibalirestaurant.com/ and are converted at their original dimensions (550 × 440). No upscaling or generated restaurant photographs are used.
 
-| File | Original path |
-| --- | --- |
-| `public/images/sate.webp` | `/images/dishes/2023/015.jpg` |
-| `public/images/sharing.webp` | `/images/dishes/2023/009.jpg` |
-| `public/images/rendang.webp` | `/images/dishes/2023/003.jpg` |
+| File                            | Original path                 |
+| ------------------------------- | ----------------------------- |
+| `public/images/sate.webp`       | `/images/dishes/2023/015.jpg` |
+| `public/images/sharing.webp`    | `/images/dishes/2023/009.jpg` |
+| `public/images/rendang.webp`    | `/images/dishes/2023/003.jpg` |
 | `public/images/vegetables.webp` | `/images/dishes/2023/004.jpg` |
-| `public/images/rice.webp` | `/images/dishes/2023/016.jpg` |
+| `public/images/rice.webp`       | `/images/dishes/2023/016.jpg` |
 
 The source photos are low-resolution. Replace these exact WebP filenames with approved higher-resolution restaurant images for a sharper full-screen experience. `asset-source/` retains the restaurant gallery used to identify the dishes; only selected WebP files are loaded by the site.
 

@@ -2,6 +2,7 @@
 import { useState } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { BOOKING, MENU } from "@/lib/content";
+import ReservationActions from "./ReservationActions";
 export default function Navigation({
   staticMode,
   toggleMode,
@@ -26,7 +27,7 @@ export default function Navigation({
         </a>
         <nav className="desktop-nav" aria-label="Main navigation">
           <a href={MENU} target="_blank" rel="noreferrer">
-            Menu ↗
+            View Menu ↗
           </a>
           <a href="#rijsttafel">Rijsttafel</a>
           <a href="#our-story">Our story</a>
@@ -39,7 +40,7 @@ export default function Navigation({
             target="_blank"
             rel="noreferrer"
           >
-            Book a table <span>↗</span>
+            Book a Table <span aria-hidden="true">↗</span>
           </a>
           <button
             className="menu-toggle"
@@ -65,7 +66,7 @@ export default function Navigation({
             }}
           >
             {[
-              ["Menu ↗", MENU],
+              ["View Menu ↗", MENU],
               ["Rijsttafel", "#rijsttafel"],
               ["Our story", "#our-story"],
               ["Visit us", "#visit"],
@@ -77,6 +78,9 @@ export default function Navigation({
           </motion.nav>
         )}
       </AnimatePresence>
+      <nav className="mobile-booking-bar" aria-label="Quick booking and menu">
+        <ReservationActions />
+      </nav>
       <button
         className="motion-toggle"
         onClick={toggleMode}

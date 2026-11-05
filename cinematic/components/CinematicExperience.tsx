@@ -4,6 +4,7 @@ import dynamic from "next/dynamic";
 import Navigation from "./Navigation";
 import ScrollProgress from "./ScrollProgress";
 import ScrollDirector from "./ScrollDirector";
+import ReservationActions from "./ReservationActions";
 import { anchors, asset, BOOKING, MENU, DIRECTIONS } from "@/lib/content";
 const SceneCanvas = dynamic(() => import("./SceneCanvas"), { ssr: false });
 class CanvasBoundary extends Component<
@@ -40,6 +41,7 @@ export default function CinematicExperience() {
   const [failed, setFailed] = useState(false);
   useEffect(() => {
     const media = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const compact = window.matchMedia("(max-height: 740px)");
     let supported = false;
     try {
       const c = document.createElement("canvas");
@@ -48,10 +50,15 @@ export default function CinematicExperience() {
       gl?.getExtension("WEBGL_lose_context")?.loseContext();
     } catch {}
     setFailed(!supported);
-    setStaticMode(media.matches || !supported);
-    const change = () => setStaticMode(media.matches || !supported);
+    setStaticMode(media.matches || compact.matches || !supported);
+    const change = () =>
+      setStaticMode(media.matches || compact.matches || !supported);
     media.addEventListener("change", change);
-    return () => media.removeEventListener("change", change);
+    compact.addEventListener("change", change);
+    return () => {
+      media.removeEventListener("change", change);
+      compact.removeEventListener("change", change);
+    };
   }, []);
   const onReady = useCallback(() => setReady(true), []);
   const onFailure = useCallback(() => {
@@ -137,9 +144,7 @@ export default function CinematicExperience() {
                     <br />
                     Right here in London.
                   </p>
-                  <a className="text-link" href="#the-table">
-                    Explore our story <span>↓</span>
-                  </a>
+                  <ReservationActions className="hero-actions" />
                 </div>
               </div>
               <div
@@ -179,6 +184,14 @@ export default function CinematicExperience() {
                 <br />
                 Please tell our team about allergies.
               </p>
+              <a
+                className="text-link"
+                href={MENU}
+                target="_blank"
+                rel="noreferrer"
+              >
+                View Menu <span aria-hidden="true">↗</span>
+              </a>
               <Photo
                 name="sharing.webp"
                 alt="A real Bali Bali spread of saté, rice, vegetables, sauces and other dishes"
@@ -205,7 +218,7 @@ export default function CinematicExperience() {
                 target="_blank"
                 rel="noreferrer"
               >
-                Discover rijsttafel <span>↗</span>
+                View Menu <span aria-hidden="true">↗</span>
               </a>
               <div className="sharing-note">
                 <span className="small-caps">RIJSTTAFEL / THE RICE TABLE</span>
@@ -270,7 +283,7 @@ export default function CinematicExperience() {
                 target="_blank"
                 rel="noreferrer"
               >
-                Book your table <span>↗</span>
+                Book a Table <span aria-hidden="true">↗</span>
               </a>
               <div className="address-art">
                 <span className="street-number">150</span>
@@ -312,24 +325,7 @@ export default function CinematicExperience() {
                 Discover the flavours and hospitality of Indonesia, right here
                 in London.
               </p>
-              <div className="booking-actions">
-                <a
-                  className="button"
-                  href={BOOKING}
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  Reserve a table <span>↗</span>
-                </a>
-                <a
-                  className="text-link"
-                  href={MENU}
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  View our menu ↗
-                </a>
-              </div>
+              <ReservationActions className="booking-actions" />
               <div className="visit-details">
                 <div>
                   <h3>COME FIND US</h3>

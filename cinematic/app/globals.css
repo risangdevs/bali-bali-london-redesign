@@ -527,6 +527,9 @@ button:focus-visible {
   margin: 20px 0;
 }
 .group-note a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
   text-decoration: underline;
   text-underline-offset: 3px;
 }
@@ -539,6 +542,11 @@ button:focus-visible {
   padding-top: 14px;
   font-size: 8px;
   letter-spacing: 0.1em;
+}
+.booking-scene footer a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
 }
 .scroll-progress {
   position: fixed;
@@ -573,7 +581,8 @@ button:focus-visible {
   align-items: center;
   font-size: 9px;
   opacity: 0.5;
-  min-height: 34px;
+  min-height: 44px;
+  min-width: 44px;
 }
 .chapter-links a[aria-current] {
   opacity: 1;
@@ -1079,6 +1088,178 @@ button:focus-visible {
   }
   .static-mode .booking-scene footer {
     flex-wrap: wrap;
+  }
+}
+/* Conversion controls live above, and outside, the cinematic stage. */
+.reservation-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.reservation-actions .button {
+  min-width: 140px;
+  min-height: 48px;
+  gap: 22px;
+}
+.button.button-secondary {
+  background: var(--ivory);
+  color: var(--burgundy);
+  border-color: var(--burgundy);
+}
+.button.button-secondary:hover {
+  background: #e7d7c4;
+}
+.button,
+.text-link,
+.menu-toggle,
+.motion-toggle,
+.desktop-nav a,
+.mobile-nav a {
+  min-height: 44px;
+  min-width: 44px;
+}
+.desktop-nav a,
+.mobile-nav a {
+  display: inline-flex;
+  align-items: center;
+}
+.hero-bottom {
+  width: 63%;
+}
+.hero-bottom .intro {
+  margin-bottom: 18px;
+}
+.hero-actions {
+  flex-wrap: nowrap;
+}
+.mobile-booking-bar {
+  display: none;
+}
+.chapter-links a {
+  min-width: 44px;
+  min-height: 44px;
+}
+.visit-details a {
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+}
+@media (max-width: 767px) {
+  .nav-actions .book-button {
+    display: none;
+  }
+  .navigation .menu-toggle {
+    min-width: 44px;
+    min-height: 44px;
+  }
+  .mobile-booking-bar {
+    display: block;
+    position: fixed;
+    z-index: 50;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 10px 5% calc(10px + env(safe-area-inset-bottom, 0px));
+    background: var(--ivory);
+    border-top: 1px solid var(--line);
+  }
+  .mobile-booking-bar .reservation-actions {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    gap: 10px;
+  }
+  .mobile-booking-bar .button {
+    min-width: 0;
+    min-height: 48px;
+    padding: 12px 16px;
+    font-size: 12px;
+  }
+  .scroll-progress {
+    bottom: calc(69px + env(safe-area-inset-bottom, 0px));
+    padding: 0 5% 4px;
+    height: 52px;
+  }
+  .progress-track {
+    margin-bottom: 0;
+  }
+  .chapter-links {
+    height: 44px;
+  }
+  .chapter-links a:not([aria-current]) {
+    display: none;
+  }
+  .chapter-links a[aria-current] .chapter-name {
+    display: inline;
+    max-width: 160px;
+  }
+  .motion-toggle,
+  .static-mode .motion-toggle {
+    bottom: calc(73px + env(safe-area-inset-bottom, 0px));
+    right: 5%;
+    min-height: 44px;
+  }
+  .scene-copy,
+  .booking-scene {
+    padding-bottom: calc(140px + env(safe-area-inset-bottom, 0px));
+  }
+  .hero-bottom {
+    width: 100%;
+    padding-bottom: 8px;
+    display: block;
+  }
+  .hero-bottom > .small-caps {
+    display: none;
+  }
+  .hero-bottom .intro {
+    margin-bottom: 15px;
+  }
+  .hero-actions {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    gap: 10px;
+  }
+  .hero-actions .button {
+    min-width: 0;
+    padding: 12px 16px;
+    font-size: 12px;
+  }
+  .booking-actions {
+    flex-wrap: nowrap;
+    gap: 10px;
+    width: 100%;
+  }
+  .booking-actions .button {
+    flex: 1;
+    min-width: 0;
+    min-height: 48px;
+    font-size: 11px;
+    padding: 12px 16px;
+  }
+  .asset-note {
+    bottom: calc(145px + env(safe-area-inset-bottom, 0px));
+  }
+  .evening-scene .asset-note {
+    bottom: calc(125px + env(safe-area-inset-bottom, 0px));
+  }
+  .static-mode .scroll-track {
+    padding-bottom: calc(125px + env(safe-area-inset-bottom, 0px));
+  }
+  .static-mode .scene-copy {
+    scroll-margin-top: 0;
+  }
+}
+@media (max-height: 740px) {
+  .motion-toggle {
+    display: none;
+  }
+}
+@media (max-width: 767px) {
+  .cinematic-mode .booking-scene {
+    top: 88px;
+    bottom: calc(125px + env(safe-area-inset-bottom, 0px));
+    padding: 28px 7% 24px;
+    overflow-y: auto;
   }
 }
 @media (prefers-reduced-motion: reduce) {
