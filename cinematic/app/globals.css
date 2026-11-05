@@ -1214,27 +1214,11 @@ button:focus-visible {
   .hero-bottom .intro {
     margin-bottom: 15px;
   }
-  .hero-actions {
-    display: grid;
-    grid-template-columns: 1.2fr 1fr;
-    gap: 10px;
-  }
-  .hero-actions .button {
-    min-width: 0;
-    padding: 12px 16px;
-    font-size: 12px;
-  }
-  .booking-actions {
-    flex-wrap: nowrap;
-    gap: 10px;
-    width: 100%;
-  }
-  .booking-actions .button {
-    flex: 1;
-    min-width: 0;
-    min-height: 48px;
-    font-size: 11px;
-    padding: 12px 16px;
+  /* The persistent mobile bar owns these actions, including in reading mode. */
+  .hero-actions,
+  .booking-actions,
+  .evening-scene > .button {
+    display: none;
   }
   .asset-note {
     bottom: calc(145px + env(safe-area-inset-bottom, 0px));

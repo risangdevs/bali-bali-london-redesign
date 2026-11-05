@@ -24,6 +24,8 @@ The canvas renders on demand; progress changes invalidate it. Mobile uses fewer 
 
 ## Reservation access
 
+On mobile, the persistent bottom bar is the single booking/menu action pair. Inline hero, pre-theatre and final-scene booking buttons are hidden at this breakpoint in both cinematic and reading modes, avoiding duplicated controls. Desktop retains its navigation and contextual actions.
+
 Book a Table is the sole primary action; View Menu is secondary. Both appear in the hero and final scene, with contextual menu links in food scenes. Desktop navigation and the mobile safe-area-aware bottom bar sit outside the canvas and scene transitions. Booking remains a regular link, independent of scroll progress or WebGL readiness. Controls have at least 44-pixel touch targets and visible keyboard focus. Viewports under 741 pixels high use normal scrolling so content cannot be clipped by the cinematic stage; reduced-motion preferences also select this edition. The final mobile scene can scroll if enlarged text exceeds its available space.
 
 ## Assets and facts
