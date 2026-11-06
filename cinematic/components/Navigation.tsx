@@ -3,13 +3,7 @@ import { useState } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { BOOKING, MENU } from "@/lib/content";
 import ReservationActions from "./ReservationActions";
-export default function Navigation({
-  staticMode,
-  toggleMode,
-}: {
-  staticMode: boolean;
-  toggleMode: () => void;
-}) {
+export default function Navigation() {
   const [open, setOpen] = useState(false);
   const reduced = useReducedMotion();
   return (
@@ -81,13 +75,6 @@ export default function Navigation({
       <nav className="mobile-booking-bar" aria-label="Quick booking and menu">
         <ReservationActions />
       </nav>
-      <button
-        className="motion-toggle"
-        onClick={toggleMode}
-        aria-pressed={staticMode}
-      >
-        {staticMode ? "○ Enable motion" : "◉ Pause motion"}
-      </button>
     </>
   );
 }

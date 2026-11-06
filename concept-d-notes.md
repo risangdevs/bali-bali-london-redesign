@@ -10,7 +10,7 @@ An immersive six-scene exploration added alongside concepts A, B and C.
 6. **Hero:** An oversized BALI BALI wordmark across a close view of the restaurant's saté, with a persistent booking link and a small family-run/halal seal.
 7. **Scenes:** First taste → movement between dishes and through a ceramic portal → overhead sharing table → heritage photo study → West End address study → booking and practical details.
 8. **CTAs:** Burgundy booking buttons open the official restaurant booking section. Menu links open the verified PDF. Phone and directions remain directly available.
-9. **Mobile and accessibility:** Lower graphics density, native touch scrolling, simple mobile navigation, reduced-motion photographic edition, explicit motion toggle, semantic content, inert inactive chapters, keyboard focus indicators and WebGL fallback.
+9. **Mobile and accessibility:** Lower graphics density, native touch scrolling, simple mobile navigation, automatic reduced-motion photographic edition, semantic content, inert inactive chapters, keyboard focus indicators and WebGL fallback. No scroll instruction or manual motion control interrupts the experience.
 
 **Strongest aspect:** The camera creates a spatial food journey, with independent navigation and clear booking access.
 

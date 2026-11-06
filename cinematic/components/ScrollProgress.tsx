@@ -19,9 +19,6 @@ export default function ScrollProgress({ chapter }: { chapter: number }) {
           </a>
         ))}
       </div>
-      <span className="scroll-instruction">
-        SCROLL TO SAVOUR <span>↓</span>
-      </span>
     </aside>
   );
 }

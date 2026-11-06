@@ -71,20 +71,12 @@ export default function CinematicExperience() {
     return () => clearTimeout(timer);
   }, [staticMode, ready, onFailure]);
   const onChapter = useCallback((n: number) => setChapter(n), []);
-  const toggleMode = () => {
-    if (failed) return;
-    setStaticMode((s) => !s);
-    setReady(false);
-    requestAnimationFrame(() =>
-      document.getElementById(anchors[chapter])?.scrollIntoView(),
-    );
-  };
   return (
     <div
       className={`experience ${staticMode ? "static-mode" : "cinematic-mode"} ${ready ? "is-ready" : ""}`}
       data-chapter={chapter}
     >
-      <Navigation staticMode={staticMode} toggleMode={toggleMode} />
+      <Navigation />
       <ScrollDirector enabled={!staticMode} onChapter={onChapter} />
       <main
         className="scroll-track"

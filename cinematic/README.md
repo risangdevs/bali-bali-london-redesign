@@ -14,13 +14,13 @@ Open http://127.0.0.1:3000. `npm run typecheck` checks TypeScript; `npm run buil
 
 ## Architecture
 
-`CinematicExperience` provides semantic HTML for all six scenes, including a complete server-rendered photographic edition. WebGL is progressive enhancement; reduced motion selects the photographic edition automatically. The motion toggle can switch editions manually. Context loss, canvas errors or a 15-second loading timeout return to the static edition.
+`CinematicExperience` provides semantic HTML for all six scenes, including a complete server-rendered photographic edition. WebGL is progressive enhancement; reduced motion selects the photographic edition automatically. Scrolling needs no on-screen instruction or manual motion control. Context loss, canvas errors or a 15-second loading timeout return to the static edition.
 
 `ScrollDirector` owns one scrubbed ScrollTrigger and one mutable journey progress value. Lenis is advanced by GSAP's ticker in milliseconds; it notifies ScrollTrigger on scroll. The ticker callback, trigger, tween, listeners and Lenis instance are removed on cleanup. No React state is updated per scroll frame. React chapter state changes only when crossing a chapter boundary.
 
 `CameraRig` samples reversible position/target keyframes in `lib/journey.ts`. It moves through world-space photographic planes and the ceramic ring at z=-13, then rises to an overhead table view. `SceneTransition` is real lit geometry. `DepthLayer` uses a GLSL aperture and timeline opacity, with actual restaurant photographs as textures. No food models are used. Scene windows prevent distant chapters appearing through previous scenes.
 
-The canvas renders on demand; progress changes invalidate it. Mobile uses fewer photo layers, simpler portal geometry and lower pixel density. Later scene textures are requested as the camera approaches; fetched textures remain cached for reverse scrolling. React Three Fiber disposes mounted geometry/materials on unmount; the five small texture files are cached by Drei for subsequent mode toggles. No perpetual animation loop is needed when idle.
+The canvas renders on demand; progress changes invalidate it. Mobile uses fewer photo layers, simpler portal geometry and lower pixel density. Later scene textures are requested as the camera approaches; fetched textures remain cached for reverse scrolling. React Three Fiber disposes mounted geometry/materials on unmount; the five small texture files are cached by Drei when the responsive layout changes. No perpetual animation loop is needed when idle.
 
 ## Reservation access
 

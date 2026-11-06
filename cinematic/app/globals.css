@@ -156,19 +156,6 @@ button:focus-visible {
   top: 8px;
   left: 8px;
 }
-.motion-toggle {
-  position: fixed;
-  z-index: 31;
-  bottom: 15px;
-  right: 4%;
-  border: 0;
-  background: var(--ivory);
-  padding: 8px 12px;
-  color: var(--burgundy);
-  font-size: 10px;
-  letter-spacing: 0.04em;
-  min-height: 32px;
-}
 .scroll-track {
   position: relative;
 }
@@ -596,16 +583,6 @@ button:focus-visible {
 .chapter-links a[aria-current] .chapter-name {
   display: inline;
 }
-.scroll-instruction {
-  position: absolute;
-  left: 50%;
-  bottom: 33px;
-  font-size: 8px;
-  letter-spacing: 0.15em;
-}
-.scroll-instruction span {
-  padding-left: 20px;
-}
 .anchor-track {
   position: absolute;
   inset: 0;
@@ -695,9 +672,6 @@ button:focus-visible {
 }
 .static-mode .booking-scene footer {
   margin-top: 35px;
-}
-.static-mode .motion-toggle {
-  border: 1px solid var(--line);
 }
 @media (min-width: 1600px) {
   .scene-copy {
@@ -1022,15 +996,6 @@ button:focus-visible {
     max-width: 85px;
     line-height: 1.2;
   }
-  .scroll-instruction {
-    display: none;
-  }
-  .motion-toggle {
-    bottom: 58px;
-    right: 5%;
-    font-size: 8px;
-    min-height: 28px;
-  }
   .experience[data-chapter="2"] .reading-shade,
   .experience[data-chapter="5"] .reading-shade {
     background: linear-gradient(
@@ -1083,9 +1048,6 @@ button:focus-visible {
   .static-mode .asset-note {
     bottom: 25px;
   }
-  .static-mode .motion-toggle {
-    bottom: 14px;
-  }
   .static-mode .booking-scene footer {
     flex-wrap: wrap;
   }
@@ -1113,7 +1075,6 @@ button:focus-visible {
 .button,
 .text-link,
 .menu-toggle,
-.motion-toggle,
 .desktop-nav a,
 .mobile-nav a {
   min-height: 44px;
@@ -1193,12 +1154,6 @@ button:focus-visible {
     display: inline;
     max-width: 160px;
   }
-  .motion-toggle,
-  .static-mode .motion-toggle {
-    bottom: calc(73px + env(safe-area-inset-bottom, 0px));
-    right: 5%;
-    min-height: 44px;
-  }
   .scene-copy,
   .booking-scene {
     padding-bottom: calc(140px + env(safe-area-inset-bottom, 0px));
@@ -1231,11 +1186,6 @@ button:focus-visible {
   }
   .static-mode .scene-copy {
     scroll-margin-top: 0;
-  }
-}
-@media (max-height: 740px) {
-  .motion-toggle {
-    display: none;
   }
 }
 @media (max-width: 767px) {
