@@ -19,6 +19,7 @@ export default function ScrollDirector({
       duration: 1.15,
       smoothWheel: true,
       syncTouch: false,
+      allowNestedScroll: true,
       anchors: { offset: 0 },
     });
     lenis.on("scroll", ScrollTrigger.update);

@@ -41,7 +41,6 @@ export default function CinematicExperience() {
   const [failed, setFailed] = useState(false);
   useEffect(() => {
     const media = window.matchMedia("(prefers-reduced-motion: reduce)");
-    const compact = window.matchMedia("(max-height: 740px)");
     let supported = false;
     try {
       const c = document.createElement("canvas");
@@ -50,14 +49,11 @@ export default function CinematicExperience() {
       gl?.getExtension("WEBGL_lose_context")?.loseContext();
     } catch {}
     setFailed(!supported);
-    setStaticMode(media.matches || compact.matches || !supported);
-    const change = () =>
-      setStaticMode(media.matches || compact.matches || !supported);
+    setStaticMode(media.matches || !supported);
+    const change = () => setStaticMode(media.matches || !supported);
     media.addEventListener("change", change);
-    compact.addEventListener("change", change);
     return () => {
       media.removeEventListener("change", change);
-      compact.removeEventListener("change", change);
     };
   }, []);
   const onReady = useCallback(() => setReady(true), []);
