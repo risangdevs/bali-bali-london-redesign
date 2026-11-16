@@ -2,6 +2,12 @@
 
 Reviewed 16 November 2026 using Humanizer.
 
+Implementation update, 16 November 2026: Applied the copy changes across A, B, C, D and the comparison page. Removed the three review sections pending independently checked review sources, updated navigation labels and menu destinations, and removed the guest-facing production notes. The findings below record the original copy.
+
+Checked the [restaurant website](https://www.balibalirestaurant.com/) and [2026 menu](https://www.balibalirestaurant.com/pdf/bali_bali_menu_2026.pdf) during implementation. The menu confirms the Special Rijsttafel has eight dishes with a minimum order for two people, and identifies the vegetarian sate as mock chicken. The website reproduces review excerpts, but the linked Tripadvisor pages could not be independently read. The old review summaries remain withheld. Image descriptions were checked against the local photographs; B's second story image is a drink, and C's hero photograph is now described without an unconfirmed dish name.
+
+Validation: TypeScript and the production export passed. Browser checks covered all five pages at widths of 1440, 390 and 360 pixels, plus all six cinematic scenes on desktop and mobile. Menu destinations, navigation states and local asset links passed. Refreshed the four preview images to show the updated copy. Small layout adjustments keep headings and action labels readable on narrow screens.
+
 The copy is strongest when it names the food, the address or something a guest can do. Concept B has the clearest invitation. Concept C has the most useful practical detail, but needs substantial trimming. Concept A needs a more natural editorial voice. Concept D repeats broad hospitality slogans across scenes that could each tell the guest something different.
 
 ## Scope
@@ -16,7 +22,7 @@ Sources:
 - [Concept D source](/Users/risang/Documents/ChatGPT/bali-bali-redesign/cinematic/components/CinematicExperience.tsx) and [export](/Users/risang/Documents/ChatGPT/bali-bali-redesign/concept-d/index.html)
 - [Comparison page](/Users/risang/Documents/ChatGPT/bali-bali-redesign/index.html)
 
-The design notes and cinematic README supplied context. They were not treated as guest copy. This is a source-based copy audit; business facts and external review sources have not been independently reverified, and text fit has not been checked in a browser. Suggested copy is recorded here. The designs have not been edited.
+The design notes and cinematic README supplied context. They were not treated as guest copy. This audit originally reviewed the source without changing the designs. See the implementation update above for subsequent changes and source checks.
 
 ## Fix first
 

@@ -9,7 +9,7 @@ export default function ReservationActions({
   return (
     <div className={`reservation-actions ${className}`}>
       <a className="button" href={BOOKING} target="_blank" rel="noreferrer">
-        Book a Table <span aria-hidden="true">↗</span>
+        Book a table <span aria-hidden="true">↗</span>
       </a>
       <a
         className="button button-secondary"
@@ -17,7 +17,7 @@ export default function ReservationActions({
         target="_blank"
         rel="noreferrer"
       >
-        View Menu <span aria-hidden="true">↗</span>
+        View menu (PDF) <span aria-hidden="true">↗</span>
       </a>
     </div>
   );

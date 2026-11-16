@@ -50,7 +50,7 @@ export default function Navigation() {
             onClick={() => setOpen(!open)}
           >
             <span aria-hidden="true">{open ? "×" : "+"}</span>
-            {open ? "Close" : "Menu"}
+            {open ? "Close" : "Explore"}
           </button>
           {open && (
             <motion.nav
@@ -67,7 +67,7 @@ export default function Navigation() {
                 ["Rijsttafel", "#rijsttafel"],
                 ["Our story", "#our-story"],
                 ["Visit us", "#visit"],
-                ["View Menu ↗", MENU],
+                ["View menu (PDF) ↗", MENU],
               ].map(([name, href]) => (
                 <a
                   key={name}
@@ -91,7 +91,7 @@ export default function Navigation() {
           target="_blank"
           rel="noreferrer"
         >
-          Book a Table <span aria-hidden="true">↗</span>
+          Book a table <span aria-hidden="true">↗</span>
         </a>
       </div>
       <nav className="mobile-booking-bar" aria-label="Quick booking and menu">

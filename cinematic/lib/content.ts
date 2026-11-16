@@ -7,11 +7,11 @@ export const DIRECTIONS =
   "https://www.google.com/maps/search/?api=1&query=Bali+Bali+150+Shaftesbury+Avenue+London+WC2H+8HL";
 export const chapters = [
   "First taste",
-  "The Indonesian table",
-  "The art of sharing",
+  "The food",
+  "Rijsttafel",
   "Since 1986",
-  "West End evenings",
-  "Come to the table",
+  "Pre-theatre",
+  "Visit and booking",
 ];
 export const anchors = [
   "first-taste",

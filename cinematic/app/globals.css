@@ -1071,8 +1071,13 @@ button:focus-visible {
 }
 .hero-bottom {
   width: 63%;
+  justify-content: flex-start;
+}
+.hero-bottom > .small-caps {
+  flex: 0 0 130px;
 }
 .hero-bottom .intro {
+  max-width: 34ch;
   margin-bottom: 18px;
 }
 .hero-actions {
@@ -1107,7 +1112,7 @@ button:focus-visible {
   }
   .mobile-booking-bar .reservation-actions {
     display: grid;
-    grid-template-columns: 1.2fr 1fr;
+    grid-template-columns: 1fr 1fr;
     gap: 10px;
   }
   .mobile-booking-bar .button {

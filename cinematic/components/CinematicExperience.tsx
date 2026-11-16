@@ -114,7 +114,7 @@ export default function CinematicExperience() {
               aria-labelledby="hero-title"
             >
               <p className="eyebrow hero-location">
-                LONDON’S WEST END <span>•</span> EST. 1986
+                London's West End <span>·</span> Since 1986
               </p>
               <h1 id="hero-title">
                 BALI BALI
@@ -122,15 +122,14 @@ export default function CinematicExperience() {
               </h1>
               <div className="hero-bottom">
                 <p className="small-caps">
-                  AUTHENTIC INDONESIAN
+                  150 SHAFTESBURY
                   <br />
-                  DINING SINCE 1986
+                  AVENUE
                 </p>
                 <div>
                   <p className="intro">
-                    A little closer to Indonesia.
-                    <br />
-                    Right here in London.
+                    A family-run Indonesian restaurant on Shaftesbury Avenue.
+                    New to the food? We'll help you choose.
                   </p>
                   <ReservationActions className="hero-actions" />
                 </div>
@@ -145,7 +144,7 @@ export default function CinematicExperience() {
               </div>
               <Photo
                 name="sate.webp"
-                alt="Bali Bali’s saté skewers with peanut sauce on a ceramic plate"
+                alt="Bali Bali's sate skewers with peanut sauce on a ceramic plate"
               />
             </section>
             <section
@@ -153,24 +152,23 @@ export default function CinematicExperience() {
               id={staticMode ? "the-table" : undefined}
               aria-labelledby="table-title"
             >
-              <p className="eyebrow">02 / THROUGH THE INDONESIAN TABLE</p>
+              <p className="eyebrow">02 / The food</p>
               <h2 id="table-title">
-                A little heat.
-                <br />A lot of <em>heart.</em>
+                Start with <em>sate.</em>
               </h2>
               <p className="body-copy">
-                Grilled saté. Fragrant rice. A spoonful of sambal. Follow your
-                curiosity — we’ll help you find your favourites.
+                Try grilled sate with rice, and ask for sambal if you'd like
+                more heat. We'll help you find your favourites.
               </p>
               <div className="dish-notes">
-                <span>SATÉ / SMOKY & SAVOURY</span>
+                <span>SATE / SMOKY & SAVOURY</span>
                 <span>NASI GORENG / A GENTLE INTRODUCTION</span>
                 <span>SAMBAL / HEAT ON THE SIDE</span>
               </div>
               <p className="dietary">
-                All meat is halal. Vegetarian dishes available.
+                All meat is halal. Vegetarian dishes are available.
                 <br />
-                Please tell our team about allergies.
+                Please tell our team about allergies before ordering.
               </p>
               <a
                 className="text-link"
@@ -178,11 +176,11 @@ export default function CinematicExperience() {
                 target="_blank"
                 rel="noreferrer"
               >
-                View Menu <span aria-hidden="true">↗</span>
+                View menu (PDF) <span aria-hidden="true">↗</span>
               </a>
               <Photo
                 name="sharing.webp"
-                alt="A real Bali Bali spread of saté, rice, vegetables, sauces and other dishes"
+                alt="Bali Bali's sate, rice, vegetables and sauces served together"
               />
             </section>
             <section
@@ -190,15 +188,15 @@ export default function CinematicExperience() {
               id={staticMode ? "rijsttafel" : undefined}
               aria-labelledby="sharing-title"
             >
-              <p className="eyebrow">03 / THE ART OF SHARING</p>
+              <p className="eyebrow">03 / Rijsttafel</p>
               <h2 id="sharing-title">
-                Good food is meant
+                A rice table
                 <br />
-                to be <em>shared.</em>
+                to <em>share.</em>
               </h2>
               <p className="body-copy">
-                Discover the richness of Indonesian flavours, served together at
-                the table.
+                Rijsttafel means 'rice table': a selection of dishes served
+                together.
               </p>
               <a
                 className="text-link"
@@ -206,19 +204,19 @@ export default function CinematicExperience() {
                 target="_blank"
                 rel="noreferrer"
               >
-                View Menu <span aria-hidden="true">↗</span>
+                View menu (PDF) <span aria-hidden="true">↗</span>
               </a>
               <div className="sharing-note">
-                <span className="small-caps">RIJSTTAFEL / THE RICE TABLE</span>
+                <span className="small-caps">The Special Rijsttafel</span>
                 <p>
-                  A selection of dishes to explore together.
+                  Eight dishes to share, for two or more people.
                   <br />
-                  An inviting place to begin if you’re new to Indonesian food.
+                  New to Indonesian food? Ask us about each dish.
                 </p>
               </div>
               <Photo
                 name="sharing.webp"
-                alt="Several dishes arranged together on Bali Bali’s wooden dining table"
+                alt="Several dishes arranged together on Bali Bali's wooden dining table"
               />
             </section>
             <section
@@ -226,28 +224,25 @@ export default function CinematicExperience() {
               id={staticMode ? "our-story" : undefined}
               aria-labelledby="heritage-title"
             >
-              <p className="eyebrow">04 / A SMALL RESTAURANT. A LONG STORY.</p>
+              <p className="eyebrow">04 / Our story</p>
               <span className="heritage-year" aria-hidden="true">
                 1986
               </span>
               <h2 id="heritage-title">
-                Rooted in
+                Family-run
                 <br />
-                <em>tradition.</em>
+                since <em>1986.</em>
               </h2>
               <p className="body-copy">
-                Sharing Indonesian hospitality in London’s West End since 1986.
+                We've served Indonesian food in London's West End since 1986.
               </p>
               <p className="heritage-detail">
-                Family-run and full of flavour. A place for familiar faces,
-                first tastes and another dish for the table.
+                Whether you know your favourites or are trying Indonesian food
+                for the first time, ask us what to order.
               </p>
-              <span className="asset-note">
-                FOOD FROM OUR TABLE · INTERIOR PORTRAIT TO FOLLOW
-              </span>
               <Photo
                 name="rendang.webp"
-                alt="Bali Bali’s beef dish, photographed on the restaurant’s wooden table"
+                alt="Bali Bali's beef in a dark sauce, served on a wooden table"
               />
             </section>
             <section
@@ -255,15 +250,14 @@ export default function CinematicExperience() {
               id={staticMode ? "west-end" : undefined}
               aria-labelledby="evening-title"
             >
-              <p className="eyebrow">05 / YOUR EVENING IN THE WEST END</p>
+              <p className="eyebrow">05 / Pre-theatre dining</p>
               <h2 id="evening-title">
                 Before the
                 <br />
                 <em>curtain rises.</em>
               </h2>
               <p className="body-copy">
-                Make Bali Bali part of your West End evening. Tell us your
-                theatre timing when you book.
+                Eating before a show? Tell us when it starts when you book.
               </p>
               <a
                 className="button"
@@ -271,7 +265,7 @@ export default function CinematicExperience() {
                 target="_blank"
                 rel="noreferrer"
               >
-                Book a Table <span aria-hidden="true">↗</span>
+                Book a table <span aria-hidden="true">↗</span>
               </a>
               <div className="address-art">
                 <span className="street-number">150</span>
@@ -291,68 +285,66 @@ export default function CinematicExperience() {
                   target="_blank"
                   rel="noreferrer"
                 >
-                  Find us in London ↗
+                  Get directions <span aria-hidden="true">↗</span>
                 </a>
               </div>
-              <span className="asset-note">
-                LOCATION STUDY · STREET PHOTOGRAPHY TO FOLLOW
-              </span>
             </section>
             <section
               className="scene-copy booking-scene"
               id={staticMode ? "visit" : undefined}
               aria-labelledby="booking-title"
             >
-              <p className="eyebrow">06 / COME TO THE TABLE</p>
+              <p className="eyebrow">06 / Visit and booking</p>
               <h2 id="booking-title">
-                There’s always room
+                Join us on
                 <br />
-                at <em>our table.</em>
+                <em>Shaftesbury Avenue.</em>
               </h2>
               <p className="body-copy">
-                Discover the flavours and hospitality of Indonesia, right here
-                in London.
+                Book a table and tell us about any allergies or theatre plans.
               </p>
               <ReservationActions className="booking-actions" />
               <div className="visit-details">
                 <div>
-                  <h3>COME FIND US</h3>
+                  <h3>Find us</h3>
                   <address>
                     150 Shaftesbury Avenue
                     <br />
                     London WC2H 8HL
                   </address>
                   <a href={DIRECTIONS} target="_blank" rel="noreferrer">
-                    Get directions ↗
+                    Get directions <span aria-hidden="true">↗</span>
                   </a>
                   <a href="tel:+442078362644">+44 20 7836 2644</a>
                 </div>
                 <div>
-                  <h3>TAKE YOUR TIME</h3>
+                  <h3>Opening hours</h3>
                   <dl>
                     <div>
-                      <dt>Mon–Thu</dt>
-                      <dd>12:00–22:00</dd>
+                      <dt>Mon to Thu</dt>
+                      <dd>12:00 to 22:00</dd>
                     </div>
                     <div>
                       <dt>Friday</dt>
-                      <dd>12:00–22:45</dd>
+                      <dd>12:00 to 22:45</dd>
                     </div>
                     <div>
                       <dt>Saturday</dt>
-                      <dd>12:00–23:00</dd>
+                      <dd>12:00 to 23:00</dd>
                     </div>
                     <div>
                       <dt>Sunday</dt>
-                      <dd>13:00–21:30</dd>
+                      <dd>13:00 to 21:30</dd>
                     </div>
                   </dl>
-                  <small>Kitchen closes around 30 minutes earlier.</small>
+                  <small>
+                    The kitchen closes around 30 minutes before the restaurant.
+                  </small>
                 </div>
               </div>
               <p className="group-note">
-                A bigger table?{" "}
-                <a href="tel:+442078362644">Ask us about groups of 6–50.</a>
+                For groups of 6 to 50,{" "}
+                <a href="tel:+442078362644">call us to discuss your booking.</a>
               </p>
               <footer>
                 <span>© 2026 BALI BALI · ALL MEAT HALAL</span>
@@ -375,7 +367,7 @@ export default function CinematicExperience() {
       {!staticMode && <ScrollProgress chapter={chapter} />}
       {failed && (
         <div className="fallback-notice" role="status">
-          Enjoy the photographic edition — motion is unavailable on this device.
+          Showing the photo version because animation is unavailable.
         </div>
       )}
     </div>
