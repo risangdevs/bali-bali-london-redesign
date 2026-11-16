@@ -9,8 +9,8 @@ An immersive six-scene exploration added alongside concepts A, B and C.
 5. **Motifs:** Ceramic circles, a narrow brass rim, quiet table-like rules, large year and street-number typography.
 6. **Hero:** An oversized BALI BALI wordmark across a close view of the restaurant's saté, with a persistent booking link and a small family-run/halal seal.
 7. **Scenes:** First taste → movement between dishes and through a ceramic portal → overhead sharing table → heritage photo study → West End address study → booking and practical details.
-8. **CTAs:** Burgundy booking buttons open the official restaurant booking section. Menu links open the verified PDF. Phone and directions remain directly available.
-9. **Mobile and accessibility:** Lower graphics density, native touch scrolling, simple mobile navigation, automatic reduced-motion photographic edition, semantic content, inert inactive chapters, keyboard focus indicators and WebGL fallback. No scroll instruction or manual motion control interrupts the experience.
+8. **CTAs:** Burgundy request buttons open the official restaurant booking section, with confirmation by reply explained nearby. Menu links open an HTML selection with verified prices and a link to the complete PDF. Phone and directions remain directly available.
+9. **Mobile and accessibility:** Lower graphics density, native touch scrolling, simple mobile navigation, automatic reduced-motion photographic edition, semantic content, inert inactive chapters, keyboard focus indicators and WebGL fallback. Explore offers a continuous reading edition; switching preserves the current section. Direct hours and calling shortcuts stay visible.
 
 **Strongest aspect:** The camera creates a spatial food journey, with independent navigation and clear booking access.
 

@@ -1,10 +1,18 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
 import { motion, useReducedMotion } from "motion/react";
-import { BOOKING, MENU } from "@/lib/content";
+import { BOOKING, FOOD_MENU } from "@/lib/content";
 import ReservationActions from "./ReservationActions";
 
-export default function Navigation() {
+export default function Navigation({
+  staticMode,
+  canAnimate,
+  onModeChange,
+}: {
+  staticMode: boolean;
+  canAnimate: boolean;
+  onModeChange: () => void;
+}) {
   const [open, setOpen] = useState(false);
   const reduced = useReducedMotion();
   const disclosure = useRef<HTMLDivElement>(null);
@@ -34,56 +42,75 @@ export default function Navigation() {
         Skip to visit & booking
       </a>
       <div className="floating-navigation">
-        <div
-          className="menu-disclosure"
-          ref={disclosure}
-          onBlur={(event) => {
-            if (!event.currentTarget.contains(event.relatedTarget))
-              setOpen(false);
-          }}
-        >
-          <button
-            ref={toggle}
-            className="menu-toggle"
-            aria-expanded={open}
-            aria-controls="site-navigation"
-            onClick={() => setOpen(!open)}
+        <div className="navigation-tools">
+          <div
+            className="menu-disclosure"
+            ref={disclosure}
+            onBlur={(event) => {
+              if (!event.currentTarget.contains(event.relatedTarget))
+                setOpen(false);
+            }}
           >
-            <span aria-hidden="true">{open ? "×" : "+"}</span>
-            {open ? "Close" : "Explore"}
-          </button>
-          {open && (
-            <motion.nav
-              id="site-navigation"
-              aria-label="Main navigation"
-              className="navigation-panel"
-              initial={{ opacity: reduced ? 1 : 0, y: reduced ? 0 : -8 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: reduced ? 0 : 0.18 }}
+            <button
+              ref={toggle}
+              className="menu-toggle"
+              aria-expanded={open}
+              aria-controls="site-navigation"
+              onClick={() => setOpen(!open)}
             >
-              {[
-                ["First taste", "#first-taste"],
-                ["The food", "#the-table"],
-                ["Rijsttafel", "#rijsttafel"],
-                ["Our story", "#our-story"],
-                ["Visit us", "#visit"],
-                ["View menu (PDF) ↗", MENU],
-              ].map(([name, href]) => (
-                <a
-                  key={name}
-                  href={href}
-                  target={href === MENU ? "_blank" : undefined}
-                  rel={href === MENU ? "noreferrer" : undefined}
-                  onClick={() => {
-                    setOpen(false);
-                    toggle.current?.focus();
-                  }}
-                >
-                  {name}
-                </a>
-              ))}
-            </motion.nav>
-          )}
+              <span aria-hidden="true">{open ? "×" : "+"}</span>
+              {open ? "Close" : "Explore"}
+            </button>
+            {open && (
+              <motion.nav
+                id="site-navigation"
+                aria-label="Main navigation"
+                className="navigation-panel"
+                initial={{ opacity: reduced ? 1 : 0, y: reduced ? 0 : -8 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: reduced ? 0 : 0.18 }}
+              >
+                {[
+                  ["First taste", "#first-taste"],
+                  ["The food", "#the-table"],
+                  ["Rijsttafel", "#rijsttafel"],
+                  ["Our story", "#our-story"],
+                  ["Pre-theatre", "#west-end"],
+                  ["Hours & directions", "#visit"],
+                  ["Menu & prices", FOOD_MENU],
+                  ["Call the restaurant", "tel:+442078362644"],
+                ].map(([name, href]) => (
+                  <a
+                    key={name}
+                    href={href}
+                    onClick={() => {
+                      setOpen(false);
+                      toggle.current?.focus();
+                    }}
+                  >
+                    {name}
+                  </a>
+                ))}
+                {canAnimate && (
+                  <button
+                    className="reading-toggle"
+                    onClick={() => {
+                      setOpen(false);
+                      onModeChange();
+                    }}
+                  >
+                    {staticMode ? "Watch the journey" : "Read the full page"}
+                  </button>
+                )}
+              </motion.nav>
+            )}
+          </div>
+          <a className="utility-link" href="#visit">
+            Hours & directions
+          </a>
+          <a className="utility-link" href="tel:+442078362644">
+            Call
+          </a>
         </div>
         <a
           className="button floating-booking"
@@ -91,7 +118,7 @@ export default function Navigation() {
           target="_blank"
           rel="noreferrer"
         >
-          Book a table <span aria-hidden="true">↗</span>
+          Request a table <span aria-hidden="true">↗</span>
         </a>
       </div>
       <nav className="mobile-booking-bar" aria-label="Quick booking and menu">

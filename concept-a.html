@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Bali Bali | Concept A: London Institution</title>
-  <meta name="description" content="Family-run Indonesian restaurant on Shaftesbury Avenue in London's West End, established in 1986. View menu (PDF) and plan your visit.">
+  <meta name="description" content="Family-run Indonesian restaurant on Shaftesbury Avenue in London's West End, established in 1986. View the menu and prices, and plan your visit.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&amp;family=Newsreader:opsz,wght@6..72,400;6..72,500;6..72,600&amp;display=swap" rel="stylesheet">
@@ -20,15 +20,15 @@
   <div class="topline"><div class="wrap"><span>150 Shaftesbury Avenue · London WC2H 8HL</span><span>All meat halal · Family-run since 1986</span></div></div>
   <header class="nav" id="nav"><div class="wrap">
     <a class="brand" href="#top"><strong>Bali Bali</strong><small>Indonesian Restaurant</small></a>
-    <nav class="navlinks" aria-label="Primary"><a href="#food">Food</a><a href="#rijsttafel">Rijsttafel</a><a href="#pre-theatre">Pre-theatre</a><a href="#story">Our story</a><a href="#visit">Visit</a></nav>
-    <a class="button primary" href="#visit">Book a table</a><button class="menu-button" aria-expanded="false" aria-controls="nav">Explore</button>
+    <nav class="navlinks" id="primary-navigation" aria-label="Primary"><a href="#food">Food</a><a href="#rijsttafel">Rijsttafel</a><a href="#pre-theatre">Pre-theatre</a><a href="#story">Our story</a><a href="#visit">Visit</a></nav>
+    <a class="button primary" href="#visit">Book a table</a><button class="menu-button" aria-expanded="false" aria-controls="primary-navigation">Explore</button>
   </div></header>
   <main id="main">
     <section class="hero" id="top"><div class="hero-grid">
       <div class="hero-copy"><div class="edition"><span>Independent London dining</span><span>Est. 1986</span></div>
         <p class="kicker">Authentic Indonesian · West End</p><h1>Indonesian cooking. <em>A London home since 1986.</em></h1>
         <p class="hero-lead">We're a small, family-run restaurant on Shaftesbury Avenue. New to Indonesian food? We'll help you choose.</p>
-        <div class="actions"><a class="button primary" href="#visit">Book a table</a><a class="button light" href="https://www.balibalirestaurant.com/pdf/bali_bali_menu_2026.pdf">View menu (PDF)</a></div>
+        <div class="actions"><a class="button primary" href="#visit">Book a table</a><a class="button light" href="concept-d/menu/">Menu &amp; prices</a></div>
       </div>
       <div class="hero-media"><span class="year-stamp">Serving<br>London<br>since 1986</span><figure><img src="assets/2023_011.jpg" alt="An Indonesian dish in dark sauce with diced vegetables and spring onions"></figure></div>
     </div></section>
@@ -51,8 +51,8 @@
 
     <section class="section" id="visit"><div class="wrap"><header class="section-head"><p class="kicker">05 · Visit</p><div><h2>Visit us on Shaftesbury Avenue.</h2></div></header><div class="visit-grid"><div><p class="kicker">The address</p><p class="address">150 Shaftesbury Avenue<br>London WC2H 8HL</p><div class="details"><div><b>Nearest Tube</b>Leicester Square</div><div><b>Also nearby</b>Covent Garden</div><div><b>Phone</b><a href="tel:+442078362644">+44 20 7836 2644</a></div><div><b>Kitchen</b>Closes around 30 minutes before the restaurant</div></div></div><aside class="booking"><p class="kicker">Reservations</p><h3>Book a table</h3><p>Call to book, and tell us your show time, any allergies or whether you're celebrating.</p><div class="actions"><a class="button primary" href="tel:+442078362644">Call to book</a><a class="button light" href="https://maps.google.com/?q=150+Shaftesbury+Avenue+London+WC2H+8HL">Directions</a></div><a class="group-link" href="tel:+442078362644">Group dining enquiry · 6 to 50 guests</a></aside></div></div></section>
   </main>
-  <footer class="footer"><div class="wrap footer-grid"><div><div class="footer-brand">Bali Bali</div><p>Authentic Indonesian restaurant · London West End · Since 1986</p></div><div><p><strong>Hours</strong><br>Mon to Thu 12:00 to 22:00<br>Fri 12:00 to 22:45<br>Sat 12:00 to 23:00<br>Sun 13:00 to 21:30</p></div><div><p><a href="https://www.balibalirestaurant.com/pdf/bali_bali_menu_2026.pdf">View menu (PDF)</a><br><a href="#pre-theatre">Pre-theatre</a><br><a href="#visit">Visit &amp; booking</a></p></div></div></footer>
-  <nav class="mobile-bar" aria-label="Quick actions"><a href="#visit">Book</a><a href="https://www.balibalirestaurant.com/pdf/bali_bali_menu_2026.pdf" aria-label="View menu (PDF)">Menu</a><a href="tel:+442078362644">Call</a></nav>
-  <script>const nav=document.querySelector('.nav');const menu=document.querySelector('.menu-button');menu.addEventListener('click',()=>{const open=nav.classList.toggle('open');menu.setAttribute('aria-expanded',String(open));menu.textContent=open?'Close':'Explore'});document.querySelectorAll('.navlinks a').forEach(a=>a.addEventListener('click',()=>{nav.classList.remove('open');menu.setAttribute('aria-expanded','false');menu.textContent='Explore'}));</script>
+  <footer class="footer"><div class="wrap footer-grid"><div><div class="footer-brand">Bali Bali</div><p>Authentic Indonesian restaurant · London West End · Since 1986</p></div><div><p><strong>Hours</strong><br>Mon to Thu 12:00 to 22:00<br>Fri 12:00 to 22:45<br>Sat 12:00 to 23:00<br>Sun 13:00 to 21:30</p></div><div><p><a href="concept-d/menu/">Menu &amp; prices</a><br><a href="#pre-theatre">Pre-theatre</a><br><a href="#visit">Visit &amp; booking</a></p></div></div></footer>
+  <nav class="mobile-bar" aria-label="Quick actions"><a href="#visit">Book</a><a href="concept-d/menu/" aria-label="Menu &amp; prices">Menu</a><a href="tel:+442078362644">Call</a></nav>
+  <script src="assets/navigation.js" defer></script>
 </body>
 </html>

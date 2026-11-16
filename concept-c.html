@@ -459,7 +459,7 @@ section[id]{scroll-margin-top:82px}
       <span class="mark">Bali Bali</span>
       <span class="since">Indonesian · West End · est. 1986</span>
     </a>
-    <nav class="navlinks" aria-label="Primary">
+    <nav class="navlinks" id="primary-navigation" aria-label="Primary">
       <a href="#food">The food</a>
       <a href="#rijsttafel">Rice table</a>
       <a href="#pre-theatre">Pre-theatre</a>
@@ -496,7 +496,7 @@ section[id]{scroll-margin-top:82px}
         <p class="lede">A small, family-run Indonesian restaurant on Shaftesbury Avenue. Tell us what you like and we'll help you choose.</p>
         <div class="hero-cta">
           <a class="btn btn--primary" href="#visit" data-od-id="cta-book-hero">Book a table</a>
-          <a class="btn btn--ghost" href="https://www.balibalirestaurant.com/pdf/bali_bali_menu_2026.pdf" data-od-id="cta-menu-hero">View menu (PDF)</a>
+          <a class="btn btn--ghost" href="concept-d/menu/" data-od-id="cta-menu-hero">Menu &amp; prices</a>
         </div>
         <div class="trust" data-od-id="trust-signals" aria-label="Reasons to visit">
           <div><span class="k">All meat</span><span class="v">Halal</span></div>
@@ -759,7 +759,7 @@ section[id]{scroll-margin-top:82px}
           <a class="tel" href="tel:+442078362644">+44 20 7836 2644</a>
           <div class="bpc">
             <a class="btn btn--primary" href="tel:+442078362644">Call to book</a>
-            <a class="btn btn--outline" href="https://www.balibalirestaurant.com/pdf/bali_bali_menu_2026.pdf" target="_blank" rel="noopener">View menu (PDF)</a>
+            <a class="btn btn--outline" href="concept-d/menu/" rel="noopener">Menu &amp; prices</a>
           </div>
           <p class="group-note">Groups of 6 to 50: <a href="tel:+442078362644">call to ask about a menu for your party</a>.</p>
         </div>
@@ -793,7 +793,7 @@ section[id]{scroll-margin-top:82px}
           <li>Friday · 12:00 to 22:45</li>
           <li>Saturday · 12:00 to 23:00</li>
           <li>Sunday · 13:00 to 21:30</li>
-          <li><a href="https://www.balibalirestaurant.com/pdf/bali_bali_menu_2026.pdf" target="_blank" rel="noopener">View menu (PDF)</a></li>
+          <li><a href="concept-d/menu/" rel="noopener">Menu &amp; prices</a></li>
         </ul>
       </div>
     </div>
@@ -811,7 +811,7 @@ section[id]{scroll-margin-top:82px}
     <span class="ic" aria-hidden="true"><svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4.5" width="18" height="16" rx="1.5"/><path d="M3 9.5h18M7.5 2.8v3.4M16.5 2.8v3.4"/></svg></span>
     <span>Book</span>
   </a>
-  <a href="https://www.balibalirestaurant.com/pdf/bali_bali_menu_2026.pdf" aria-label="View menu (PDF)">
+  <a href="concept-d/menu/" aria-label="Menu &amp; prices">
     <span class="ic" aria-hidden="true"><svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6.5h16M4 12h16M4 17.5h16"/></svg></span>
     <span>Menu</span>
   </a>
@@ -851,26 +851,8 @@ section[id]{scroll-margin-top:82px}
     sections.forEach(function(s){ if(s) io.observe(s); });
   }
 
-  // Mobile menu button: toggle the in-page section list.
-  var burger = document.querySelector('.burger');
-  var nav = document.querySelector('.nav');
-  if(burger && nav){
-    burger.addEventListener('click', function(){
-      var open = nav.classList.toggle('open');
-      burger.setAttribute('aria-expanded', open ? 'true' : 'false');
-      burger.textContent = open ? 'Close' : 'Explore';
-      burger.setAttribute('aria-label', open ? 'Close navigation' : 'Open navigation');
-    });
-    nav.addEventListener('click', function(e){
-      if(e.target.closest('.navlinks a')){
-        nav.classList.remove('open');
-        burger.setAttribute('aria-expanded','false');
-        burger.textContent = 'Explore';
-        burger.setAttribute('aria-label', 'Open navigation');
-      }
-    });
-  }
 })();
 </script>
+<script src="assets/navigation.js" defer></script>
 </body>
 </html>

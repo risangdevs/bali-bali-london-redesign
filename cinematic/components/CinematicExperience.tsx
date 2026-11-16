@@ -1,11 +1,26 @@
 "use client";
-import { Component, ReactNode, useCallback, useEffect, useState } from "react";
+import {
+  Component,
+  ReactNode,
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import dynamic from "next/dynamic";
 import Navigation from "./Navigation";
 import ScrollProgress from "./ScrollProgress";
 import ScrollDirector from "./ScrollDirector";
 import ReservationActions from "./ReservationActions";
-import { anchors, asset, BOOKING, MENU, DIRECTIONS } from "@/lib/content";
+import {
+  anchors,
+  asset,
+  BOOKING,
+  FOOD_MENU,
+  DIRECTIONS,
+  RIJSTTAFEL_PRICE,
+  menuSelection,
+} from "@/lib/content";
 const SceneCanvas = dynamic(() => import("./SceneCanvas"), { ssr: false });
 class CanvasBoundary extends Component<
   { children: ReactNode; onFailure: () => void },
@@ -39,6 +54,9 @@ export default function CinematicExperience() {
   const [chapter, setChapter] = useState(0);
   const [ready, setReady] = useState(false);
   const [failed, setFailed] = useState(false);
+  const [canAnimate, setCanAnimate] = useState(false);
+  const readingPreference = useRef(false);
+  const pendingSection = useRef<string | null>(null);
   useEffect(() => {
     const media = window.matchMedia("(prefers-reduced-motion: reduce)");
     let supported = false;
@@ -48,9 +66,17 @@ export default function CinematicExperience() {
       supported = !!gl;
       gl?.getExtension("WEBGL_lose_context")?.loseContext();
     } catch {}
+    try {
+      readingPreference.current =
+        sessionStorage.getItem("bali-reading") === "true";
+    } catch {}
     setFailed(!supported);
-    setStaticMode(media.matches || !supported);
-    const change = () => setStaticMode(media.matches || !supported);
+    setCanAnimate(supported && !media.matches);
+    setStaticMode(readingPreference.current || media.matches || !supported);
+    const change = () => {
+      setCanAnimate(supported && !media.matches);
+      setStaticMode(readingPreference.current || media.matches || !supported);
+    };
     media.addEventListener("change", change);
     return () => {
       media.removeEventListener("change", change);
@@ -59,6 +85,7 @@ export default function CinematicExperience() {
   const onReady = useCallback(() => setReady(true), []);
   const onFailure = useCallback(() => {
     setFailed(true);
+    setCanAnimate(false);
     setStaticMode(true);
   }, []);
   useEffect(() => {
@@ -67,12 +94,46 @@ export default function CinematicExperience() {
     return () => clearTimeout(timer);
   }, [staticMode, ready, onFailure]);
   const onChapter = useCallback((n: number) => setChapter(n), []);
+  const onModeChange = () => {
+    const current = staticMode
+      ? anchors.find((id) => {
+          const rect = document.getElementById(id)?.getBoundingClientRect();
+          return rect && rect.bottom > 100;
+        }) || anchors[0]
+      : anchors[chapter];
+    pendingSection.current = current;
+    readingPreference.current = !staticMode;
+    try {
+      sessionStorage.setItem("bali-reading", String(!staticMode));
+    } catch {}
+    setStaticMode(!staticMode);
+  };
+  useEffect(() => {
+    if (!pendingSection.current) return;
+    const id = pendingSection.current;
+    const frame = requestAnimationFrame(() => {
+      const destination = document.getElementById(id);
+      destination?.scrollIntoView({ behavior: "instant", block: "start" });
+      if (staticMode) destination?.focus({ preventScroll: true });
+      else
+        document
+          .querySelector<HTMLButtonElement>(".menu-toggle")
+          ?.focus({ preventScroll: true });
+      history.replaceState(null, "", `#${id}`);
+      pendingSection.current = null;
+    });
+    return () => cancelAnimationFrame(frame);
+  }, [staticMode]);
   return (
     <div
       className={`experience ${staticMode ? "static-mode" : "cinematic-mode"} ${ready ? "is-ready" : ""}`}
       data-chapter={chapter}
     >
-      <Navigation />
+      <Navigation
+        staticMode={staticMode}
+        canAnimate={canAnimate}
+        onModeChange={onModeChange}
+      />
       <ScrollDirector enabled={!staticMode} onChapter={onChapter} />
       <main
         className="scroll-track"
@@ -111,6 +172,7 @@ export default function CinematicExperience() {
             <section
               className="scene-copy hero-scene"
               id={staticMode ? "first-taste" : undefined}
+              tabIndex={-1}
               aria-labelledby="hero-title"
             >
               <p className="eyebrow hero-location">
@@ -132,6 +194,9 @@ export default function CinematicExperience() {
                     New to the food? We'll help you choose.
                   </p>
                   <ReservationActions className="hero-actions" />
+                  <p className="booking-expectation">
+                    We’ll reply to confirm your table.
+                  </p>
                 </div>
               </div>
               <div
@@ -150,6 +215,7 @@ export default function CinematicExperience() {
             <section
               className="scene-copy table-scene"
               id={staticMode ? "the-table" : undefined}
+              tabIndex={-1}
               aria-labelledby="table-title"
             >
               <p className="eyebrow">02 / The food</p>
@@ -161,22 +227,22 @@ export default function CinematicExperience() {
                 more heat. We'll help you find your favourites.
               </p>
               <div className="dish-notes">
-                <span>SATE / SMOKY & SAVOURY</span>
-                <span>NASI GORENG / A GENTLE INTRODUCTION</span>
-                <span>SAMBAL / HEAT ON THE SIDE</span>
+                {[menuSelection[0], menuSelection[2], menuSelection[3]].map(
+                  (dish) => (
+                    <span key={dish.name}>
+                      <span>{dish.name}</span>
+                      <strong>{dish.price}</strong>
+                    </span>
+                  ),
+                )}
               </div>
               <p className="dietary">
                 All meat is halal. Vegetarian dishes are available.
                 <br />
                 Please tell our team about allergies before ordering.
               </p>
-              <a
-                className="text-link"
-                href={MENU}
-                target="_blank"
-                rel="noreferrer"
-              >
-                View menu (PDF) <span aria-hidden="true">↗</span>
+              <a className="text-link" href={FOOD_MENU}>
+                Menu & prices <span aria-hidden="true">→</span>
               </a>
               <Photo
                 name="sharing.webp"
@@ -186,6 +252,7 @@ export default function CinematicExperience() {
             <section
               className="scene-copy sharing-scene"
               id={staticMode ? "rijsttafel" : undefined}
+              tabIndex={-1}
               aria-labelledby="sharing-title"
             >
               <p className="eyebrow">03 / Rijsttafel</p>
@@ -198,18 +265,14 @@ export default function CinematicExperience() {
                 Rijsttafel means 'rice table': a selection of dishes served
                 together.
               </p>
-              <a
-                className="text-link"
-                href={MENU}
-                target="_blank"
-                rel="noreferrer"
-              >
-                View menu (PDF) <span aria-hidden="true">↗</span>
+              <a className="text-link" href={FOOD_MENU}>
+                Menu & prices <span aria-hidden="true">→</span>
               </a>
               <div className="sharing-note">
                 <span className="small-caps">The Special Rijsttafel</span>
                 <p>
-                  Eight dishes to share, for two or more people.
+                  Eight dishes to share. {RIJSTTAFEL_PRICE} per person, minimum
+                  two people.
                   <br />
                   New to Indonesian food? Ask us about each dish.
                 </p>
@@ -222,6 +285,7 @@ export default function CinematicExperience() {
             <section
               className="scene-copy heritage-scene"
               id={staticMode ? "our-story" : undefined}
+              tabIndex={-1}
               aria-labelledby="heritage-title"
             >
               <p className="eyebrow">04 / Our story</p>
@@ -248,6 +312,7 @@ export default function CinematicExperience() {
             <section
               className="scene-copy evening-scene"
               id={staticMode ? "west-end" : undefined}
+              tabIndex={-1}
               aria-labelledby="evening-title"
             >
               <p className="eyebrow">05 / Pre-theatre dining</p>
@@ -257,7 +322,8 @@ export default function CinematicExperience() {
                 <em>curtain rises.</em>
               </h2>
               <p className="body-copy">
-                Eating before a show? Tell us when it starts when you book.
+                Eating before a show? Include your show time in your booking
+                request. We’ll reply to confirm your table.
               </p>
               <a
                 className="button"
@@ -265,7 +331,7 @@ export default function CinematicExperience() {
                 target="_blank"
                 rel="noreferrer"
               >
-                Book a table <span aria-hidden="true">↗</span>
+                Request a table <span aria-hidden="true">↗</span>
               </a>
               <div className="address-art">
                 <span className="street-number">150</span>
@@ -292,6 +358,7 @@ export default function CinematicExperience() {
             <section
               className="scene-copy booking-scene"
               id={staticMode ? "visit" : undefined}
+              tabIndex={-1}
               aria-labelledby="booking-title"
             >
               <p className="eyebrow">06 / Visit and booking</p>
@@ -301,7 +368,8 @@ export default function CinematicExperience() {
                 <em>Shaftesbury Avenue.</em>
               </h2>
               <p className="body-copy">
-                Book a table and tell us about any allergies or theatre plans.
+                Send a booking request. We’ll reply to confirm your table. Tell
+                us about any allergies or theatre plans.
               </p>
               <ReservationActions className="booking-actions" />
               <div className="visit-details">
@@ -315,7 +383,7 @@ export default function CinematicExperience() {
                   <a href={DIRECTIONS} target="_blank" rel="noreferrer">
                     Get directions <span aria-hidden="true">↗</span>
                   </a>
-                  <a href="tel:+442078362644">+44 20 7836 2644</a>
+                  <a href="tel:+442078362644">Call +44 20 7836 2644</a>
                 </div>
                 <div>
                   <h3>Opening hours</h3>

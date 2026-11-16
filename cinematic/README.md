@@ -14,7 +14,7 @@ Open http://127.0.0.1:3000. `npm run typecheck` checks TypeScript; `npm run buil
 
 ## Architecture
 
-`CinematicExperience` provides semantic HTML for all six scenes, including a complete server-rendered photographic edition. WebGL is progressive enhancement; reduced motion selects the photographic edition automatically. Scrolling needs no on-screen instruction or manual motion control. Context loss, canvas errors or a 15-second loading timeout return to the static edition.
+`CinematicExperience` provides semantic HTML for all six scenes, including a complete server-rendered photographic edition. WebGL is progressive enhancement; reduced motion selects the photographic edition automatically. Explore offers a reading edition and a return to the camera journey. The choice lasts for the current browser session, and switching preserves the current section. Context loss, canvas errors or a 15-second loading timeout return to the static edition.
 
 `ScrollDirector` owns one scrubbed ScrollTrigger and one mutable journey progress value. Lenis is advanced by GSAP's ticker in milliseconds; it notifies ScrollTrigger on scroll. The ticker callback, trigger, tween, listeners and Lenis instance are removed on cleanup. No React state is updated per scroll frame. React chapter state changes only when crossing a chapter boundary.
 
@@ -24,11 +24,11 @@ The canvas renders on demand; progress changes invalidate it. Mobile uses fewer 
 
 ## Reservation access
 
-There is no full-width header or repeated navigation wordmark. A floating Menu disclosure opens the food, story and visit links on every screen size. Desktop keeps a separate floating Book a Table link in the opposite corner; mobile uses the bottom booking bar. Controls and the navigation panel have opaque backgrounds. Escape closes the panel and returns focus to its button; clicking outside or tabbing away also dismisses it. The hero remains the primary brand introduction.
+There is no full-width header or repeated navigation wordmark. A floating Explore disclosure opens all six chapters, the menu and a reading-view switch on every screen size. Hours & directions and Call shortcuts remain available beside it. Desktop keeps a separate floating Request a Table link in the opposite corner; mobile uses the bottom booking bar. Controls and the navigation panel have opaque backgrounds. Escape closes the panel and returns focus to its button; clicking outside or tabbing away also dismisses it. The hero remains the primary brand introduction.
 
 On mobile, the persistent bottom bar is the single booking/menu action pair. Inline hero, pre-theatre and final-scene booking buttons are hidden at this breakpoint in both cinematic and reading modes, avoiding duplicated controls. Desktop retains its navigation and contextual actions.
 
-Book a Table is the sole primary action; View Menu is secondary. Both appear in the desktop hero and final scene, with contextual menu links in food scenes. Desktop floating controls and the mobile safe-area-aware bottom bar sit outside the canvas and scene transitions. Booking remains a regular link, independent of scroll progress or WebGL readiness. Controls have at least 44-pixel touch targets and visible keyboard focus. Short viewports retain the cinematic experience, with locally scrollable scene content when necessary; window height does not choose the photographic edition. Reduced-motion preferences and unavailable graphics select the photographic edition automatically. The final mobile scene can also scroll if enlarged text exceeds its available space.
+Request a Table is the primary action; View Menu & Prices is secondary. Booking copy explains that the restaurant replies to confirm a request. Both appear in the desktop hero and final scene, with contextual menu links in food scenes. Desktop floating controls and the mobile safe-area-aware bottom bar sit outside the canvas and scene transitions. Booking remains a regular link, independent of scroll progress or WebGL readiness. Controls have at least 44-pixel touch targets and visible keyboard focus. Every cinematic scene can scroll locally as content grows; window height does not choose the photographic edition. Reduced-motion preferences and unavailable graphics select the photographic edition automatically. The final mobile scene can also scroll if enlarged text exceeds its available space.
 
 ## Assets and facts
 
@@ -46,10 +46,14 @@ The source photos are low-resolution. Replace these exact WebP filenames with ap
 
 The restaurant's current site uses resort stock imagery for backgrounds, so those backgrounds were not reused. Authentic interior, archival and street photographs were not available in the source. The heritage scene uses a labelled food-photography study, and the West End scene uses the verified address in a labelled typography study. These are deliberate temporary compositions, not claims to show the real interior or storefront. Replace `HeritageScene` photo planes and the `address-art` component when approved assets are supplied.
 
-Booking points to the verified official `#Booking` section (which embeds MachForm 11659). It opens externally and does not submit a reservation. Menu points to the official 2026 PDF. Address, phone, hours, halal meat and group capacity were checked against the restaurant website on 5 November 2026. The 1986 establishment date is supplied in the client brief. No reviews, awards, prices or new historical claims have been added.
+Booking points to the verified official `#Booking` section (which embeds MachForm 11659). It opens externally and does not submit a reservation. Menu opens an HTML selection with prices, a Special Rijsttafel price and key menu terms. The official 2026 PDF remains linked for the full menu. Address, phone, hours, halal meat and group capacity were checked against the restaurant website on 5 November 2026. The 1986 establishment date is supplied in the client brief. No reviews, awards, prices or new historical claims have been added.
 
 Locally hosted fonts: Cormorant Garamond and DM Sans, available under the SIL Open Font License. Typeface sources: Google Fonts. Interaction reference: https://webflow.com/made-in-webflow/website/jeskojets-e9dc11 — continuous camera progression and occlusion; no reference branding, code or assets copied.
 
 ## Prototype limits
 
 This is a 2.5D photographic journey, not a scan of the restaurant or a video shoot. The ceramic portal is a designed transition object, not a restaurant architectural feature. Steam and depth-of-field blur are intentionally omitted to preserve food detail and mobile performance. The photographic edition remains the usable fallback on small devices or unsupported graphics hardware.
+
+## Menu maintenance
+
+The site content maintainer must update `lib/content.ts` (the shared selection and Rijsttafel price) and `app/menu/page.tsx` (menu terms and checked date) whenever the restaurant revises its PDF. Prices and terms were checked against the official 2026 menu on 16 November 2026. All four concept pages link to the same exported HTML selection at `concept-d/menu/`. The full PDF remains the source for dishes outside this selection.

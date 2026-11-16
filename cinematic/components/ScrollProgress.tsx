@@ -19,6 +19,9 @@ export default function ScrollProgress({ chapter }: { chapter: number }) {
           </a>
         ))}
       </div>
+      <p className="mobile-chapter" aria-label="Journey progress">
+        {chapter + 1} of {chapters.length} · {chapters[chapter]}
+      </p>
     </aside>
   );
 }

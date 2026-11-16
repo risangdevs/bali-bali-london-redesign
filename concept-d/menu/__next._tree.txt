@@ -1,0 +1,4 @@
+:HL["/bali-bali-london-redesign/concept-d/_next/static/css/aa6b31f8629f5e3c.css","style"]
+2:[["children",{"s":"__PAGE__","h":160}]]
+1:[["children",{"s":"menu","h":96,"c":"$Q2"}]]
+0:{"b":"HHkAaeCLgcWyfM7vgOLYq","t":{"t":{"s":"","h":80,"c":"$Q1"}}}
