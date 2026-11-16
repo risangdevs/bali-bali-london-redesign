@@ -1,6 +1,6 @@
 # Concept D — A Journey to the Indonesian Table
 
-Next.js App Router / React / TypeScript / Tailwind 4 / GSAP ScrollTrigger / Lenis / Three.js / React Three Fiber / Drei / Motion.
+Next.js App Router / React / TypeScript / Tailwind 4 / GSAP ScrollTrigger / Lenis / Three.js / React Three Fiber / Drei.
 
 ## Run
 
@@ -16,7 +16,7 @@ Open http://127.0.0.1:3000. `npm run typecheck` checks TypeScript; `npm run buil
 
 `CinematicExperience` provides semantic HTML for all six scenes, including a complete server-rendered photographic edition. WebGL is progressive enhancement; reduced motion selects the photographic edition automatically. Scrolling needs no on-screen instruction or manual motion control. Context loss, canvas errors or a 15-second loading timeout return to the static edition.
 
-`ScrollDirector` owns one scrubbed ScrollTrigger and one mutable journey progress value. Lenis is advanced by GSAP's ticker in milliseconds; it notifies ScrollTrigger on scroll. The ticker callback, trigger, tween, listeners and Lenis instance are removed on cleanup. No React state is updated per scroll frame. React chapter state changes only when crossing a chapter boundary.
+`ScrollDirector` is loaded only in cinematic mode, keeping GSAP and Lenis out of the photographic edition. It owns one scrubbed ScrollTrigger and one mutable journey progress value. Lenis is advanced by GSAP's ticker in milliseconds; it notifies ScrollTrigger on scroll. The ticker callback, trigger, tween, listeners and Lenis instance are removed on cleanup. No React state is updated per scroll frame. React chapter state changes only when crossing a chapter boundary.
 
 `CameraRig` samples reversible position/target keyframes in `lib/journey.ts`. It moves through world-space photographic planes and the ceramic ring at z=-13, then rises to an overhead table view. `SceneTransition` is real lit geometry. `DepthLayer` uses a GLSL aperture and timeline opacity, with actual restaurant photographs as textures. No food models are used. Scene windows prevent distant chapters appearing through previous scenes.
 
@@ -28,7 +28,7 @@ There is no full-width header or repeated navigation wordmark. A floating Menu d
 
 On mobile, the persistent bottom bar is the single booking/menu action pair. Inline hero, pre-theatre and final-scene booking buttons are hidden at this breakpoint in both cinematic and reading modes, avoiding duplicated controls. Desktop retains its navigation and contextual actions.
 
-Book a Table is the sole primary action; View Menu is secondary. Both appear in the desktop hero and final scene, with contextual menu links in food scenes. Desktop floating controls and the mobile safe-area-aware bottom bar sit outside the canvas and scene transitions. Booking remains a regular link, independent of scroll progress or WebGL readiness. Controls have at least 44-pixel touch targets and visible keyboard focus. Short viewports retain the cinematic experience, with locally scrollable scene content when necessary; window height does not choose the photographic edition. Reduced-motion preferences and unavailable graphics select the photographic edition automatically. The final mobile scene can also scroll if enlarged text exceeds its available space.
+Book a Table is the sole primary action; View Menu is secondary. Both appear in the desktop hero and final scene, with contextual menu links in food scenes. Desktop floating controls and the mobile safe-area-aware bottom bar sit outside the canvas and scene transitions. Booking remains a regular link, independent of scroll progress or WebGL readiness. Controls have at least 44-pixel touch targets and visible keyboard focus. Every cinematic scene is keyboard-focusable and scrolls locally when its content exceeds the available space, including with enlarged text. Short viewports retain the cinematic experience; window height does not choose the photographic edition. Reduced-motion preferences and unavailable graphics select the photographic edition automatically.
 
 ## Assets and facts
 
@@ -48,7 +48,7 @@ The restaurant's current site uses resort stock imagery for backgrounds, so thos
 
 Booking points to the verified official `#Booking` section (which embeds MachForm 11659). It opens externally and does not submit a reservation. Menu points to the official 2026 PDF. Address, phone, hours, halal meat and group capacity were checked against the restaurant website on 5 November 2026. The 1986 establishment date is supplied in the client brief. No reviews, awards, prices or new historical claims have been added.
 
-Locally hosted fonts: Cormorant Garamond and DM Sans, available under the SIL Open Font License. Typeface sources: Google Fonts. Interaction reference: https://webflow.com/made-in-webflow/website/jeskojets-e9dc11 — continuous camera progression and occlusion; no reference branding, code or assets copied.
+Locally hosted fonts: Cormorant Garamond and DM Sans, available under the SIL Open Font License. The browser loads WOFF2 subsets covering Latin, extended Latin, punctuation, currency and navigation symbols; original TTFs and licenses remain in `public/fonts/`. Typeface sources: Google Fonts. Interaction reference: https://webflow.com/made-in-webflow/website/jeskojets-e9dc11 — continuous camera progression and occlusion; no reference branding, code or assets copied.
 
 ## Prototype limits
 
