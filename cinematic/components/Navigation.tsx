@@ -1,10 +1,12 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
+import { motion, useReducedMotion } from "motion/react";
 import { BOOKING, MENU } from "@/lib/content";
 import ReservationActions from "./ReservationActions";
 
 export default function Navigation() {
   const [open, setOpen] = useState(false);
+  const reduced = useReducedMotion();
   const disclosure = useRef<HTMLDivElement>(null);
   const toggle = useRef<HTMLButtonElement>(null);
 
@@ -51,10 +53,13 @@ export default function Navigation() {
             {open ? "Close" : "Explore"}
           </button>
           {open && (
-            <nav
+            <motion.nav
               id="site-navigation"
               aria-label="Main navigation"
               className="navigation-panel"
+              initial={{ opacity: reduced ? 1 : 0, y: reduced ? 0 : -8 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: reduced ? 0 : 0.18 }}
             >
               {[
                 ["First taste", "#first-taste"],
@@ -77,7 +82,7 @@ export default function Navigation() {
                   {name}
                 </a>
               ))}
-            </nav>
+            </motion.nav>
           )}
         </div>
         <a

@@ -3,12 +3,10 @@ import { Component, ReactNode, useCallback, useEffect, useState } from "react";
 import dynamic from "next/dynamic";
 import Navigation from "./Navigation";
 import ScrollProgress from "./ScrollProgress";
+import ScrollDirector from "./ScrollDirector";
 import ReservationActions from "./ReservationActions";
 import { anchors, asset, BOOKING, MENU, DIRECTIONS } from "@/lib/content";
 const SceneCanvas = dynamic(() => import("./SceneCanvas"), { ssr: false });
-const ScrollDirector = dynamic(() => import("./ScrollDirector"), {
-  ssr: false,
-});
 class CanvasBoundary extends Component<
   { children: ReactNode; onFailure: () => void },
   { error: boolean }
@@ -24,23 +22,13 @@ class CanvasBoundary extends Component<
     return this.state.error ? null : this.props.children;
   }
 }
-function Photo({
-  name,
-  alt,
-  priority = false,
-}: {
-  name: string;
-  alt: string;
-  priority?: boolean;
-}) {
+function Photo({ name, alt }: { name: string; alt: string }) {
   return (
     <img
       className="static-photo"
       src={asset(name)}
       alt={alt}
-      loading={priority ? "eager" : "lazy"}
-      fetchPriority={priority ? "high" : undefined}
-      decoding="async"
+      loading="lazy"
       width={550}
       height={440}
     />
@@ -85,7 +73,7 @@ export default function CinematicExperience() {
       data-chapter={chapter}
     >
       <Navigation />
-      {!staticMode && <ScrollDirector enabled onChapter={onChapter} />}
+      <ScrollDirector enabled={!staticMode} onChapter={onChapter} />
       <main
         className="scroll-track"
         aria-label="A journey to the Indonesian table"
@@ -121,7 +109,6 @@ export default function CinematicExperience() {
           )}
           <div className="scene-panels">
             <section
-              tabIndex={0}
               className="scene-copy hero-scene"
               id={staticMode ? "first-taste" : undefined}
               aria-labelledby="hero-title"
@@ -157,12 +144,10 @@ export default function CinematicExperience() {
               </div>
               <Photo
                 name="sate.webp"
-                priority
                 alt="Bali Bali's sate skewers with peanut sauce on a ceramic plate"
               />
             </section>
             <section
-              tabIndex={0}
               className="scene-copy table-scene"
               id={staticMode ? "the-table" : undefined}
               aria-labelledby="table-title"
@@ -199,7 +184,6 @@ export default function CinematicExperience() {
               />
             </section>
             <section
-              tabIndex={0}
               className="scene-copy sharing-scene"
               id={staticMode ? "rijsttafel" : undefined}
               aria-labelledby="sharing-title"
@@ -236,7 +220,6 @@ export default function CinematicExperience() {
               />
             </section>
             <section
-              tabIndex={0}
               className="scene-copy heritage-scene"
               id={staticMode ? "our-story" : undefined}
               aria-labelledby="heritage-title"
@@ -263,7 +246,6 @@ export default function CinematicExperience() {
               />
             </section>
             <section
-              tabIndex={0}
               className="scene-copy evening-scene"
               id={staticMode ? "west-end" : undefined}
               aria-labelledby="evening-title"
@@ -308,7 +290,6 @@ export default function CinematicExperience() {
               </div>
             </section>
             <section
-              tabIndex={0}
               className="scene-copy booking-scene"
               id={staticMode ? "visit" : undefined}
               aria-labelledby="booking-title"
