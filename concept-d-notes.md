@@ -6,9 +6,9 @@ An immersive six-scene exploration added alongside concepts A, B and C.
 2. **Typography:** Cormorant Garamond's oversized editorial serif and italic, supported by compact DM Sans navigation and captions.
 3. **Colour:** Warm ivory `#F4EBDD`, burgundy `#652D2B`, dark teak `#30251F`, terracotta `#B66D4D`, muted brass `#B89A62`.
 4. **Photography:** Actual Bali Bali food images. The original files are 550 × 440; higher-resolution originals are the next asset priority. Interior and street photographs are explicitly marked as outstanding.
-5. **Motifs:** Ceramic circles, a narrow brass rim, quiet table-like rules, large year and street-number typography.
+5. **Motifs:** Extruded B → A → L → I brand letters with brass sides, quiet table-like rules, large year and street-number typography.
 6. **Hero:** An oversized BALI BALI wordmark across a close view of the restaurant's saté, with a persistent booking link and a small family-run/halal seal.
-7. **Scenes:** First taste → movement between dishes and through a ceramic portal → overhead sharing table → heritage photo study → West End address study → booking and practical details.
+7. **Scenes:** First taste → movement between dishes and past B → A letters → overhead sharing table → heritage photo study with L → I letters → West End address study → booking and practical details.
 8. **CTAs:** Burgundy Book a Table buttons open the official restaurant booking section, with confirmation by reply explained nearby. Menu links open an HTML selection with verified prices and a link to the complete PDF. Phone and directions remain directly available.
 9. **Mobile and accessibility:** Lower graphics density, native touch scrolling, simple mobile navigation, automatic reduced-motion photographic edition, semantic content, inert inactive chapters, keyboard focus indicators and WebGL fallback. Explore offers a continuous reading edition; switching preserves the current section. Direct hours and calling shortcuts stay visible.
 

@@ -42,5 +42,5 @@ sampleCamera(0.35, after, new Vector3());
 assert(before.z > -13 && after.z < -13);
 assert(Math.abs(after.x) < 3.1);
 console.log(
-  "PASS: keyframes, finite camera/target separation, continuity, exact reverse path and physical portal crossing.",
+  "PASS: keyframes, finite camera/target separation, continuity, exact reverse path and crossing the z=-13 brand passage plane.",
 );

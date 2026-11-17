@@ -12,7 +12,7 @@ import { Group } from "three";
 import { initialQuality, qualitySettings } from "@/lib/effects";
 import { type Quality } from "@/lib/effects";
 import useSceneSample from "./useSceneSample";
-import CeramicPortal from "./CeramicPortal";
+import BrandLetterPassage from "./BrandLetterPassage";
 import AtmosphericLighting from "./AtmosphericLighting";
 import RenderQuality from "./RenderQuality";
 import { journey } from "@/lib/journey";
@@ -149,8 +149,8 @@ export default function SceneCanvas({
         <SceneWindow from={0} to={0.36}>
           <FoodScene mobile={mobile} quality={quality} />
         </SceneWindow>
-        <SceneWindow from={0.1} to={0.4}>
-          <CeramicPortal mobile={mobile || quality !== "high"} />
+        <SceneWindow from={0.085} to={0.405}>
+          <BrandLetterPassage mobile={mobile} quality={quality} />
         </SceneWindow>
         <Ready onReady={onReady} />
       </Suspense>
@@ -163,7 +163,7 @@ export default function SceneCanvas({
       )}
       {stage >= 2 && (
         <Suspense fallback={null}>
-          <SceneWindow from={0.5} to={0.74}>
+          <SceneWindow from={0.5} to={0.755}>
             <HeritageScene quality={quality} mobile={mobile} />
           </SceneWindow>
         </Suspense>

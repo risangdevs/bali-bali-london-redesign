@@ -823,7 +823,8 @@ button:focus-visible {
       180deg,
       rgba(244, 235, 221, 0.95) 20%,
       rgba(244, 235, 221, 0.15) 50%,
-      var(--ivory) 78%
+      rgba(244, 235, 221, 0.15) 88%,
+      var(--ivory) 100%
     );
   }
   .scene-copy h2 {

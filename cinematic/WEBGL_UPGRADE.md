@@ -10,11 +10,11 @@ There are five approved 550 × 440 food photographs, local fonts, no video and n
 
 ## Effects implemented
 
-- **Spatial transitions:** `SceneTransition` is a reusable two-camera color/depth render-to-texture compositor. Five bounded windows cover the opening food approach, ceramic passage, table-to-heritage, heritage-to-address and address-to-booking handoffs. Closer geometry holds the reveal edge, foreground perspective enlargement suggests passing behind it, and a small deterministic noise displacement softens the boundary. `CeramicPortal` retains the original physical ring and adds restrained ceramic clearcoat. Endpoint views match the ordinary camera path; progress comes entirely from scroll, in either direction.
+- **Spatial transitions:** `SceneTransition` is a reusable two-camera color/depth render-to-texture compositor. Five bounded windows cover the opening food approach, letter passage, table-to-heritage, heritage-to-address and address-to-booking handoffs. Closer geometry holds the reveal edge, foreground perspective enlargement suggests passing behind it, and a small deterministic noise displacement softens the boundary. `BrandLetterPassage` replaces the original ring with B → A, and `HeritageScene` replaces its two box columns with L → I. All four use extruded outlines from the existing editorial font, burgundy faces, brass edges and reversible visibility windows. Mobile uses smaller letters placed beneath the copy, with the lower photographic shade softened to keep them visible; desktop uses large sculptures. Endpoint views match the ordinary camera path; progress comes entirely from scroll, in either direction.
 - **Depth:** World-space photo layers and camera keyframes are retained. Plate surfaces gain slight analytic relief, tessellated by quality level, plus soft contact-shadow planes. Cover UVs preserve photo aspect ratio, including the existing portrait heritage composition. Mobile has its own plate sizes/positions and wider lens. Relief is deliberately shallow to preserve the food photography.
 - **Steam:** Custom GPU point shaders use stable seeds, varied lifetimes, soft alpha, expansion, rising world-space motion and procedural turbulence. Only hot dishes emit steam. Visibility follows the scene/photo and fades during handoffs. High uses 64 points per hot plate, Medium 22, Low none.
 - **Heat:** Very small UV displacement is masked to a region above the hot food inside each photograph. It follows the dish through all camera movement. Shader branches avoid noise work on cold dishes and outside the heat mask. Text and controls never enter this pass.
-- **Atmosphere:** Scroll-sampled warm backgrounds, exposure, ambient/key lighting, warm shadow bounce, contact shadows and a slight vignette. Ceramic geometry uses physically based materials. Bloom is omitted because the available photography has no interior light sources that justify it.
+- **Atmosphere:** Scroll-sampled warm backgrounds, exposure, ambient/key lighting, warm shadow bounce, contact shadows and a slight vignette. Letter geometry uses physically based materials. Bloom is omitted because the available photography has no interior light sources that justify it.
 
 ## Animation architecture
 
@@ -49,7 +49,7 @@ Existing source:
 
 Added:
 
-- `components/CeramicPortal.tsx`, `AtmosphericLighting.tsx`, `SteamParticles.tsx`, `RenderQuality.tsx`
+- `components/BrandLetter.tsx`, `BrandLetterPassage.tsx`, `AtmosphericLighting.tsx`, `SteamParticles.tsx`, `RenderQuality.tsx`
 - `components/useSceneSample.ts`, `useOwnedTexture.ts`
 - `lib/effects.ts`, `lib/shaders.ts`, `scripts/check-effects.cjs`
 - This report and `verification/` browser screenshots.
@@ -58,7 +58,7 @@ No dependencies or restaurant image assets were added or changed.
 
 ## Verification
 
-- `npm test`: camera keyframes, finite values, path continuity, exact reverse samples and physical portal crossing; three device-quality tiers; downgrade/recovery hysteresis; ceilings; idle/jank rejection; non-overlapping transition windows and deterministic reverse camera samples.
+- `npm test`: camera keyframes, finite values, path continuity, exact reverse samples and crossing the original z=-13 passage plane; three device-quality tiers; downgrade/recovery hysteresis; ceilings; idle/jank rejection; non-overlapping transition windows and deterministic reverse camera samples.
 - `npm run typecheck`: passed.
 - `npm run export:pages`: production compilation, TypeScript and static generation passed; `concept-d/` refreshed with the existing GitHub Pages base path.
 - All 22 initial script, stylesheet, image and preload references in the exported home/menu HTML resolve locally.
@@ -73,3 +73,7 @@ The original 550 × 440 photographs still limit fullscreen sharpness. True extra
 The 60 FPS target needs profiling on physical target devices and additional browsers; desktop viewport emulation is not a phone benchmark. Reduced-motion switching, forced context-loss fault injection and Low-tier GPU rendering were not independently exercised through browser emulation in this session; their implementation was inspected and quality policy was tested. Short resource-counter checks are not an exhaustive long-duration GPU leak test.
 
 Deployment uses the repository's existing GitHub Pages pipeline from `main`, publishing the checked-in static export. The verification above records pre-deployment checks. No reservation submission was performed.
+
+## B → A → L → I geometry revision
+
+The former ring and two columns have been replaced by four genuine text extrusions. B and A occupy the food-to-table approach; L and I appear sequentially through the heritage scene. `BrandLetter` owns each geometry and retains the existing sampler, lighting, quality and cleanup architecture. The original source font is reused through a 4.5 KB generated glyph subset; no external font or 3D model is downloaded. `scripts/check-brand-geometry.cjs` checks visible counters, extrusion depth, finite vertices, consistent sizing, material groups, quality tiers and disposal. Use `npm run fonts:brand` to regenerate the subset.

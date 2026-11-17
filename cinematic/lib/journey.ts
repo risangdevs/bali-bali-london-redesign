@@ -5,7 +5,7 @@ export type JourneyState = {
   invalidate?: () => void;
 };
 export const journey: JourneyState = { progress: 0, time: 0 };
-// A single reversible track. Portal sits at z=-13; the lens physically crosses it.
+// A single reversible track. The B passage sits at z=-13; the lens crosses its plane.
 export const cameraStops = [
   { t: 0, position: [0, 1, 13], target: [0, 0, 0] },
   { t: 0.11, position: [1, 0.7, 9], target: [2, 0, 0] },
