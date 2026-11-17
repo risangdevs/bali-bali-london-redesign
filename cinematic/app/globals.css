@@ -1227,18 +1227,29 @@ button:focus-visible {
 
 /* Practical information and controls stay readable as content grows. */
 .navigation-tools {
+  --control-min-height: 50px;
+  --control-padding-block: 12px;
+  --control-font-size: 13px;
   display: flex;
-  align-items: flex-start;
+  align-items: stretch;
   gap: 12px;
+}
+.navigation-tools > .menu-disclosure {
+  display: flex;
+}
+.navigation-tools .menu-toggle,
+.navigation-tools .utility-link {
+  min-height: var(--control-min-height);
+  padding-block: var(--control-padding-block);
+  font-size: var(--control-font-size);
+  line-height: 1.5;
 }
 .utility-link {
   display: inline-flex;
   align-items: center;
-  min-height: 50px;
   padding: 12px 16px;
   background: var(--ivory);
   border: 1px solid var(--line);
-  font-size: 13px;
 }
 .utility-link:hover {
   background: #e7d7c4;
@@ -1484,14 +1495,15 @@ button:focus-visible {
     justify-content: flex-start;
   }
   .navigation-tools {
+    --control-min-height: 44px;
+    --control-padding-block: 10px;
+    --control-font-size: 12px;
     width: 100%;
     justify-content: space-between;
     gap: 6px;
   }
   .utility-link {
-    min-height: 44px;
     padding: 10px;
-    font-size: 12px;
   }
   .menu-toggle {
     min-width: 80px;
