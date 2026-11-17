@@ -34,7 +34,7 @@ High targets are capped at 1.25 MP each and 1600 pixels wide. Targets allocate G
 
 A single demand-loop invalidation chain keeps visible steam/heat alive when scroll stops. Quiet chapters return to demand rendering. Hidden tabs and offscreen canvases stop atmospheric animation. Scene windows cull irrelevant chapters, and later scenes load ahead of their transitions. Geometry/material disposal is managed by R3F; shared photo textures have reference-counted ownership and loader-cache cleanup. Context loss, shader failure, load timeout or unavailable WebGL select the photographic edition. Failure preserves the current chapter. The original reduced-motion preference handling remains in place.
 
-Mobile uses a shorter 610svh track versus 700svh on desktop; native touch scrolling remains enabled. Both hero CTAs and the safe-area-aware sticky mobile actions remain available. Canvas containers have no pointer events. Booking copy still explains that the restaurant replies to confirm the request.
+Mobile uses a shorter 610svh track versus 700svh on desktop; native touch scrolling remains enabled. Mobile uses the safe-area-aware sticky booking/menu actions without duplicate inline hero buttons; desktop retains both hero CTAs. Canvas containers have no pointer events. Booking copy still explains that the restaurant replies to confirm the request.
 
 ## Files changed
 

@@ -1161,7 +1161,8 @@ button:focus-visible {
   .hero-bottom .intro {
     margin-bottom: 15px;
   }
-  /* Contextual booking at the end; hero actions also remain directly available. */
+  /* The persistent mobile bar owns booking/menu actions in every chapter. */
+  .hero-actions,
   .booking-actions,
   .evening-scene > .button {
     display: none;
@@ -1590,16 +1591,5 @@ button:focus-visible {
 @media (max-width: 767px) {
   .cinematic-mode {
     --chapter-step: 85svh;
-  }
-  .hero-actions {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-  }
-  .hero-actions .button {
-    min-width: 0;
-    min-height: 44px;
-    padding: 10px 14px;
-    gap: 14px;
   }
 }
