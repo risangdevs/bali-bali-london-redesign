@@ -1,46 +1,142 @@
 const fs = require("node:fs");
+const path = require("node:path");
+const { createRequire } = require("node:module");
 const ts = require("typescript");
 const vm = require("node:vm");
 const assert = require("node:assert/strict");
-const { Vector3 } = require("three");
-const source = ts.transpileModule(
-  fs.readFileSync(
-    require("node:path").join(__dirname, "../lib/journey.ts"),
-    "utf8",
-  ),
-  { compilerOptions: { module: ts.ModuleKind.CommonJS } },
-).outputText;
-const compiled = {};
-vm.runInNewContext(source, { exports: compiled, require });
-const { sampleCamera, cameraStops } = compiled;
-for (const stop of cameraStops) {
-  const p = new Vector3(),
-    t = new Vector3();
-  sampleCamera(stop.t, p, t);
-  assert(p.distanceTo(new Vector3(...stop.position)) < 0.00001);
-  assert(t.distanceTo(new Vector3(...stop.target)) < 0.00001);
+const {
+  Vector3,
+  Euler,
+  Mesh,
+  MeshBasicMaterial,
+  DoubleSide,
+  Raycaster,
+} = require("three");
+const modules = new Map();
+function loadTS(filename) {
+  filename = path.resolve(filename);
+  if (modules.has(filename)) return modules.get(filename);
+  const compiled = {};
+  modules.set(filename, compiled);
+  const nativeRequire = createRequire(filename);
+  const output = ts.transpileModule(fs.readFileSync(filename, "utf8"), {
+    compilerOptions: { module: ts.ModuleKind.CommonJS, esModuleInterop: true },
+  }).outputText;
+  vm.runInNewContext(output, {
+    exports: compiled,
+    require: (id) => {
+      const local = path.resolve(path.dirname(filename), `${id}.ts`);
+      return id.startsWith(".") && fs.existsSync(local)
+        ? loadTS(local)
+        : nativeRequire(id);
+    },
+  });
+  return compiled;
 }
-const positions = [];
-for (let i = 0; i <= 1000; i++) {
-  const p = new Vector3(),
-    t = new Vector3();
-  sampleCamera(i / 1000, p, t);
-  assert(p.toArray().every(Number.isFinite));
-  assert(p.distanceTo(t) > 0.01);
-  if (i) assert(p.distanceTo(positions[i - 1]) < 0.5);
-  positions.push(p);
+const root = path.join(__dirname, "../lib");
+const { sampleCamera, cameraStops, mobileCameraStops } = loadTS(
+  path.join(root, "journey.ts"),
+);
+const { brandLayout, letterGate } = loadTS(path.join(root, "brand-layout.ts"));
+const { makeBrandGeometry } = loadTS(path.join(root, "brand-geometry.ts"));
+const { smooth, transitionAt } = loadTS(path.join(root, "effects.ts"));
+for (const mobile of [false, true]) {
+  const stops = mobile ? mobileCameraStops : cameraStops;
+  for (const stop of stops) {
+    const p = new Vector3(),
+      t = new Vector3();
+    sampleCamera(stop.t, p, t, mobile);
+    assert(p.distanceTo(new Vector3(...stop.position)) < 0.00001);
+    assert(t.distanceTo(new Vector3(...stop.target)) < 0.00001);
+  }
+  const positions = [];
+  for (let i = 0; i <= 1000; i++) {
+    const p = new Vector3(),
+      t = new Vector3();
+    sampleCamera(i / 1000, p, t, mobile);
+    assert(p.toArray().every(Number.isFinite));
+    assert(p.distanceTo(t) > 0.01);
+    if (i)
+      assert(p.distanceTo(positions[i - 1]) < 0.5, "continuous camera travel");
+    positions.push(p);
+  }
+  for (let i = 1000; i >= 0; i--) {
+    const p = new Vector3();
+    sampleCamera(i / 1000, p, new Vector3(), mobile);
+    assert(p.equals(positions[i]), "exact reverse path");
+  }
+  for (const [letter, from, to] of [
+    ["B", 0.325, 0.34],
+    ["A", 0.37, 0.395],
+    ["L", 0.625, 0.65],
+    ["I", 0.705, 0.73],
+  ]) {
+    const layout = brandLayout(letter, mobile),
+      gate = letterGate(layout);
+    const before = new Vector3(),
+      after = new Vector3();
+    sampleCamera(from, before, new Vector3(), mobile);
+    sampleCamera(to, after, new Vector3(), mobile);
+    assert(before.clone().sub(gate.point).dot(gate.normal) > 0);
+    assert(after.clone().sub(gate.point).dot(gate.normal) < 0);
+    for (let step = 0; step <= 20; step++) {
+      const progress = from + ((to - from) * step) / 20,
+        p = new Vector3(),
+        target = new Vector3();
+      sampleCamera(progress, p, target, mobile);
+      assert(
+        p.clone().sub(gate.point).cross(gate.normal).length() < 1e-6,
+        "lens follows glyph normal through its gate",
+      );
+      assert(
+        target.sub(p).normalize().cross(gate.normal).length() < 1e-6,
+        "lens faces through gate",
+      );
+      assert(
+        smooth(layout.from, layout.from + 0.025, progress) *
+          (1 - smooth(layout.to - 0.025, layout.to, progress)) >
+          0.99,
+        "letter stays opaque throughout crossing",
+      );
+      assert(
+        transitionAt(progress)?.mode !== "shader",
+        "no alternate camera compositing during physical flight",
+      );
+    }
+    for (const quality of ["low", "medium", "high"]) {
+      const geometry = makeBrandGeometry(letter, quality),
+        material = new MeshBasicMaterial({ side: DoubleSide });
+      const mesh = new Mesh(geometry, material);
+      mesh.position.fromArray(layout.position);
+      mesh.rotation.set(...layout.rotation);
+      mesh.scale.setScalar(layout.height);
+      mesh.updateMatrixWorld();
+      // A small lens-radius sweep catches strokes/bevels that a centre ray could miss.
+      for (let j = 0; j < 9; j++) {
+        const angle = (j * Math.PI) / 4,
+          radius = j === 8 ? 0 : 0.06;
+        const offset = new Vector3(
+          Math.cos(angle) * radius,
+          Math.sin(angle) * radius,
+          0,
+        ).applyEuler(new Euler(...layout.rotation));
+        const ray = new Raycaster(
+          before.clone().add(offset),
+          after.clone().sub(before).normalize(),
+          0,
+          before.distanceTo(after),
+        );
+        assert.equal(
+          ray.intersectObject(mesh).length,
+          0,
+          `${mobile ? "mobile" : "desktop"} ${letter} ${quality}: lens must not collide with glyph strokes`,
+        );
+      }
+      geometry.dispose();
+      material.dispose();
+    }
+  }
 }
-for (let i = 1000; i >= 0; i--) {
-  const p = new Vector3();
-  sampleCamera(i / 1000, p, new Vector3());
-  assert(p.equals(positions[i]));
-}
-const before = new Vector3(),
-  after = new Vector3();
-sampleCamera(0.29, before, new Vector3());
-sampleCamera(0.35, after, new Vector3());
-assert(before.z > -13 && after.z < -13);
-assert(Math.abs(after.x) < 3.1);
 console.log(
-  "PASS: keyframes, finite camera/target separation, continuity, exact reverse path and crossing the z=-13 brand passage plane.",
+  "PASS: desktop/mobile keyframes, continuous reversible flight, B/A counter crossings, L/I edge passages, lens clearance at every quality, opaque geometry and authoritative camera rendering.",
 );

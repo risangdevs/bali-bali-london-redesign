@@ -65,11 +65,41 @@ export const smooth = (a: number, b: number, value: number) => {
   return t * t * (3 - 2 * t);
 };
 export const transitions = [
-  { from: 0.125, to: 0.205, center: [0.7, 0.47] as const, approach: 0.62 },
-  { from: 0.255, to: 0.375, center: [0.51, 0.5] as const, approach: 0.32 },
-  { from: 0.49, to: 0.57, center: [0.62, 0.48] as const, approach: 0.28 },
-  { from: 0.66, to: 0.745, center: [0.72, 0.54] as const, approach: 0.25 },
-  { from: 0.825, to: 0.91, center: [0.65, 0.48] as const, approach: 0.35 },
+  {
+    from: 0.125,
+    to: 0.205,
+    center: [0.7, 0.47] as const,
+    approach: 0.62,
+    mode: "shader",
+  },
+  {
+    from: 0.255,
+    to: 0.375,
+    center: [0.51, 0.5] as const,
+    approach: 0.32,
+    mode: "physical",
+  },
+  {
+    from: 0.49,
+    to: 0.57,
+    center: [0.62, 0.48] as const,
+    approach: 0.28,
+    mode: "shader",
+  },
+  {
+    from: 0.66,
+    to: 0.745,
+    center: [0.72, 0.54] as const,
+    approach: 0.25,
+    mode: "physical",
+  },
+  {
+    from: 0.825,
+    to: 0.91,
+    center: [0.65, 0.48] as const,
+    approach: 0.35,
+    mode: "shader",
+  },
 ];
 export function transitionAt(p: number) {
   return transitions.find(({ from, to }) => p >= from && p <= to);
@@ -93,5 +123,5 @@ export function atmosphereVisibility(p: number) {
     : 1;
 }
 export function hasAtmosphere(p: number) {
-  return p < 0.24 || (p > 0.375 && p < 0.49) || p > 0.91;
+  return (p < 0.54 || p > 0.64) && atmosphereVisibility(p) > 0.015;
 }

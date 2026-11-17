@@ -107,7 +107,7 @@ export default function SceneCanvas({
         setStage((s) =>
           Math.max(
             s,
-            journey.progress > 0.72
+            journey.progress > 0.58
               ? 3
               : journey.progress > 0.38
                 ? 2
@@ -149,7 +149,7 @@ export default function SceneCanvas({
         <SceneWindow from={0} to={0.36}>
           <FoodScene mobile={mobile} quality={quality} />
         </SceneWindow>
-        <SceneWindow from={0.085} to={0.405}>
+        <SceneWindow from={0.085} to={0.45}>
           <BrandLetterPassage mobile={mobile} quality={quality} />
         </SceneWindow>
         <Ready onReady={onReady} />
@@ -163,14 +163,14 @@ export default function SceneCanvas({
       )}
       {stage >= 2 && (
         <Suspense fallback={null}>
-          <SceneWindow from={0.5} to={0.755}>
+          <SceneWindow from={0.49} to={0.79}>
             <HeritageScene quality={quality} mobile={mobile} />
           </SceneWindow>
         </Suspense>
       )}
       {stage >= 3 && (
         <Suspense fallback={null}>
-          <SceneWindow from={0.8} to={1}>
+          <SceneWindow from={0.62} to={1}>
             <BookingScene quality={quality} mobile={mobile} />
           </SceneWindow>
         </Suspense>

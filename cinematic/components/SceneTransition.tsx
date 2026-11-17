@@ -122,7 +122,9 @@ export default function SceneTransition({
   // work runs first; there is no competing EffectComposer or requestAnimationFrame.
   useFrame(({ scene, camera }) => {
     const p = journey.progress;
-    const transition = resources && transitionAt(p);
+    const candidate = resources && transitionAt(p);
+    const transition =
+      candidate && candidate.mode === "shader" ? candidate : undefined;
     if (!resources || !transition) {
       sampleScene(p);
       gl.setRenderTarget(null);
@@ -138,7 +140,7 @@ export default function SceneTransition({
     lastTransition.current = true;
     const { progress, outgoing, incoming } = transitionSamples(p, transition);
     const renderView = (sample: number, target: WebGLRenderTarget) => {
-      sampleCamera(sample, resources.position, resources.target);
+      sampleCamera(sample, resources.position, resources.target, mobile);
       frameCamera(
         resources.viewCamera,
         resources.position,

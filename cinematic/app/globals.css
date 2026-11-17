@@ -463,6 +463,10 @@ button:focus-visible {
 .address-art .text-link {
   margin-top: 16px;
 }
+.cinematic-mode .address-art {
+  background: var(--ivory);
+  padding-inline: 20px;
+}
 .evening-scene h2 {
   max-width: 60%;
 }

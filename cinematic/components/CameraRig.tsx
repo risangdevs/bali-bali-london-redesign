@@ -13,7 +13,7 @@ export function frameCamera(
 ) {
   camera.position.copy(position);
   // A wider portrait lens retains the plate and negative space for the copy.
-  // The world path stays identical when rotating a device or changing quality.
+  // Direct and offscreen cameras use the same responsive route and lens.
   const fov = mobile && aspect < 1 ? 51 : 43;
   if (camera.fov !== fov) {
     camera.fov = fov;
@@ -26,7 +26,7 @@ export default function CameraRig({ mobile }: { mobile: boolean }) {
   const [position, target] = useMemo(() => [new Vector3(), new Vector3()], []);
   const size = useThree((s) => s.size);
   useFrame(({ camera }) => {
-    sampleCamera(journey.progress, position, target);
+    sampleCamera(journey.progress, position, target, mobile);
     frameCamera(
       camera as PerspectiveCamera,
       position,
