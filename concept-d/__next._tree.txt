@@ -1,3 +1,3 @@
-:HL["/bali-bali-london-redesign/concept-d/_next/static/css/aa6b31f8629f5e3c.css","style"]
+:HL["/bali-bali-london-redesign/concept-d/_next/static/css/031a2c4d96ecc600.css","style"]
 1:[["children",{"s":"__PAGE__","h":160}]]
-0:{"b":"HHkAaeCLgcWyfM7vgOLYq","t":{"t":{"s":"","h":80,"c":"$Q1"}}}
+0:{"b":"0FXIk-SN8_mQOjlLcAopc","t":{"t":{"s":"","h":80,"c":"$Q1"}}}

@@ -1321,7 +1321,8 @@ button:focus-visible {
   bottom: 90px;
   padding: 24px 6%;
   overflow-y: auto;
-  overscroll-behavior: contain;
+  /* Hand gestures back to the journey at the panel's top and bottom edges. */
+  overscroll-behavior-y: auto;
   scrollbar-width: thin;
   justify-content: flex-start;
 }

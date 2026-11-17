@@ -31,3 +31,9 @@ The eight findings in `ux-audit.md` have corresponding implementation changes. T
 No live reservation was submitted or external site changed. No physical-device, screen-reader, 200% text-enlargement or field-performance verification was performed. Those remain launch validation work; the implementation should not be described as a full accessibility certification.
 
 Menu prices and terms were checked against the [official 2026 PDF](https://www.balibalirestaurant.com/pdf/bali_bali_menu_2026.pdf) on 16 November 2026. `cinematic/README.md` documents the content-maintenance locations. Keep the HTML selection, Rijsttafel teaser and PDF aligned whenever the restaurant changes prices.
+
+## Scroll boundary correction — 17 November 2026
+
+The scene-wide `overscroll-behavior: contain` trapped scrolling whenever a scene had overflow, even just the hero's 8.5px overflow at 1280 × 720. After the inner content reached its edge, Lenis deferred to the contained panel and the page never advanced. Scene panels now use vertical overscroll `auto`, allowing the existing direction-aware nested-scroll handling to return control to the journey. The Explore disclosure retains containment.
+
+Reproduced before the change with repeated centre-screen wheel gestures: hero scroll reached 8.5px while page scroll stayed at zero. After the fix, the same gestures advanced the page to 2160px and chapter 4, then reached the final chapter; reverse gestures returned to earlier chapters. At 390 × 844, the visit panel scrolled its full 322px content range. Scrolling back to its top and continuing upward returned to earlier journey chapters. These checks used browser wheel gestures; physical touch devices were not tested. The production export, including TypeScript, passed after the correction.
