@@ -12,7 +12,7 @@ import { Group } from "three";
 import { initialQuality, qualitySettings } from "@/lib/effects";
 import { type Quality } from "@/lib/effects";
 import useSceneSample from "./useSceneSample";
-import BrandLetterPassage from "./BrandLetterPassage";
+import CulturalPassage from "./CulturalPassage";
 import AtmosphericLighting from "./AtmosphericLighting";
 import RenderQuality from "./RenderQuality";
 import { journey } from "@/lib/journey";
@@ -150,7 +150,7 @@ export default function SceneCanvas({
           <FoodScene mobile={mobile} quality={quality} />
         </SceneWindow>
         <SceneWindow from={0.085} to={0.45}>
-          <BrandLetterPassage mobile={mobile} quality={quality} />
+          <CulturalPassage mobile={mobile} quality={quality} />
         </SceneWindow>
         <Ready onReady={onReady} />
       </Suspense>

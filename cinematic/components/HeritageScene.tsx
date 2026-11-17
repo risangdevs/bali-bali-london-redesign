@@ -1,8 +1,8 @@
 "use client";
 import { type Quality } from "@/lib/effects";
 import DepthLayer from "./DepthLayer";
-import BrandLetter from "./BrandLetter";
-import { brandLayout } from "@/lib/brand-layout";
+import CulturalSculpture from "./CulturalSculpture";
+import { culturalLayout } from "@/lib/cultural-layout";
 // Abstract photographic installation, deliberately not a fabricated restaurant interior.
 export default function HeritageScene({
   quality,
@@ -29,10 +29,10 @@ export default function HeritageScene({
         size={mobile ? [3.6, 2.88] : [5, 4]}
         rotation={[0, -0.35, 0]}
       />
-      {(["L", "I"] as const).map((letter) => (
-        <BrandLetter
-          key={letter}
-          {...brandLayout(letter, mobile)}
+      {(["foliage", "jepun"] as const).map((symbol) => (
+        <CulturalSculpture
+          key={symbol}
+          {...culturalLayout(symbol, mobile)}
           quality={quality}
         />
       ))}

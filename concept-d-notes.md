@@ -19,3 +19,8 @@ An immersive six-scene exploration added alongside concepts A, B and C.
 Source and run instructions: [cinematic/README.md](cinematic/README.md).
 
 **WebGL upgrade:** Five reusable render-to-texture handoffs, depth-aware occlusion, aspect-preserving photo relief, GPU steam, dish-local heat refraction and timeline-sampled warm lighting enhance the existing composition. Three adaptive quality tiers preserve the photographic fallback and direct booking access. See [the implementation report](cinematic/WEBGL_UPGRADE.md).
+
+
+## Balinese cultural passages
+
+The former B/A/L/I sculptures are now a split stone gateway → ornamental penjor bamboo bow → carved foliate frame → jepun petals. The camera travels through their open spaces between the food photographs; the flower's centre remains intact. These are locally generated stylised cultural references rather than temple or ritual replicas. Source geometry/palettes live in `cinematic/lib/cultural-geometry.ts`; responsive mesh transforms and shared camera openings live in `cinematic/lib/cultural-layout.ts`. No new model, font or photography downloads.

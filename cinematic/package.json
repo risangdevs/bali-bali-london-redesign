@@ -7,8 +7,7 @@
     "build": "next build --webpack",
     "typecheck": "tsc --noEmit",
     "export:pages": "node scripts/export-pages.mjs",
-    "test": "node scripts/check-camera.cjs && node scripts/check-effects.cjs && node scripts/check-brand-geometry.cjs",
-    "fonts:brand": "node scripts/build-brand-font.mjs"
+    "test": "node scripts/check-camera.cjs && node scripts/check-effects.cjs && node scripts/check-cultural-geometry.cjs"
   },
   "dependencies": {
     "@react-three/drei": "^10.7.0",

@@ -10,11 +10,11 @@ There are five approved 550 × 440 food photographs, local fonts, no video and n
 
 ## Effects implemented
 
-- **Spatial transitions:** `SceneTransition` is a reusable two-camera color/depth render-to-texture compositor. Five bounded windows cover the opening food approach, letter passage, table-to-heritage, heritage-to-address and address-to-booking handoffs. Three use shader compositing; the two letter-crossing windows render the actual camera directly so geometric occlusion drives the physical flight. Closer geometry holds the reveal edge, foreground perspective enlargement suggests passing behind it, and a small deterministic noise displacement softens the boundary. `BrandLetterPassage` replaces the original ring with B → A, and `HeritageScene` replaces its two box columns with L → I. All four use extruded outlines from the existing editorial font, burgundy faces, brass edges and reversible visibility windows. Mobile uses responsive letter sizes and its own route through their openings; desktop uses large sculptures. The lower photographic shade is softened to keep the geometry visible. Endpoint views match the ordinary camera path; progress comes entirely from scroll, in either direction.
+- **Spatial transitions:** `SceneTransition` retains five bounded handoff windows and three shader-composited transitions. Physical flights render the actual camera directly through a candi-bentar-inspired split gateway, beneath an ornamental penjor bow, through a pepatran-inspired carved frame, and between jepun petal tips. `CulturalPassage` contains the first pair; `HeritageScene` contains the second. Sculpture and camera transforms share `lib/cultural-layout.ts`. All geometry is generated locally, with stone, bamboo/palm, wood/brass and ivory/gold materials. Desktop/mobile use their own scales and paths; progress is entirely reversible scroll sampling.
 - **Depth:** World-space photo layers and camera keyframes are retained. Plate surfaces gain slight analytic relief, tessellated by quality level, plus soft contact-shadow planes. Cover UVs preserve photo aspect ratio, including the existing portrait heritage composition. Mobile has its own plate sizes/positions and wider lens. Relief is deliberately shallow to preserve the food photography.
 - **Steam:** Custom GPU point shaders use stable seeds, varied lifetimes, soft alpha, expansion, rising world-space motion and procedural turbulence. Only hot dishes emit steam. Visibility follows the scene/photo and fades during handoffs. High uses 64 points per hot plate, Medium 22, Low none.
 - **Heat:** Very small UV displacement is masked to a region above the hot food inside each photograph. It follows the dish through all camera movement. Shader branches avoid noise work on cold dishes and outside the heat mask. Text and controls never enter this pass.
-- **Atmosphere:** Scroll-sampled warm backgrounds, exposure, ambient/key lighting, warm shadow bounce, contact shadows and a slight vignette. Letter geometry uses physically based materials. Bloom is omitted because the available photography has no interior light sources that justify it.
+- **Atmosphere:** Scroll-sampled warm backgrounds, exposure, ambient/key lighting, warm shadow bounce, contact shadows and a slight vignette. Cultural sculptures use physically based materials. Bloom is omitted because the available photography has no interior light sources that justify it.
 
 ## Animation architecture
 
@@ -49,9 +49,9 @@ Existing source:
 
 Added:
 
-- `components/BrandLetter.tsx`, `BrandLetterPassage.tsx`, `AtmosphericLighting.tsx`, `SteamParticles.tsx`, `RenderQuality.tsx`
+- `components/CulturalSculpture.tsx`, `CulturalPassage.tsx`, `AtmosphericLighting.tsx`, `SteamParticles.tsx`, `RenderQuality.tsx`
 - `components/useSceneSample.ts`, `useOwnedTexture.ts`
-- `lib/effects.ts`, `lib/shaders.ts`, `lib/brand-layout.ts`, `scripts/check-effects.cjs`
+- `lib/effects.ts`, `lib/shaders.ts`, `lib/cultural-layout.ts`, `lib/cultural-geometry.ts`, `scripts/check-effects.cjs`
 - This report and `verification/` browser screenshots.
 
 No dependencies or restaurant image assets were added or changed.
@@ -74,10 +74,12 @@ The 60 FPS target needs profiling on physical target devices and additional brow
 
 Deployment uses the repository's existing GitHub Pages pipeline from `main`, publishing the checked-in static export. The verification above records pre-deployment checks. No reservation submission was performed.
 
-## B → A → L → I geometry revision
+## Balinese cultural sculpture revision
 
-The former ring and two columns have been replaced by four genuine text extrusions. B and A occupy the food-to-table approach; L and I appear sequentially through the heritage scene. Their shared layout now generates the camera gates, with ray-tested physical crossings and a clear lane between the food photographs. `BrandLetter` owns each geometry and retains the existing sampler, lighting, quality and cleanup architecture. The original source font is reused through a 4.5 KB generated glyph subset; no external font or 3D model is downloaded. `scripts/check-brand-geometry.cjs` checks visible counters, extrusion depth, finite vertices, consistent sizing, material groups, quality tiers and disposal. Use `npm run fonts:brand` to regenerate the subset.
+The B/A/L/I sculptures and derived font subset have been replaced by four original procedural objects: a stepped split gateway, ornamental bamboo bow with palm-leaf flourishes, an open carved botanical frame and five cupped frangipani petals. No ceremonial shrine, sacred inscription or offering is represented. This is a stylised cultural composition, not a fabricated view of the restaurant.
 
-## Physical letter-flight verification
+`makeCulturalGeometry` merges all geometry into three material buckets per sculpture. Low/Medium/High reduce curve and radial segments, with bevels omitted on Low. High sculptures each use fewer than 16,000 vertices. The existing sampler and demand rendering remain authoritative; no controller, per-frame React state or extra animation loop was added. The UI font, actual food photography, chapter copy, booking/menu links, mobile CTA policy and photographic fallback are preserved.
 
-The camera and meshes share transforms from `lib/brand-layout.ts`. B/A crossings occur through actual open glyph counters; L/I route through the open corner and beside the stem. Letters remain opaque through each crossing. Direct rendering in these windows prevents a secondary composited camera from skipping the physical passage. Heritage photos frame the lane, and the next meal appears ahead before I is crossed. The address panel has an opaque ivory background to retain contrast over that meal. Desktop and mobile camera tests cover every keyframe, continuity and reverse traversal, surface-normal alignment, visibility during the crossing, and a nine-ray lens-clearance sweep against actual Low/Medium/High geometry. No new animation controller or scroll lock is added.
+## Cultural passage verification
+
+Camera and meshes share transforms from `lib/cultural-layout.ts`. Crossings occur through the real central split, beneath the bamboo bow, through the carved aperture and between the flower's outer petal tips. The golden throat stays intact. Objects remain opaque through each crossing. Camera tests check both responsive routes, all keyframes, continuous/reversible sampling, alignment, visibility and a nine-ray lens-clearance sweep against actual Low/Medium/High triangle geometry. Geometry tests also verify solid defining surfaces, finite vertices/normals, spatial depth, three material groups, adaptive triangle budgets and disposal. `npm test`, typecheck and the production Pages export pass.

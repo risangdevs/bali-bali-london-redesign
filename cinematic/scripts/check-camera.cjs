@@ -37,8 +37,12 @@ const root = path.join(__dirname, "../lib");
 const { sampleCamera, cameraStops, mobileCameraStops } = loadTS(
   path.join(root, "journey.ts"),
 );
-const { brandLayout, letterGate } = loadTS(path.join(root, "brand-layout.ts"));
-const { makeBrandGeometry } = loadTS(path.join(root, "brand-geometry.ts"));
+const { culturalLayout, culturalGate } = loadTS(
+  path.join(root, "cultural-layout.ts"),
+);
+const { makeCulturalGeometry } = loadTS(
+  path.join(root, "cultural-geometry.ts"),
+);
 const { smooth, transitionAt } = loadTS(path.join(root, "effects.ts"));
 for (const mobile of [false, true]) {
   const stops = mobile ? mobileCameraStops : cameraStops;
@@ -65,14 +69,14 @@ for (const mobile of [false, true]) {
     sampleCamera(i / 1000, p, new Vector3(), mobile);
     assert(p.equals(positions[i]), "exact reverse path");
   }
-  for (const [letter, from, to] of [
-    ["B", 0.325, 0.34],
-    ["A", 0.37, 0.395],
-    ["L", 0.625, 0.65],
-    ["I", 0.705, 0.73],
+  for (const [symbol, from, to] of [
+    ["gateway", 0.325, 0.34],
+    ["penjor", 0.37, 0.395],
+    ["foliage", 0.625, 0.65],
+    ["jepun", 0.705, 0.73],
   ]) {
-    const layout = brandLayout(letter, mobile),
-      gate = letterGate(layout);
+    const layout = culturalLayout(symbol, mobile),
+      gate = culturalGate(layout);
     const before = new Vector3(),
       after = new Vector3();
     sampleCamera(from, before, new Vector3(), mobile);
@@ -86,7 +90,7 @@ for (const mobile of [false, true]) {
       sampleCamera(progress, p, target, mobile);
       assert(
         p.clone().sub(gate.point).cross(gate.normal).length() < 1e-6,
-        "lens follows glyph normal through its gate",
+        "lens follows sculpture normal through its gate",
       );
       assert(
         target.sub(p).normalize().cross(gate.normal).length() < 1e-6,
@@ -96,7 +100,7 @@ for (const mobile of [false, true]) {
         smooth(layout.from, layout.from + 0.025, progress) *
           (1 - smooth(layout.to - 0.025, layout.to, progress)) >
           0.99,
-        "letter stays opaque throughout crossing",
+        "sculpture stays opaque throughout crossing",
       );
       assert(
         transitionAt(progress)?.mode !== "shader",
@@ -104,12 +108,12 @@ for (const mobile of [false, true]) {
       );
     }
     for (const quality of ["low", "medium", "high"]) {
-      const geometry = makeBrandGeometry(letter, quality),
+      const geometry = makeCulturalGeometry(symbol, quality),
         material = new MeshBasicMaterial({ side: DoubleSide });
       const mesh = new Mesh(geometry, material);
       mesh.position.fromArray(layout.position);
       mesh.rotation.set(...layout.rotation);
-      mesh.scale.setScalar(layout.height);
+      mesh.scale.setScalar(layout.scale);
       mesh.updateMatrixWorld();
       // A small lens-radius sweep catches strokes/bevels that a centre ray could miss.
       for (let j = 0; j < 9; j++) {
@@ -129,7 +133,7 @@ for (const mobile of [false, true]) {
         assert.equal(
           ray.intersectObject(mesh).length,
           0,
-          `${mobile ? "mobile" : "desktop"} ${letter} ${quality}: lens must not collide with glyph strokes`,
+          `${mobile ? "mobile" : "desktop"} ${symbol} ${quality}: lens must not collide with sculpture surfaces`,
         );
       }
       geometry.dispose();
@@ -138,5 +142,5 @@ for (const mobile of [false, true]) {
   }
 }
 console.log(
-  "PASS: desktop/mobile keyframes, continuous reversible flight, B/A counter crossings, L/I edge passages, lens clearance at every quality, opaque geometry and authoritative camera rendering.",
+  "PASS: desktop/mobile keyframes, continuous reversible flight, split gateway, bamboo bow, carved aperture and petal-gap crossings, lens clearance at every quality, opaque geometry and authoritative camera rendering.",
 );
