@@ -26,7 +26,7 @@ export default function Navigation({
     const escape = (event: KeyboardEvent) => {
       if (event.key !== "Escape") return;
       setOpen(false);
-      toggle.current?.focus();
+      toggle.current?.focus({ preventScroll: true });
     };
     document.addEventListener("pointerdown", dismiss);
     document.addEventListener("keydown", escape);
@@ -85,7 +85,7 @@ export default function Navigation({
                     href={href}
                     onClick={() => {
                       setOpen(false);
-                      toggle.current?.focus();
+                      toggle.current?.focus({ preventScroll: true });
                     }}
                   >
                     {name}

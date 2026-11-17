@@ -110,10 +110,12 @@ export function transitionSamples(
 ) {
   const { from, to, approach } = transition;
   const progress = Math.max(0, Math.min(1, (p - from) / (to - from)));
+  const envelope = Math.sin(progress * Math.PI) ** 2;
+  const separation = (to - from) * (1 - approach) * 0.24 * envelope;
   return {
     progress,
-    outgoing: from + (p - from) * approach,
-    incoming: to - (to - p) * 0.45,
+    outgoing: p - separation,
+    incoming: p + separation * 0.75,
   };
 }
 export function atmosphereVisibility(p: number) {

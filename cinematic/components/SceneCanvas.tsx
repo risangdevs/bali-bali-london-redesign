@@ -7,6 +7,8 @@ import {
   useMemo,
   ReactNode,
 } from "react";
+import { useTexture } from "@react-three/drei";
+import { asset } from "@/lib/content";
 import { Canvas, useThree } from "@react-three/fiber";
 import { Group } from "three";
 import { initialQuality, qualitySettings } from "@/lib/effects";
@@ -101,6 +103,14 @@ export default function SceneCanvas({
   }, []);
   const [stage, setStage] = useState(0);
   useEffect(() => {
+    const prepare = (p: number) =>
+      setStage((s) =>
+        Math.max(s, p > 0.58 ? 3 : p > 0.38 ? 2 : p > 0.12 ? 1 : 0),
+      );
+    journey.prepare = prepare;
+    // The only food image not already requested by the opening scene. Warm its
+    // cache so a first click to a distant chapter cannot reveal an empty photo.
+    useTexture.preload(asset("sharing.webp"));
     // Deferred scene textures are fetched near their chapter, then retained for reverse scroll.
     const id = window.setInterval(
       () =>
@@ -118,7 +128,10 @@ export default function SceneCanvas({
         ),
       250,
     );
-    return () => clearInterval(id);
+    return () => {
+      clearInterval(id);
+      journey.prepare = undefined;
+    };
   }, []);
   return (
     <Canvas
@@ -156,7 +169,7 @@ export default function SceneCanvas({
       </Suspense>
       {stage >= 1 && (
         <Suspense fallback={null}>
-          <SceneWindow from={0.18} to={0.54}>
+          <SceneWindow from={0.18} to={0.58}>
             <SharingScene mobile={mobile} quality={quality} />
           </SceneWindow>
         </Suspense>

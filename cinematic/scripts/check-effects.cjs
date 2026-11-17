@@ -1,16 +1,6 @@
-const fs = require("node:fs");
 const path = require("node:path");
-const ts = require("typescript");
-const vm = require("node:vm");
 const assert = require("node:assert/strict");
-const compiled = {};
-const source = ts.transpileModule(
-  fs.readFileSync(path.join(__dirname, "../lib/effects.ts"), "utf8"),
-  {
-    compilerOptions: { module: ts.ModuleKind.CommonJS },
-  },
-).outputText;
-vm.runInNewContext(source, { exports: compiled });
+const loadTS = require("./load-ts.cjs");
 const {
   FrameBudget,
   initialQuality,
@@ -18,7 +8,28 @@ const {
   transitionAt,
   transitionSamples,
   atmosphereVisibility,
-} = compiled;
+} = loadTS(path.join(__dirname, "../lib/effects.ts"));
+const { smootherstep, navigationDuration, photoVisibility } = loadTS(
+  path.join(__dirname, "../lib/motion.ts"),
+);
+for (let i = 0; i <= 100; i++) {
+  const t = i / 100;
+  assert(smootherstep(t) >= 0 && smootherstep(t) <= 1);
+  if (i) assert(smootherstep(t) >= smootherstep(t - 0.01));
+  assert(
+    Math.abs(photoVisibility(t, 0.1, 0.9) - photoVisibility(1 - t, 0.1, 0.9)) <
+      1e-12,
+  );
+}
+assert.equal(smootherstep(0), 0);
+assert.equal(smootherstep(1), 1);
+assert(navigationDuration(5000, 900) > navigationDuration(900, 900));
+assert.equal(navigationDuration(-5000, 900), navigationDuration(5000, 900));
+assert(navigationDuration(500000, 900) <= 3.6);
+assert(
+  photoVisibility(0.1, 0.1, 0.9) === 0 && photoVisibility(0.9, 0.1, 0.9) === 0,
+);
+assert(photoVisibility(0.3, 0.1, 0.9) === 1);
 assert.equal(initialQuality({ mobile: false, cores: 12, memory: 8 }), "high");
 assert.equal(initialQuality({ mobile: true, cores: 8 }), "medium");
 assert.equal(initialQuality({ mobile: false, cores: 4 }), "medium");
@@ -76,6 +87,19 @@ for (let i = 0; i < transitions.length; i++) {
   assert.equal(transitionAt((track.from + track.to) / 2), track);
   assert.equal(transitionSamples(track.from, track).outgoing, track.from);
   assert.equal(transitionSamples(track.to, track).incoming, track.to);
+  const h = 1e-6;
+  assert(
+    Math.abs(
+      (transitionSamples(track.from + h, track).outgoing - track.from) / h - 1,
+    ) < 0.001,
+    "outgoing camera matches entry velocity",
+  );
+  assert(
+    Math.abs(
+      (track.to - transitionSamples(track.to - h, track).incoming) / h - 1,
+    ) < 0.001,
+    "incoming camera matches exit velocity",
+  );
   const forward = [];
   for (let step = 0; step <= 100; step++) {
     const p = track.from + ((track.to - track.from) * step) / 100;

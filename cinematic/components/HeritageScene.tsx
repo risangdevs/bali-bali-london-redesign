@@ -15,6 +15,7 @@ export default function HeritageScene({
     <group>
       <DepthLayer
         quality={quality}
+        start={0.49}
         src="sate.webp"
         end={0.74}
         position={[mobile ? 3.2 : 7.5, 1, -44]}
@@ -23,6 +24,7 @@ export default function HeritageScene({
       />
       <DepthLayer
         quality={quality}
+        start={0.49}
         src="sharing.webp"
         end={0.74}
         position={[mobile ? -2.2 : -0.6, -0.6, -47]}

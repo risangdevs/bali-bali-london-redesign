@@ -77,6 +77,8 @@ export function SharingScene({
   return (
     <group ref={table} position={[0, 0, -26]}>
       <DepthLayer
+        start={0.18}
+        end={0.57}
         quality={quality}
         src="sharing.webp"
         position={[0, 0.02, 0]}
@@ -85,6 +87,8 @@ export function SharingScene({
         round={1}
       />
       <DepthLayer
+        start={0.18}
+        end={0.57}
         quality={quality}
         hot
         src="sate.webp"
@@ -94,6 +98,8 @@ export function SharingScene({
         round={1}
       />
       <DepthLayer
+        start={0.18}
+        end={0.57}
         quality={quality}
         hot
         src="rendang.webp"
@@ -104,6 +110,8 @@ export function SharingScene({
       />
       {!mobile && (
         <DepthLayer
+          start={0.18}
+          end={0.57}
           quality={quality}
           src="vegetables.webp"
           position={[1, 0.12, 4.1]}

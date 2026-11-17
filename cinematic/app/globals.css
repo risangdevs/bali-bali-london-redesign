@@ -205,7 +205,7 @@ button:focus-visible {
   );
   pointer-events: none;
 }
-.experience[data-chapter="2"] .reading-shade {
+.reading-shade::before {
   background: linear-gradient(
     90deg,
     rgba(244, 235, 221, 0.96),
@@ -219,7 +219,7 @@ button:focus-visible {
 .experience[data-chapter="4"] .stage {
   background: #e5d7c5;
 }
-.experience[data-chapter="5"] .reading-shade {
+.reading-shade::after {
   background: linear-gradient(
     90deg,
     var(--ivory) 35%,
@@ -998,8 +998,8 @@ button:focus-visible {
     max-width: 85px;
     line-height: 1.2;
   }
-  .experience[data-chapter="2"] .reading-shade,
-  .experience[data-chapter="5"] .reading-shade {
+  .reading-shade::before,
+  .reading-shade::after {
     background: linear-gradient(
       180deg,
       var(--ivory),
@@ -1596,5 +1596,32 @@ button:focus-visible {
 @media (max-width: 767px) {
   .cinematic-mode {
     --chapter-step: 85svh;
+  }
+}
+
+/* Scroll-sampled shade layers avoid a chapter-boundary flash. */
+.reading-shade::before,
+.reading-shade::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+.reading-shade::before {
+  opacity: var(--table-shade, 0);
+}
+.reading-shade::after {
+  opacity: var(--booking-shade, 0);
+}
+.scene-panels {
+  transition: opacity 0.28s ease;
+}
+.experience[data-navigating="true"] .scene-panels {
+  opacity: 0;
+  pointer-events: none;
+}
+@media (prefers-reduced-motion: no-preference) {
+  html:has(.experience.static-mode) {
+    scroll-behavior: smooth;
   }
 }

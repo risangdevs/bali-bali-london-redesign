@@ -79,3 +79,11 @@ These are original decorative interpretations for a restaurant website. The penj
 - [Penjor, including ceremonial and ornamental contexts — Humaniora / UGM](https://journal.ugm.ac.id/jurnal-humaniora/article/download/3316/3032)
 - [Traditional foliate ornament vocabulary — ISI Denpasar](https://repo.isi-dps.ac.id/1348/)
 - [Bunga Jepun — ISI Denpasar](https://repo.isi-dps.ac.id/5537/)
+
+## Motion and asset refinement
+
+The camera now uses continuous Hermite interpolation between compositions instead of stopping at each keyframe. Shared straight-through velocities retain the ray-tested openings. Food photos have wider feathered edges, quintic visibility envelopes and alpha blending without writing transparent rectangles into the depth buffer. Sharing/heritage visibility windows overlap their fades, and shader camera samples match the live camera's velocity at each transition boundary. Reading shades also blend continuously rather than switching at chapter boundaries.
+
+All same-page chapter links, including Explore and Hours & directions, use one delegated Lenis navigation handler. Duration scales with distance (up to 3.6 seconds), follows quintic easing, and remains interruptible by scrolling, touch or navigation keys. New clicks replace the current destination. Intermediate chapter copy fades during longer journeys; the destination receives focus on arrival. Browser Back/Forward follows the same route. Target scenes prepare at click time, with the remaining food image cache warmed in advance. The ordinary photographic edition retains native anchor navigation.
+
+Stone cornices have rounded edges on Medium/High; leaves curl in depth; the carved frame has lobed foliage and scroll details. The jepun petals use a continuous vertex-colour gradient instead of a hard gold/ivory seam. Each sculpture still uses three material groups and fewer than 30,000 vertices at High. No model, image or dependency was added.

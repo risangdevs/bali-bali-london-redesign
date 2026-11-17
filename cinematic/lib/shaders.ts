@@ -28,16 +28,17 @@ void main() {
   float depthB=-viewDepth(texture2D(uDepthTo,vUv).x);
   float foreground=(1.-smoothstep(2.,23.,depthA));
   float receiving=1.-smoothstep(3.,30.,depthB);
-  float envelope=sin(p*3.14159265);
-  float edgeNoise=(noise21(q*15.+uScroll*2.)-.5)*.012*uQuality;
+  float envelope=pow(sin(p*3.14159265),2.);
+  float edgeNoise=(noise21(q*15.+uScroll*2.)-.5)*.003*uQuality;
   float maxRadius=length(vec2(max(uCenter.x,1.-uCenter.x)*uAspect,max(uCenter.y,1.-uCenter.y)));
   float field=radius+foreground*.14-receiving*.025+edgeNoise;
-  float reach=mix(-.18,maxRadius+.22,p*p*(3.-2.*p));
-  float reveal=1.-smoothstep(reach-.022,reach+.022,field);
+  float eased=p*p*p*(p*(p*6.-15.)+10.);
+  float reach=mix(-.24,maxRadius+.28,eased);
+  float reveal=1.-smoothstep(reach-.095,reach+.095,field);
   // Explicit endpoints are pixel-identical to each camera, including reverse scroll.
   reveal=p<.00001?0.:(p>.99999?1.:reveal);
-  vec2 fromUv=uCenter+(vUv-uCenter)/(1.+.15*p*foreground);
-  vec2 toUv=uCenter+(vUv-uCenter)/(1.+.035*(1.-p)*receiving);
+  vec2 fromUv=uCenter+(vUv-uCenter)/(1.+.045*envelope*(1.-p)*foreground);
+  vec2 toUv=uCenter+(vUv-uCenter)/(1.+.02*envelope*p*receiving);
   vec2 displacement=q*edgeNoise*.025*envelope;
   vec4 outgoing=texture2D(uFrom,clamp(fromUv+displacement,vec2(.001),vec2(.999)));
   vec4 incoming=texture2D(uTo,clamp(toUv-displacement,vec2(.001),vec2(.999)));
@@ -72,7 +73,8 @@ ${noiseGLSL}
 void main() {
   vec2 uv=(vUv-.5)*uCover+.5;
   vec2 q=(vUv-.5)*2.;
-  float alpha=rounded>.5?1.-smoothstep(.94,1.,length(q)):1.;
+  float edge=min(min(vUv.x,1.-vUv.x),min(vUv.y,1.-vUv.y));
+  float alpha=rounded>.5?1.-smoothstep(.81,1.,length(q)):smoothstep(0.,.025,edge);
   if(alpha*visibility<.003) discard;
   #if EFFECT_QUALITY > 0
     // Only the food photograph is refracted. DOM text, buttons and surroundings

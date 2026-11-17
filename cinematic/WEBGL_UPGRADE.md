@@ -78,8 +78,18 @@ Deployment uses the repository's existing GitHub Pages pipeline from `main`, pub
 
 The B/A/L/I sculptures and derived font subset have been replaced by four original procedural objects: a stepped split gateway, ornamental bamboo bow with palm-leaf flourishes, an open carved botanical frame and five cupped frangipani petals. No ceremonial shrine, sacred inscription or offering is represented. This is a stylised cultural composition, not a fabricated view of the restaurant.
 
-`makeCulturalGeometry` merges all geometry into three material buckets per sculpture. Low/Medium/High reduce curve and radial segments, with bevels omitted on Low. High sculptures each use fewer than 16,000 vertices. The existing sampler and demand rendering remain authoritative; no controller, per-frame React state or extra animation loop was added. The UI font, actual food photography, chapter copy, booking/menu links, mobile CTA policy and photographic fallback are preserved.
+`makeCulturalGeometry` merges all geometry into three material buckets per sculpture. Low/Medium/High reduce curve and radial segments, with bevels omitted on Low. High sculptures each use fewer than 30,000 vertices. The existing sampler and demand rendering remain authoritative; no controller, per-frame React state or extra animation loop was added. The UI font, actual food photography, chapter copy, booking/menu links, mobile CTA policy and photographic fallback are preserved.
 
 ## Cultural passage verification
 
 Camera and meshes share transforms from `lib/cultural-layout.ts`. Crossings occur through the real central split, beneath the bamboo bow, through the carved aperture and between the flower's outer petal tips. The golden throat stays intact. Objects remain opaque through each crossing. Camera tests check both responsive routes, all keyframes, continuous/reversible sampling, alignment, visibility and a nine-ray lens-clearance sweep against actual Low/Medium/High triangle geometry. Geometry tests also verify solid defining surfaces, finite vertices/normals, spatial depth, three material groups, adaptive triangle budgets and disposal. `npm test`, typecheck and the production Pages export pass.
+
+## Motion polish and sculptural detail
+
+The cultural assets now use rounded stone edges, cupped palm leaves, lobed foliate carving with scrolls and continuous golden-throat petal colouring. High geometry stays below 30,000 vertices per sculpture and three material batches; Medium and Low retain adaptive detail. Camera interpolation is C1 continuous, with constant straight-through passage velocities and unchanged gate clearance.
+
+Image fades use quintic envelopes and wider edge feathers, transparent photo meshes no longer write depth, and scene windows remain mounted until their fades finish. Composited camera samples converge to the actual view with matching endpoint velocity; UV displacement and aperture edges are restrained. Text entrance/exit envelopes avoid overlapping paragraphs, and reading shades blend from progress rather than React chapter changes.
+
+Section clicks use distance-based, interruptible Lenis motion with target preparation, retargeting, focus on arrival and browser history support. Intermediate copy fades during travel. One Lenis/GSAP ticker still owns the journey; ScrollTrigger follows it directly, removing the former second smoothing delay. Existing reduced-motion/static fallbacks and ordinary booking/menu links are preserved.
+
+Verification adds camera velocity continuity and uninterrupted passage-speed checks, navigation timing and reversible photo envelopes, compositor boundary velocity checks, finite vertex colour attributes and the existing lens-clearance/quality/disposal tests. Production build and desktop/mobile preview checks cover long clicks, rapid retargeting, manual interruption, history navigation and destination focus.

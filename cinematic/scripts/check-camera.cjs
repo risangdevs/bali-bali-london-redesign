@@ -1,8 +1,5 @@
-const fs = require("node:fs");
+const loadTS = require("./load-ts.cjs");
 const path = require("node:path");
-const { createRequire } = require("node:module");
-const ts = require("typescript");
-const vm = require("node:vm");
 const assert = require("node:assert/strict");
 const {
   Vector3,
@@ -12,27 +9,6 @@ const {
   DoubleSide,
   Raycaster,
 } = require("three");
-const modules = new Map();
-function loadTS(filename) {
-  filename = path.resolve(filename);
-  if (modules.has(filename)) return modules.get(filename);
-  const compiled = {};
-  modules.set(filename, compiled);
-  const nativeRequire = createRequire(filename);
-  const output = ts.transpileModule(fs.readFileSync(filename, "utf8"), {
-    compilerOptions: { module: ts.ModuleKind.CommonJS, esModuleInterop: true },
-  }).outputText;
-  vm.runInNewContext(output, {
-    exports: compiled,
-    require: (id) => {
-      const local = path.resolve(path.dirname(filename), `${id}.ts`);
-      return id.startsWith(".") && fs.existsSync(local)
-        ? loadTS(local)
-        : nativeRequire(id);
-    },
-  });
-  return compiled;
-}
 const root = path.join(__dirname, "../lib");
 const { sampleCamera, cameraStops, mobileCameraStops } = loadTS(
   path.join(root, "journey.ts"),
@@ -68,6 +44,23 @@ for (const mobile of [false, true]) {
     const p = new Vector3();
     sampleCamera(i / 1000, p, new Vector3(), mobile);
     assert(p.equals(positions[i]), "exact reverse path");
+  }
+  for (const stop of stops.slice(1, -1)) {
+    const h = 1e-6,
+      before = new Vector3(),
+      at = new Vector3(),
+      after = new Vector3();
+    sampleCamera(stop.t - h, before, new Vector3(), mobile);
+    sampleCamera(stop.t, at, new Vector3(), mobile);
+    sampleCamera(stop.t + h, after, new Vector3(), mobile);
+    const left = at.clone().sub(before).divideScalar(h),
+      right = after.sub(at).divideScalar(h);
+    assert(
+      left.distanceTo(right) < 0.15,
+      "camera velocity is continuous across keyframes",
+    );
+    if (stop.velocity)
+      assert(left.length() > 60, "camera keeps travelling through the passage");
   }
   for (const [symbol, from, to] of [
     ["gateway", 0.325, 0.34],

@@ -7,9 +7,10 @@ import { asset } from "@/lib/content";
 import {
   atmosphereVisibility,
   qualitySettings,
-  smooth,
   type Quality,
 } from "@/lib/effects";
+import { photoVisibility } from "@/lib/motion";
+import { smooth } from "@/lib/effects";
 import { photoFragment, photoVertex } from "@/lib/shaders";
 import useSceneSample from "./useSceneSample";
 import useOwnedTexture from "./useOwnedTexture";
@@ -67,8 +68,7 @@ export default function DepthLayer({
     }),
     [texture, round, photoAspect, planeAspect, quality, size[0]],
   );
-  const visibility = (p: number) =>
-    smooth(start, start + 0.045, p) * (1 - smooth(end - 0.045, end, p));
+  const visibility = (p: number) => photoVisibility(p, start, end);
   useSceneSample((p) => {
     if (!material.current) return;
     const u = material.current.uniforms;
@@ -117,7 +117,7 @@ export default function DepthLayer({
           defines={{ EFFECT_QUALITY: qualitySettings[quality].noise }}
           transparent
           side={DoubleSide}
-          depthWrite
+          depthWrite={false}
           toneMapped={false}
           vertexShader={photoVertex}
           fragmentShader={photoFragment}

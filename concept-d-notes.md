@@ -24,3 +24,8 @@ Source and run instructions: [cinematic/README.md](cinematic/README.md).
 ## Balinese cultural passages
 
 The former B/A/L/I sculptures are now a split stone gateway → ornamental penjor bamboo bow → carved foliate frame → jepun petals. The camera travels through their open spaces between the food photographs; the flower's centre remains intact. These are locally generated stylised cultural references rather than temple or ritual replicas. Source geometry/palettes live in `cinematic/lib/cultural-geometry.ts`; responsive mesh transforms and shared camera openings live in `cinematic/lib/cultural-layout.ts`. No new model, font or photography downloads.
+
+
+### Motion refinement
+
+Refined the four cultural sculptures with rounded stone, curved leaves, carved scrolls and gradient-coloured jepun petals. Continuous camera curves, softer image edges/fades and progress-based reading shades smooth the journey. Chapter clicks now use distance-based Lenis timing with interruption, retargeting, history navigation and destination focus; intermediate copy fades during travel.

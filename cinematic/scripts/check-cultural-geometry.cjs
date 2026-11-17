@@ -1,8 +1,4 @@
-const fs = require("node:fs");
 const path = require("node:path");
-const { createRequire } = require("node:module");
-const vm = require("node:vm");
-const ts = require("typescript");
 const assert = require("node:assert/strict");
 const {
   Mesh,
@@ -11,16 +7,10 @@ const {
   Raycaster,
   Vector3,
 } = require("three");
-const filename = path.join(__dirname, "../lib/cultural-geometry.ts");
-const output = ts.transpileModule(fs.readFileSync(filename, "utf8"), {
-  compilerOptions: { module: ts.ModuleKind.CommonJS, esModuleInterop: true },
-}).outputText;
-const compiled = {};
-vm.runInNewContext(output, {
-  exports: compiled,
-  require: createRequire(filename),
-});
-const { culturalSymbols, makeCulturalGeometry } = compiled;
+const loadTS = require("./load-ts.cjs");
+const { culturalSymbols, makeCulturalGeometry } = loadTS(
+  path.join(__dirname, "../lib/cultural-geometry.ts"),
+);
 // An open aperture alone could pass camera tests even if the sculpture were empty.
 // Verify its defining solid surfaces too, independently of the layout constants.
 const solid = {
@@ -42,6 +32,12 @@ for (const symbol of culturalSymbols) {
     assert(
       [...geometry.getAttribute("normal").array].every(Number.isFinite),
       `${symbol}: finite normals`,
+    );
+    const colors = geometry.getAttribute("color");
+    assert.equal(colors.count, positions.count);
+    assert(
+      [...colors.array].every((v) => Number.isFinite(v) && v >= 0 && v <= 1),
+      "valid material colour gradients",
     );
     const box = geometry.boundingBox;
     assert(

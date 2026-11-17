@@ -2,6 +2,7 @@ import {
   BoxGeometry,
   BufferGeometry,
   CatmullRomCurve3,
+  Color,
   CubicBezierCurve3,
   CylinderGeometry,
   ExtrudeGeometry,
@@ -14,6 +15,8 @@ import {
   TubeGeometry,
   Vector3,
 } from "three";
+import { RoundedBoxGeometry } from "three/addons/geometries/RoundedBoxGeometry.js";
+import { smootherstep } from "./motion";
 import { mergeGeometries } from "three/addons/utils/BufferGeometryUtils.js";
 import type { Quality } from "./effects";
 
@@ -31,7 +34,7 @@ export const culturalPalettes: Record<
   gateway: ["#ac9273", "#d1b48a", "#786650"],
   penjor: ["#b88a4c", "#e2c68d", "#72805a"],
   foliage: ["#60372a", "#b18a51", "#815641"],
-  jepun: ["#fff2da", "#dfb456", "#d3c2a7"],
+  jepun: ["#ffffff", "#dfb456", "#d3c2a7"],
 };
 /** Original stylised sculptures, not scans or replicas of ceremonial objects.
  * Three material buckets keep each complete sculpture to at most three draw calls.
@@ -45,6 +48,12 @@ export function makeCulturalGeometry(symbol: CulturalSymbol, quality: Quality) {
     // Non-indexed triangles make boxes, extrusions, tubes and petal surfaces compatible.
     const triangles = geometry.index ? geometry.toNonIndexed() : geometry;
     if (triangles !== geometry) geometry.dispose();
+    if (!triangles.getAttribute("color")) {
+      const colors = new Float32Array(
+        triangles.getAttribute("position").count * 3,
+      ).fill(1);
+      triangles.setAttribute("color", new Float32BufferAttribute(colors, 3));
+    }
     triangles.clearGroups();
     buckets[material].push(triangles);
   };
@@ -56,7 +65,14 @@ export function makeCulturalGeometry(symbol: CulturalSymbol, quality: Quality) {
     h: number,
     d: number,
     material = 0,
-  ) => add(new BoxGeometry(w, h, d).translate(x, y, z), material);
+  ) =>
+    add(
+      (quality === "low"
+        ? new BoxGeometry(w, h, d)
+        : new RoundedBoxGeometry(w, h, d, 1, Math.min(w, h, d, 0.03) * 0.18)
+      ).translate(x, y, z),
+      material,
+    );
   const extrude = (shape: Shape, depth: number, material = 0, z = 0) => {
     const g = new ExtrudeGeometry(shape, {
       depth,
@@ -88,30 +104,93 @@ export function makeCulturalGeometry(symbol: CulturalSymbol, quality: Quality) {
     angle: number,
     material: number,
     z = 0.04,
+    lobed = false,
   ) => {
     const s = new Shape();
     s.moveTo(0, 0);
-    s.bezierCurveTo(
-      -width,
-      length * 0.25,
-      -width * 0.55,
-      length * 0.8,
-      0,
-      length,
-    );
-    s.bezierCurveTo(
-      width * 0.8,
-      length * 0.72,
-      width * 0.6,
-      length * 0.2,
-      0,
-      0,
-    );
+    if (lobed) {
+      s.bezierCurveTo(
+        -width * 0.9,
+        length * 0.1,
+        -width * 1.1,
+        length * 0.28,
+        -width * 0.7,
+        length * 0.36,
+      );
+      s.bezierCurveTo(
+        -width * 1.25,
+        length * 0.38,
+        -width * 0.8,
+        length * 0.58,
+        -width * 0.4,
+        length * 0.62,
+      );
+      s.bezierCurveTo(
+        -width * 0.8,
+        length * 0.75,
+        -width * 0.4,
+        length * 0.88,
+        width * 0.15,
+        length,
+      );
+      s.bezierCurveTo(
+        width * 0.7,
+        length * 0.8,
+        width * 0.95,
+        length * 0.8,
+        width * 0.55,
+        length * 0.64,
+      );
+      s.bezierCurveTo(
+        width * 1.1,
+        length * 0.55,
+        width * 0.9,
+        length * 0.45,
+        width * 0.6,
+        length * 0.35,
+      );
+      s.bezierCurveTo(width, length * 0.2, width * 0.4, length * 0.1, 0, 0);
+    } else {
+      s.bezierCurveTo(
+        -width,
+        length * 0.25,
+        -width * 0.55,
+        length * 0.8,
+        0,
+        length,
+      );
+      s.bezierCurveTo(
+        width * 0.8,
+        length * 0.72,
+        width * 0.6,
+        length * 0.2,
+        0,
+        0,
+      );
+    }
     const g = new ExtrudeGeometry(s, {
       depth: 0.012,
-      bevelEnabled: false,
-      curveSegments: detail / 2,
+      bevelEnabled: quality !== "low",
+      bevelSize: 0.0015,
+      bevelThickness: 0.0015,
+      bevelSegments: 1,
+      curveSegments: lobed
+        ? quality === "high"
+          ? 4
+          : quality === "medium"
+            ? 3
+            : 2
+        : detail / 2,
     });
+    const vertices = g.getAttribute("position");
+    for (let i = 0; i < vertices.count; i++) {
+      const t = vertices.getY(i) / length;
+      vertices.setZ(
+        i,
+        vertices.getZ(i) + Math.sin(t * Math.PI) * 0.014 + t * t * 0.012,
+      );
+    }
+    g.computeVertexNormals();
     g.rotateZ(angle).translate(x, y, z);
     add(g, material);
   };
@@ -249,7 +328,7 @@ export function makeCulturalGeometry(symbol: CulturalSymbol, quality: Quality) {
     frame.bezierCurveTo(0.3, -0.49, 0.46, -0.25, 0.43, 0.05);
     frame.bezierCurveTo(0.42, 0.3, 0.24, 0.48, 0, 0.48);
     const aperture = new Path();
-    aperture.absellipse(0, 0, 0.255, 0.335, 0, Math.PI * 2, true);
+    aperture.absellipse(0, 0, 0.28, 0.36, 0, Math.PI * 2, true);
     frame.holes.push(aperture);
     extrude(frame, 0.075);
     for (const side of [-1, 1]) {
@@ -276,13 +355,26 @@ export function makeCulturalGeometry(symbol: CulturalSymbol, quality: Quality) {
           side * (-Math.PI / 2 + theta * 0.9),
           i % 2 ? 0 : 2,
           0.02,
+          true,
         );
         if (quality !== "low")
-          leaf(x, y, 0.1, 0.03, side * (-0.5 + theta), 1, 0.063);
+          leaf(x, y, 0.1, 0.03, side * (-0.5 + theta), 1, 0.063, true);
+        if (i === 1 || i === 4) {
+          const scroll = Array.from({ length: 15 }, (_, j) => {
+            const a = (j / 14) * Math.PI * 2.15,
+              r = 0.055 * (1 - j / 18);
+            return [
+              x + side * (0.025 + Math.cos(a) * r),
+              y + Math.sin(a) * r,
+              0.073,
+            ];
+          });
+          tube(scroll, 0.0045, 1);
+        }
       }
     }
-    leaf(0, 0.37, 0.2, 0.07, 0, 0);
-    leaf(0, -0.37, 0.17, 0.065, Math.PI, 0);
+    leaf(0, 0.37, 0.2, 0.07, 0, 0, 0.04, true);
+    leaf(0, -0.37, 0.17, 0.065, Math.PI, 0, 0.04, true);
   } else {
     // Five overlapping, cupped frangipani petals. An off-centre gap between
     // two tips is the camera passage; the flower's golden throat stays intact.
@@ -296,6 +388,7 @@ export function makeCulturalGeometry(symbol: CulturalSymbol, quality: Quality) {
       columns = Math.max(6, detail / 2);
     for (let petal = 0; petal < 5; petal++) {
       const positions: number[] = [],
+        colors: number[] = [],
         uvs: number[] = [],
         indices: number[] = [];
       const angle = (petal * Math.PI * 2) / 5 + 0.2;
@@ -316,6 +409,11 @@ export function makeCulturalGeometry(symbol: CulturalSymbol, quality: Quality) {
               v * v * 0.045 +
               v * u * 0.035,
           );
+          const color = new Color("#dfb456").lerp(
+            new Color("#fff5e4"),
+            smootherstep((u - 0.02) / 0.56),
+          );
+          colors.push(color.r, color.g, color.b);
           uvs.push(u, col / columns);
         }
       }
@@ -328,32 +426,10 @@ export function makeCulturalGeometry(symbol: CulturalSymbol, quality: Quality) {
       const g = new BufferGeometry();
       g.setAttribute("position", new Float32BufferAttribute(positions, 3));
       g.setAttribute("uv", new Float32BufferAttribute(uvs, 2));
+      g.setAttribute("color", new Float32BufferAttribute(colors, 3));
       g.setIndex(indices);
       g.computeVertexNormals();
-      // The first radial strips form a warm centre without a separate decal.
-      const triangles = g.toNonIndexed();
-      g.dispose();
-      const center = triangles.clone(),
-        ivory = triangles.clone();
-      triangles.dispose();
-      const split = Math.max(1, Math.floor(rows * 0.2)) * columns * 6;
-      for (const [part, start, end, material] of [
-        [center, 0, split, 1],
-        [ivory, split, ivory.getAttribute("position").count, 0],
-      ] as const) {
-        for (const name of ["position", "normal", "uv"]) {
-          const a = part.getAttribute(name);
-          part.setAttribute(
-            name,
-            new Float32BufferAttribute(
-              a.array.slice(start * a.itemSize, end * a.itemSize),
-              a.itemSize,
-            ),
-          );
-        }
-        part.setDrawRange(0, Infinity);
-        add(part, material);
-      }
+      add(g, 0);
     }
     // Back-side botanical veins accent the sculpted surfaces without closing gaps.
     for (let i = 0; i < 5; i++) {
