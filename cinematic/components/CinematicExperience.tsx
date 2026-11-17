@@ -82,8 +82,15 @@ export default function CinematicExperience() {
       media.removeEventListener("change", change);
     };
   }, []);
+  useEffect(() => {
+    if (staticMode) setReady(false);
+  }, [staticMode]);
   const onReady = useCallback(() => setReady(true), []);
   const onFailure = useCallback(() => {
+    const active =
+      document.querySelector<HTMLElement>(".experience")?.dataset.chapter;
+    pendingSection.current =
+      anchors[Math.min(5, Math.max(0, Number(active) || 0))];
     setFailed(true);
     setCanAnimate(false);
     setStaticMode(true);
@@ -146,7 +153,9 @@ export default function CinematicExperience() {
                 className="chapter-anchor"
                 id={id}
                 key={id}
-                style={{ top: `${i === 0 ? 0 : i * 100 + 28}svh` }}
+                style={{
+                  top: `calc(var(--chapter-step) * ${i === 0 ? 0 : i + 0.28})`,
+                }}
               />
             ))}
           </div>
@@ -331,7 +340,7 @@ export default function CinematicExperience() {
                 target="_blank"
                 rel="noreferrer"
               >
-                Request a table <span aria-hidden="true">↗</span>
+                Book a table <span aria-hidden="true">↗</span>
               </a>
               <div className="address-art">
                 <span className="street-number">150</span>

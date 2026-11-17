@@ -9,10 +9,10 @@ export default function ReservationActions({
   return (
     <div className={`reservation-actions ${className}`}>
       <a className="button" href={BOOKING} target="_blank" rel="noreferrer">
-        Request a table <span aria-hidden="true">↗</span>
+        Book a table <span aria-hidden="true">↗</span>
       </a>
       <a className="button button-secondary" href={FOOD_MENU}>
-        View menu & prices <span aria-hidden="true">→</span>
+        View menu <span aria-hidden="true">→</span>
       </a>
     </div>
   );

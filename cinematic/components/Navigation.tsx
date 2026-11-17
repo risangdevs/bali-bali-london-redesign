@@ -118,7 +118,7 @@ export default function Navigation({
           target="_blank"
           rel="noreferrer"
         >
-          Request a table <span aria-hidden="true">↗</span>
+          Book a table <span aria-hidden="true">↗</span>
         </a>
       </div>
       <nav className="mobile-booking-bar" aria-label="Quick booking and menu">

@@ -1,6 +1,10 @@
 import { Vector3 } from "three";
-export type JourneyState = { progress: number; invalidate?: () => void };
-export const journey: JourneyState = { progress: 0 };
+export type JourneyState = {
+  progress: number;
+  time: number;
+  invalidate?: () => void;
+};
+export const journey: JourneyState = { progress: 0, time: 0 };
 // A single reversible track. Portal sits at z=-13; the lens physically crosses it.
 export const cameraStops = [
   { t: 0, position: [0, 1, 13], target: [0, 0, 0] },
@@ -18,6 +22,7 @@ export const cameraStops = [
   { t: 1, position: [0, 1, -57], target: [0, 0, -65] },
 ];
 export function sampleCamera(p: number, position: Vector3, target: Vector3) {
+  p = Math.min(1, Math.max(0, p));
   const i = Math.max(
     0,
     cameraStops.findIndex(

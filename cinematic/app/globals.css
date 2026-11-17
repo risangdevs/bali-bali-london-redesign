@@ -170,8 +170,11 @@ button:focus-visible {
 .scroll-track {
   position: relative;
 }
+.cinematic-mode {
+  --chapter-step: 100svh;
+}
 .cinematic-mode .scroll-track {
-  height: 700svh;
+  height: calc(100svh + var(--chapter-step) * 6);
 }
 .stage {
   position: sticky;
@@ -1158,8 +1161,7 @@ button:focus-visible {
   .hero-bottom .intro {
     margin-bottom: 15px;
   }
-  /* The persistent mobile bar owns these actions, including in reading mode. */
-  .hero-actions,
+  /* Contextual booking at the end; hero actions also remain directly available. */
   .booking-actions,
   .evening-scene > .button {
     display: none;
@@ -1581,5 +1583,23 @@ button:focus-visible {
   }
   .menu-rice-table {
     padding: 24px;
+  }
+}
+
+/* A shorter mobile camera journey keeps native touch scrolling responsive. */
+@media (max-width: 767px) {
+  .cinematic-mode {
+    --chapter-step: 85svh;
+  }
+  .hero-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  .hero-actions .button {
+    min-width: 0;
+    min-height: 44px;
+    padding: 10px 14px;
+    gap: 14px;
   }
 }

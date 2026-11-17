@@ -9,11 +9,13 @@ An immersive six-scene exploration added alongside concepts A, B and C.
 5. **Motifs:** Ceramic circles, a narrow brass rim, quiet table-like rules, large year and street-number typography.
 6. **Hero:** An oversized BALI BALI wordmark across a close view of the restaurant's saté, with a persistent booking link and a small family-run/halal seal.
 7. **Scenes:** First taste → movement between dishes and through a ceramic portal → overhead sharing table → heritage photo study → West End address study → booking and practical details.
-8. **CTAs:** Burgundy request buttons open the official restaurant booking section, with confirmation by reply explained nearby. Menu links open an HTML selection with verified prices and a link to the complete PDF. Phone and directions remain directly available.
+8. **CTAs:** Burgundy Book a Table buttons open the official restaurant booking section, with confirmation by reply explained nearby. Menu links open an HTML selection with verified prices and a link to the complete PDF. Phone and directions remain directly available.
 9. **Mobile and accessibility:** Lower graphics density, native touch scrolling, simple mobile navigation, automatic reduced-motion photographic edition, semantic content, inert inactive chapters, keyboard focus indicators and WebGL fallback. Explore offers a continuous reading edition; switching preserves the current section. Direct hours and calling shortcuts stay visible.
 
-**Strongest aspect:** The camera creates a spatial food journey, with independent navigation and clear booking access.
+**Strongest aspect:** The camera and depth-aware shader handoffs create a reversible spatial food journey, with independent navigation and clear booking access.
 
 **Current limitation:** Authentic interior/street assets and high-resolution food originals are still needed to realise the full photographic ambition. No substitute storefront or historical imagery is fabricated.
 
 Source and run instructions: [cinematic/README.md](cinematic/README.md).
+
+**WebGL upgrade:** Five reusable render-to-texture handoffs, depth-aware occlusion, aspect-preserving photo relief, GPU steam, dish-local heat refraction and timeline-sampled warm lighting enhance the existing composition. Three adaptive quality tiers preserve the photographic fallback and direct booking access. See [the implementation report](cinematic/WEBGL_UPGRADE.md).

@@ -1,22 +1,32 @@
 "use client";
 import { Suspense, useRef } from "react";
-import { useFrame } from "@react-three/fiber";
+import useSceneSample from "./useSceneSample";
+import { type Quality } from "@/lib/effects";
 import { Group, MathUtils } from "three";
-import { journey } from "@/lib/journey";
 import DepthLayer from "./DepthLayer";
-export default function FoodScene({ mobile }: { mobile: boolean }) {
+export default function FoodScene({
+  mobile,
+  quality,
+}: {
+  mobile: boolean;
+  quality: Quality;
+}) {
   return (
     <>
       <DepthLayer
+        quality={quality}
+        hot
         src="sate.webp"
-        position={[3.3, -0.3, 0]}
-        size={[10, 8]}
+        position={[mobile ? 0.9 : 3.3, mobile ? -0.5 : -0.3, 0]}
+        size={mobile ? [7.8, 6.24] : [10, 8]}
         round={1}
         rotation={[0, -0.12, -0.12]}
         end={0.2}
       />
       <Suspense fallback={null}>
         <DepthLayer
+          quality={quality}
+          hot
           src="rendang.webp"
           position={[-4, -0.7, -5]}
           size={[5.5, 4.4]}
@@ -26,6 +36,7 @@ export default function FoodScene({ mobile }: { mobile: boolean }) {
           end={0.3}
         />
         <DepthLayer
+          quality={quality}
           src="vegetables.webp"
           position={[4.5, 0.4, -8]}
           size={[5.3, 4.2]}
@@ -36,6 +47,7 @@ export default function FoodScene({ mobile }: { mobile: boolean }) {
         />
         {!mobile && (
           <DepthLayer
+            quality={quality}
             src="rice.webp"
             position={[-3.9, 2, -10]}
             size={[4, 3.2]}
@@ -49,17 +61,23 @@ export default function FoodScene({ mobile }: { mobile: boolean }) {
     </>
   );
 }
-export function SharingScene({ mobile }: { mobile: boolean }) {
+export function SharingScene({
+  mobile,
+  quality,
+}: {
+  mobile: boolean;
+  quality: Quality;
+}) {
   const table = useRef<Group>(null);
-  useFrame(() => {
+  useSceneSample((p) => {
     if (table.current)
       table.current.rotation.x =
-        ((1 - MathUtils.smoothstep(journey.progress, 0.34, 0.47)) * Math.PI) /
-        2;
+        ((1 - MathUtils.smoothstep(p, 0.34, 0.47)) * Math.PI) / 2;
   });
   return (
     <group ref={table} position={[0, 0, -26]}>
       <DepthLayer
+        quality={quality}
         src="sharing.webp"
         position={[0, 0.02, 0]}
         size={[7, 5.6]}
@@ -67,6 +85,8 @@ export function SharingScene({ mobile }: { mobile: boolean }) {
         round={1}
       />
       <DepthLayer
+        quality={quality}
+        hot
         src="sate.webp"
         position={[-5, 0.1, 1]}
         size={[4, 3.2]}
@@ -74,6 +94,8 @@ export function SharingScene({ mobile }: { mobile: boolean }) {
         round={1}
       />
       <DepthLayer
+        quality={quality}
+        hot
         src="rendang.webp"
         position={[4.5, 0.14, -1.8]}
         size={[4, 3.2]}
@@ -82,6 +104,7 @@ export function SharingScene({ mobile }: { mobile: boolean }) {
       />
       {!mobile && (
         <DepthLayer
+          quality={quality}
           src="vegetables.webp"
           position={[1, 0.12, 4.1]}
           size={[3.4, 2.7]}

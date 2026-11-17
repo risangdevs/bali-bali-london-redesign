@@ -16,7 +16,7 @@ export default function ScrollDirector({
   useLayoutEffect(() => {
     if (!enabled) return;
     const lenis = new Lenis({
-      duration: 1.15,
+      duration: window.innerWidth < 768 ? 0.8 : 1.15,
       smoothWheel: true,
       syncTouch: false,
       allowNestedScroll: true,
@@ -68,7 +68,7 @@ export default function ScrollDirector({
           trigger: ".scroll-track",
           start: "top top",
           end: "bottom bottom",
-          scrub: 0.65,
+          scrub: window.innerWidth < 768 ? 0.3 : 0.65,
           invalidateOnRefresh: true,
         },
       },

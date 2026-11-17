@@ -68,7 +68,7 @@ export default function MenuPage() {
       </aside>
       <div className="menu-booking">
         <a className="button" href={BOOKING} target="_blank" rel="noreferrer">
-          Request a table ↗
+          Book a table ↗
         </a>
         <p>
           We’ll reply to confirm your table. For a same-day visit,{" "}
