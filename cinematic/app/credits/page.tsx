@@ -15,10 +15,6 @@ export default function CreditsPage() {
       <header>
         <p className="eyebrow">Bali Bali · Asset credits</p>
         <h1>Craft and credit.</h1>
-        <p>
-          The loading images on the page are renders of the credited 3D models
-          below.
-        </p>
       </header>
       <section aria-labelledby="gateway-credit">
         <h2 id="gateway-credit">Candi Bentar</h2>

@@ -7,11 +7,10 @@
     "build": "next build --webpack",
     "typecheck": "tsc --noEmit",
     "export:pages": "node scripts/export-pages.mjs",
-    "test": "node scripts/check-camera.cjs && node scripts/check-effects.cjs && node scripts/check-cultural-geometry.cjs && node scripts/check-gateway.cjs && node scripts/check-flower.cjs && node scripts/check-penjor.cjs && node scripts/check-photos.cjs && node scripts/check-interludes.cjs",
+    "test": "node scripts/check-camera.cjs && node scripts/check-effects.cjs && node scripts/check-cultural-geometry.cjs && node scripts/check-gateway.cjs && node scripts/check-flower.cjs && node scripts/check-penjor.cjs && node scripts/check-photos.cjs",
     "assets:gateway": "node scripts/prepare-gateway.mjs",
     "assets:flower": "node scripts/prepare-flower.mjs",
-    "assets:penjor": "node scripts/prepare-penjor.mjs",
-    "verify:pages": "node scripts/check-editorial-export.cjs"
+    "assets:penjor": "node scripts/prepare-penjor.mjs"
   },
   "dependencies": {
     "@react-three/drei": "^10.7.0",

@@ -1,11 +1,5 @@
 # Concept D WebGL upgrade
 
-## Current runtime — editorial sections and model interludes
-
-The home page now uses normal-flow reading sections and complete rectangular HTML photos, with four separate 3D stages. `PageDirector`, `SculptureInterlude`, `SculptureCanvas` and `lib/interlude.ts` replace the mounted global camera/photo overlay pipeline. Each model is fitted completely inside its stage and fades before its close passage. Visit details scroll naturally; chapter progress is integrated into the top navigation. Rendered posters cover loading, reduced motion and graphics failure. The source/licence of each imported model is unchanged. See `README.md` for current architecture and verification.
-
-The sections below describe the earlier overlay prototype and its historical refinements. Its camera/effect files remain reference code and tests; they are not mounted by the current home page.
-
 Implemented in the existing Next.js project. The six chapters, Cormorant Garamond/DM Sans typography, ivory/burgundy/terracotta/brass palette, editorial layouts, authentic food photographs and original booking/menu destinations are retained. Concepts A–C are unchanged.
 
 ## Audit and integration
