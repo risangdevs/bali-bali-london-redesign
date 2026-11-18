@@ -8,10 +8,12 @@ export default function Navigation({
   staticMode,
   canAnimate,
   onModeChange,
+  chapter = 0,
 }: {
   staticMode: boolean;
   canAnimate: boolean;
   onModeChange: () => void;
+  chapter?: number;
 }) {
   const [open, setOpen] = useState(false);
   const reduced = useReducedMotion();
@@ -54,12 +56,16 @@ export default function Navigation({
             <button
               ref={toggle}
               className="menu-toggle"
+              aria-label={open ? "Close navigation" : "Explore"}
               aria-expanded={open}
               aria-controls="site-navigation"
               onClick={() => setOpen(!open)}
             >
               <span aria-hidden="true">{open ? "×" : "+"}</span>
               {open ? "Close" : "Explore"}
+              <span className="navigation-count" aria-hidden="true">
+                {String(chapter + 1).padStart(2, "0")} / 06
+              </span>
             </button>
             {open && (
               <motion.nav
@@ -99,14 +105,19 @@ export default function Navigation({
                       onModeChange();
                     }}
                   >
-                    {staticMode ? "Watch the journey" : "Read the full page"}
+                    {staticMode ? "Enable 3D motion" : "Pause 3D motion"}
                   </button>
                 )}
               </motion.nav>
             )}
           </div>
-          <a className="utility-link" href="#visit">
-            Hours & directions
+          <a
+            className="utility-link"
+            href="#visit"
+            aria-label="Hours & directions"
+          >
+            <span className="utility-label-long">Hours & directions</span>
+            <span className="utility-label-short">Visit</span>
           </a>
           <a className="utility-link" href="tel:+442078362644">
             Call

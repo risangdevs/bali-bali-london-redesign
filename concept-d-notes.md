@@ -40,3 +40,8 @@ The gateway now uses the complete Candi Bentar scan by nusaheritage.id, Sketchfa
 - Imported the selected CC0 Frangipani Flower by elkid (BlendSwap 14800), retaining five curved/thick petals and original photographed texture. Adaptive local GLBs are 616/179/60 KB; measured outer-petal passage [0.20, 0.42] keeps the centre intact. Credits and actual-triangle camera checks updated.
 
 - Imported the selected Balinese Penjor by alterego.visual (CC BY 4.0), preserving the full bow/ornaments and original materials, with 2.40/1.54/1.00 MB local tiers. Corrected chapter photo timings, portrait placement/aspect and close-camera/backface fades; sharing parent transforms now sample before photo framing. Camera and photo tests updated.
+
+
+## Current layout — editorial sections and dedicated models
+
+Replaced the fixed reading panels and masked food planes with normal page sections: desktop split copy/photo, mobile heading/photo/copy, complete 5:4 rectangular photographs. Visit details and footer scroll naturally. Candi Bentar remains the first, frontally centred asset; penjor, foliage and jepun have separate stages between chapters. Each model is fully framed before its approach and whole-stage fade, with a rendered poster while loading or motion is paused. Chapter progress is integrated into the top navigation, with one persistent mobile booking/menu dock. The imported model sources and licences are retained. Earlier entries above document previous iterations.
