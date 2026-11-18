@@ -1,5 +1,4 @@
 import {
-  BoxGeometry,
   BufferGeometry,
   CatmullRomCurve3,
   Color,
@@ -15,23 +14,17 @@ import {
   TubeGeometry,
   Vector3,
 } from "three";
-import { RoundedBoxGeometry } from "three/addons/geometries/RoundedBoxGeometry.js";
 import { smootherstep } from "./motion";
 import { mergeGeometries } from "three/addons/utils/BufferGeometryUtils.js";
 import type { Quality } from "./effects";
 
-export const culturalSymbols = [
-  "gateway",
-  "penjor",
-  "foliage",
-  "jepun",
-] as const;
-export type CulturalSymbol = (typeof culturalSymbols)[number];
+export const culturalSymbols = ["penjor", "foliage", "jepun"] as const;
+export type ProceduralSymbol = (typeof culturalSymbols)[number];
+export type CulturalSymbol = "gateway" | ProceduralSymbol;
 export const culturalPalettes: Record<
-  CulturalSymbol,
+  ProceduralSymbol,
   [string, string, string]
 > = {
-  gateway: ["#ac9273", "#d1b48a", "#786650"],
   penjor: ["#b88a4c", "#e2c68d", "#72805a"],
   foliage: ["#60372a", "#b18a51", "#815641"],
   jepun: ["#ffffff", "#dfb456", "#d3c2a7"],
@@ -40,7 +33,10 @@ export const culturalPalettes: Record<
  * Three material buckets keep each complete sculpture to at most three draw calls.
  * The local XY plane is the passage; all apertures stay open at every detail tier.
  */
-export function makeCulturalGeometry(symbol: CulturalSymbol, quality: Quality) {
+export function makeCulturalGeometry(
+  symbol: ProceduralSymbol,
+  quality: Quality,
+) {
   const detail = quality === "high" ? 24 : quality === "medium" ? 12 : 6;
   const radial = quality === "high" ? 8 : quality === "medium" ? 6 : 4;
   const buckets: BufferGeometry[][] = [[], [], []];
@@ -57,22 +53,6 @@ export function makeCulturalGeometry(symbol: CulturalSymbol, quality: Quality) {
     triangles.clearGroups();
     buckets[material].push(triangles);
   };
-  const box = (
-    x: number,
-    y: number,
-    z: number,
-    w: number,
-    h: number,
-    d: number,
-    material = 0,
-  ) =>
-    add(
-      (quality === "low"
-        ? new BoxGeometry(w, h, d)
-        : new RoundedBoxGeometry(w, h, d, 1, Math.min(w, h, d, 0.03) * 0.18)
-      ).translate(x, y, z),
-      material,
-    );
   const extrude = (shape: Shape, depth: number, material = 0, z = 0) => {
     const g = new ExtrudeGeometry(shape, {
       depth,
@@ -194,71 +174,7 @@ export function makeCulturalGeometry(symbol: CulturalSymbol, quality: Quality) {
     g.rotateZ(angle).translate(x, y, z);
     add(g, material);
   };
-  if (symbol === "gateway") {
-    // Candi bentar: matching stepped halves, a tall uninterrupted central split.
-    for (const side of [-1, 1]) {
-      const s = new Shape();
-      const points = [
-        [0.13, -0.48],
-        [0.13, 0.5],
-        [0.2, 0.5],
-        [0.2, 0.39],
-        [0.27, 0.39],
-        [0.27, 0.24],
-        [0.34, 0.24],
-        [0.34, 0.08],
-        [0.42, 0.08],
-        [0.42, -0.1],
-        [0.5, -0.1],
-        [0.5, -0.3],
-        [0.57, -0.3],
-        [0.57, -0.48],
-      ];
-      points.forEach(([x, y], i) =>
-        i ? s.lineTo(x * side, y) : s.moveTo(x * side, y),
-      );
-      s.closePath();
-      extrude(s, 0.15);
-      box(side * 0.35, -0.48, 0, 0.49, 0.055, 0.22, 2);
-      // Cornices and recessed panels give depth to the silhouette from either side.
-      for (const [y, width] of [
-        [-0.31, 0.4],
-        [-0.11, 0.32],
-        [0.07, 0.24],
-        [0.23, 0.17],
-        [0.38, 0.1],
-      ]) {
-        box(side * (0.13 + width / 2), y, 0, width, 0.026, 0.2, 1);
-        for (const z of [-0.081, 0.081]) {
-          box(
-            side * (0.16 + width / 2),
-            y + 0.06,
-            z,
-            Math.max(0.025, width - 0.065),
-            0.058,
-            0.012,
-            2,
-          );
-        }
-      }
-      for (const z of [-0.097, 0.097]) {
-        tube(
-          [
-            [side * 0.151, -0.4, z],
-            [side * 0.151, 0, z],
-            [side * 0.151, 0.45, z],
-          ],
-          0.007,
-          1,
-        );
-        for (let i = 0; i < 4; i++) {
-          const y = -0.24 + i * 0.17,
-            x = side * (0.41 - i * 0.075);
-          leaf(x, y, 0.11, 0.035, side * -0.65, 1, z);
-        }
-      }
-    }
-  } else if (symbol === "penjor") {
+  if (symbol === "penjor") {
     // An ornamental bamboo bow: no shrine, deity, sacred text or ritual offering.
     const curve = new CubicBezierCurve3(
       new Vector3(-0.42, -0.5, 0),

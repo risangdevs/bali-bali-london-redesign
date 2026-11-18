@@ -1,0 +1,45 @@
+{
+  "title": "Candi Bentar",
+  "author": "nusaheritage.id",
+  "authorUrl": "https://sketchfab.com/nusaheritage",
+  "source": "https://sketchfab.com/3d-models/candi-bentar-9051dc244c984da8a1a4ec7e90e1a567",
+  "license": "CC BY 4.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+  "modifications": "Removed detached scan fragments and peripheral vegetation/ground; normalised the mesh around its passage; simplified geometry and resized/recompressed textures.",
+  "sourceTriangles": 123538,
+  "normalisation": {
+    "origin": [
+      -0.134,
+      0.7713159918785095,
+      -0.54
+    ],
+    "height": 0.4747687578201294
+  },
+  "gate": [
+    0,
+    0.06041679796537439
+  ],
+  "variants": {
+    "high": {
+      "file": "candi-bentar-high.glb",
+      "triangles": 60095,
+      "vertices": 50534,
+      "textureResolution": 1536,
+      "bytes": 5365960
+    },
+    "medium": {
+      "file": "candi-bentar-medium.glb",
+      "triangles": 38629,
+      "vertices": 37775,
+      "textureResolution": 1024,
+      "bytes": 2830528
+    },
+    "low": {
+      "file": "candi-bentar-low.glb",
+      "triangles": 27382,
+      "vertices": 30078,
+      "textureResolution": 768,
+      "bytes": 1951040
+    }
+  }
+}

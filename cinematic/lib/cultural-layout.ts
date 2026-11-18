@@ -1,4 +1,5 @@
 import { Euler, Vector3 } from "three";
+import gateway from "./gateway-model.json";
 import type { CulturalSymbol } from "./cultural-geometry";
 
 export type CulturalLayout = {
@@ -13,10 +14,10 @@ export type CulturalLayout = {
 /** Mesh transforms and camera openings share one source. Gates are in sculpture
  * coordinates: central split, beneath the bamboo bow, carved aperture, petal gap.
  */
-export function culturalLayout(
-  symbol: CulturalSymbol,
+export function culturalLayout<T extends CulturalSymbol>(
+  symbol: T,
   mobile: boolean,
-): CulturalLayout {
+): CulturalLayout & { symbol: T } {
   const layouts: Record<CulturalSymbol, CulturalLayout> = {
     gateway: {
       symbol,
@@ -25,7 +26,7 @@ export function culturalLayout(
       rotation: [0, -0.09, 0],
       from: 0.085,
       to: 0.375,
-      gate: [0, 0],
+      gate: [gateway.gate[0], gateway.gate[1]],
     },
     penjor: {
       symbol,
@@ -55,7 +56,7 @@ export function culturalLayout(
       gate: [0.19, 0.42],
     },
   };
-  return layouts[symbol];
+  return layouts[symbol] as CulturalLayout & { symbol: T };
 }
 export function culturalGate(layout: CulturalLayout) {
   const rotation = new Euler(...layout.rotation);

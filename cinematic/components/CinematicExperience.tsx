@@ -17,6 +17,7 @@ import {
   asset,
   BOOKING,
   FOOD_MENU,
+  HOME,
   DIRECTIONS,
   RIJSTTAFEL_PRICE,
   menuSelection,
@@ -425,6 +426,7 @@ export default function CinematicExperience() {
               </p>
               <footer>
                 <span>© 2026 BALI BALI · ALL MEAT HALAL</span>
+                <a href={`${HOME}credits/`}>3D asset credits</a>
                 <a
                   href="https://www.balibalirestaurant.com/"
                   target="_blank"

@@ -93,3 +93,11 @@ Image fades use quintic envelopes and wider edge feathers, transparent photo mes
 Section clicks use distance-based, interruptible Lenis motion with target preparation, retargeting, focus on arrival and browser history support. Intermediate copy fades during travel. One Lenis/GSAP ticker still owns the journey; ScrollTrigger follows it directly, removing the former second smoothing delay. Existing reduced-motion/static fallbacks and ordinary booking/menu links are preserved.
 
 Verification adds camera velocity continuity and uninterrupted passage-speed checks, navigation timing and reversible photo envelopes, compositor boundary velocity checks, finite vertex colour attributes and the existing lens-clearance/quality/disposal tests. Production build and desktop/mobile preview checks cover long clicks, rapid retargeting, manual interruption, history navigation and destination focus.
+
+## Licensed gateway scan integration
+
+Replaced the procedural gateway with the user-selected **Candi Bentar** scan by **nusaheritage.id** (Sketchfab model `9051dc244c984da8a1a4ec7e90e1a567`), licensed CC BY 4.0. The 62.4 MB downloaded source is prepared offline into 5.4/2.8/2.0 MB High/Medium/Low GLBs with 60,095/38,629/27,382 triangles and embedded 1536/1024/768 px texture atlases. Preparation removes detached scan debris and peripheral vegetation/ground, retains the paired gate, carvings and stairs, and measures the actual open passage for the existing camera route.
+
+The opening food scene does not wait for the nested model load. Deferred tier changes retain the current asset while fetching its replacement. Source geometry and textures have counted ownership with final disposal/cache cleanup; cloned instance materials carry the existing fade and depth-write policy. All assets are served locally through the existing Pages base path. `/credits/` and the visit footer provide creator/source/licence attribution and disclose modifications. The other three sculptures, food imagery, section navigation and booking/menu destinations are preserved.
+
+Camera tests now raycast the actual prepared GLB triangles on desktop/mobile at every tier. Asset tests verify embedded textures, file/detail budgets, both solid halves and the open gap, source identity, licence and attribution. Production export also generates the credits route.

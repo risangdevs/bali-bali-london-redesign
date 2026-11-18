@@ -87,3 +87,19 @@ The camera now uses continuous Hermite interpolation between compositions instea
 All same-page chapter links, including Explore and Hours & directions, use one delegated Lenis navigation handler. Duration scales with distance (up to 3.6 seconds), follows quintic easing, and remains interruptible by scrolling, touch or navigation keys. New clicks replace the current destination. Intermediate chapter copy fades during longer journeys; the destination receives focus on arrival. Browser Back/Forward follows the same route. Target scenes prepare at click time, with the remaining food image cache warmed in advance. The ordinary photographic edition retains native anchor navigation.
 
 Stone cornices have rounded edges on Medium/High; leaves curl in depth; the carved frame has lobed foliage and scroll details. The jepun petals use a continuous vertex-colour gradient instead of a hard gold/ivory seam. Each sculpture still uses three material groups and fewer than 30,000 vertices at High. No model, image or dependency was added.
+
+## Imported Candi Bentar gateway
+
+The gateway now uses **Candi Bentar by nusaheritage.id**, downloaded from https://sketchfab.com/3d-models/candi-bentar-9051dc244c984da8a1a4ec7e90e1a567 under **CC BY 4.0**. The source is a scan of a complete split gateway with its stairs, not the restaurant entrance. Creator/source/licence and modifications are shown on `/credits/`, linked from the visit footer, and recorded in `public/models/ATTRIBUTION.txt`. Penjor, foliage and jepun remain the existing procedural assets.
+
+`components/GatewayModel.tsx` loads local GLB files, clones instance fade materials and counts ownership of cached geometry/textures. Cleanup disposes GPU resources and clears the loader cache after the last owner, including reading-mode switches. A nested Suspense boundary keeps the opening food scene available while the scan loads. Deferred quality changes retain the current model until the next tier is ready.
+
+`lib/gateway-model.json` records the exact source, preparation, passage position and tier statistics. `lib/cultural-layout.ts` uses that measured opening for the same reversible camera route. Camera clearance tests now use triangles decoded from the actual prepared gateway GLBs; the former procedural gateway geometry has been removed.
+
+| Tier | Triangles | Texture size per atlas | GLB bytes |
+| --- | ---: | ---: | ---: |
+| High | 60,095 | 1536 px | 5,365,960 |
+| Medium | 38,629 | 1024 px | 2,830,528 |
+| Low | 27,382 | 768 px | 1,951,040 |
+
+The 62,367,236-byte 4K source remains locally in the ignored `asset-source/candi-bentar/` folder. Rebuild with `npm run assets:gateway -- /path/to/source.glb`. The offline preparation removes disconnected scan fragments, crops peripheral vegetation/ground, normalises the mesh around its passage, simplifies with locked material boundaries, compacts vertices and recompresses embedded JPEG atlases. It uses the pinned `meshoptimizer` development dependency and existing Sharp; no external decoder or model host is needed at runtime.

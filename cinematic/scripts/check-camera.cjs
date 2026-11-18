@@ -1,3 +1,4 @@
+const gatewayGeometry = require("./gateway-mesh.cjs");
 const loadTS = require("./load-ts.cjs");
 const path = require("node:path");
 const assert = require("node:assert/strict");
@@ -101,7 +102,10 @@ for (const mobile of [false, true]) {
       );
     }
     for (const quality of ["low", "medium", "high"]) {
-      const geometry = makeCulturalGeometry(symbol, quality),
+      const geometry =
+          symbol === "gateway"
+            ? gatewayGeometry(quality)
+            : makeCulturalGeometry(symbol, quality),
         material = new MeshBasicMaterial({ side: DoubleSide });
       const mesh = new Mesh(geometry, material);
       mesh.position.fromArray(layout.position);

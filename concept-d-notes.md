@@ -29,3 +29,8 @@ The former B/A/L/I sculptures are now a split stone gateway → ornamental penjo
 ### Motion refinement
 
 Refined the four cultural sculptures with rounded stone, curved leaves, carved scrolls and gradient-coloured jepun petals. Continuous camera curves, softer image edges/fades and progress-based reading shades smooth the journey. Chapter clicks now use distance-based Lenis timing with interruption, retargeting, history navigation and destination focus; intermediate copy fades during travel.
+
+
+### Licensed Candi Bentar scan
+
+The gateway now uses the complete Candi Bentar scan by nusaheritage.id, Sketchfab `9051dc244c984da8a1a4ec7e90e1a567`, licensed CC BY 4.0. Prepared local GLB variants replace the procedural gate; the real opening drives the camera passage. Creator/source/licence and modifications appear on the credits page linked from the visit footer. The penjor, carved frame and jepun remain procedural.

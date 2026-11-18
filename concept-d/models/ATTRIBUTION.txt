@@ -1,0 +1,5 @@
+Candi Bentar by nusaheritage.id
+https://sketchfab.com/nusaheritage
+https://sketchfab.com/3d-models/candi-bentar-9051dc244c984da8a1a4ec7e90e1a567
+Licensed under CC BY 4.0: https://creativecommons.org/licenses/by/4.0/
+Changes: Removed detached scan fragments and peripheral vegetation/ground; normalised the mesh around its passage; simplified geometry and resized/recompressed textures.

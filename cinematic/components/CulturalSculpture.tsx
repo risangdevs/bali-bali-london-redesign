@@ -4,7 +4,7 @@ import { DoubleSide, Group, MeshStandardMaterial } from "three";
 import {
   culturalPalettes,
   makeCulturalGeometry,
-  type CulturalSymbol,
+  type ProceduralSymbol,
 } from "@/lib/cultural-geometry";
 import { smooth, type Quality } from "@/lib/effects";
 import useSceneSample from "./useSceneSample";
@@ -18,7 +18,7 @@ export default function CulturalSculpture({
   from,
   to,
 }: {
-  symbol: CulturalSymbol;
+  symbol: ProceduralSymbol;
   quality: Quality;
   scale: number;
   position: [number, number, number];
