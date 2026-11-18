@@ -1,13 +1,9 @@
 import {
   BufferGeometry,
   CatmullRomCurve3,
-  CubicBezierCurve3,
-  CylinderGeometry,
   ExtrudeGeometry,
   Float32BufferAttribute,
-  Matrix4,
   Path,
-  Quaternion,
   Shape,
   TubeGeometry,
   Vector3,
@@ -15,14 +11,13 @@ import {
 import { mergeGeometries } from "three/addons/utils/BufferGeometryUtils.js";
 import type { Quality } from "./effects";
 
-export const culturalSymbols = ["penjor", "foliage"] as const;
+export const culturalSymbols = ["foliage"] as const;
 export type ProceduralSymbol = (typeof culturalSymbols)[number];
-export type CulturalSymbol = "gateway" | "jepun" | ProceduralSymbol;
+export type CulturalSymbol = "gateway" | "penjor" | "jepun" | ProceduralSymbol;
 export const culturalPalettes: Record<
   ProceduralSymbol,
   [string, string, string]
 > = {
-  penjor: ["#b88a4c", "#e2c68d", "#72805a"],
   foliage: ["#60372a", "#b18a51", "#815641"],
 };
 /** Original stylised sculptures, not scans or replicas of ceremonial objects.
@@ -170,68 +165,7 @@ export function makeCulturalGeometry(
     g.rotateZ(angle).translate(x, y, z);
     add(g, material);
   };
-  if (symbol === "penjor") {
-    // An ornamental bamboo bow: no shrine, deity, sacred text or ritual offering.
-    const curve = new CubicBezierCurve3(
-      new Vector3(-0.42, -0.5, 0),
-      new Vector3(-0.65, 0.95, -0.025),
-      new Vector3(0.38, 0.8, 0.025),
-      new Vector3(0.4, 0.08, 0),
-    );
-    add(new TubeGeometry(curve, detail * 2, 0.014, radial, false));
-    for (let i = 1; i <= 10; i++) {
-      const t = i / 12,
-        point = curve.getPoint(t),
-        tangent = curve.getTangent(t);
-      const ring = new CylinderGeometry(0.018, 0.018, 0.009, radial);
-      ring.applyMatrix4(
-        new Matrix4().compose(
-          point,
-          new Quaternion().setFromUnitVectors(new Vector3(0, 1, 0), tangent),
-          new Vector3(1, 1, 1),
-        ),
-      );
-      add(ring, 1);
-      // Woven palm-leaf flourishes follow the bow and leave the centre clear.
-      if (i >= 4) {
-        const angle = -Math.atan2(tangent.x, tangent.y);
-        leaf(point.x, point.y, 0.105, 0.025, angle - 0.75, 1, 0.02);
-        leaf(point.x, point.y, 0.085, 0.024, angle + 0.8, 2, 0.025);
-      }
-    }
-    tube(
-      [
-        [0.4, 0.08, 0],
-        [0.4, -0.05, 0.01],
-        [0.4, -0.22, 0],
-      ],
-      0.004,
-      1,
-    );
-    for (let i = 0; i < 4; i++) {
-      const y = -0.02 - i * 0.045;
-      leaf(0.4, y, 0.09, 0.025, -0.9, 1);
-      leaf(0.4, y, 0.09, 0.025, 0.9, 1);
-    }
-    // A small woven diamond and separated ribbons, all beside the flight lane.
-    const diamond = new Shape();
-    diamond.moveTo(0.4, -0.2);
-    diamond.lineTo(0.455, -0.27);
-    diamond.lineTo(0.4, -0.34);
-    diamond.lineTo(0.345, -0.27);
-    diamond.closePath();
-    extrude(diamond, 0.02, 1);
-    for (let i = -1; i <= 1; i++)
-      tube(
-        [
-          [0.4 + i * 0.018, -0.33, 0],
-          [0.4 + i * 0.03, -0.4, 0.01],
-          [0.4 + i * 0.034, -0.46, 0.02],
-        ],
-        0.003,
-        i === 0 ? 2 : 1,
-      );
-  } else if (symbol === "foliage") {
+  if (symbol === "foliage") {
     // A pepatran-inspired carved botanical frame, with an open pear-shaped centre.
     const frame = new Shape();
     frame.moveTo(0, 0.48);

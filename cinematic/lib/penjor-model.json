@@ -1,0 +1,42 @@
+{
+  "title": "Balinese Penjor",
+  "author": "alterego.visual",
+  "authorUrl": "https://sketchfab.com/alterego.visual",
+  "source": "https://sketchfab.com/3d-models/balinese-penjor-7aca638e85d04c1699c04918cdc36a9e",
+  "license": "CC BY 4.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+  "modifications": "Baked original node transforms, centred and scaled the complete bamboo bow and ornaments, and simplified geometry into three web detail levels. Original material colours and ornament arrangement retained.",
+  "sourceTriangles": 110480,
+  "normalisation": {
+    "origin": [
+      -0.2906546241643735,
+      0.7648306008093666,
+      -0.00007912084283398513
+    ],
+    "height": 1.521962951973908
+  },
+  "gate": [
+    0,
+    0.02
+  ],
+  "variants": {
+    "high": {
+      "file": "penjor-high.glb",
+      "triangles": 74506,
+      "vertices": 60759,
+      "bytes": 2401700
+    },
+    "medium": {
+      "file": "penjor-medium.glb",
+      "triangles": 43012,
+      "vertices": 39773,
+      "bytes": 1541172
+    },
+    "low": {
+      "file": "penjor-low.glb",
+      "triangles": 22962,
+      "vertices": 26473,
+      "bytes": 995240
+    }
+  }
+}

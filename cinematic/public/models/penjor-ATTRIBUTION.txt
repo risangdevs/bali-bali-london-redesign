@@ -1,0 +1,5 @@
+Balinese Penjor by alterego.visual
+https://sketchfab.com/alterego.visual
+https://sketchfab.com/3d-models/balinese-penjor-7aca638e85d04c1699c04918cdc36a9e
+CC BY 4.0: https://creativecommons.org/licenses/by/4.0/
+Changes: Baked original node transforms, centred and scaled the complete bamboo bow and ornaments, and simplified geometry into three web detail levels. Original material colours and ornament arrangement retained.

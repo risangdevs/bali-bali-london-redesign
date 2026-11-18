@@ -1,5 +1,6 @@
 const gatewayGeometry = require("./gateway-mesh.cjs");
 const flowerGeometry = require("./flower-mesh.cjs");
+const penjorGeometry = require("./penjor-mesh.cjs");
 const loadTS = require("./load-ts.cjs");
 const path = require("node:path");
 const assert = require("node:assert/strict");
@@ -125,7 +126,9 @@ for (const mobile of [false, true]) {
             ? gatewayGeometry(quality)
             : symbol === "jepun"
               ? flowerGeometry(quality)
-              : makeCulturalGeometry(symbol, quality),
+              : symbol === "penjor"
+                ? penjorGeometry(quality)
+                : makeCulturalGeometry(symbol, quality),
         material = new MeshBasicMaterial({ side: DoubleSide });
       const mesh = new Mesh(geometry, material);
       mesh.position.fromArray(layout.position);

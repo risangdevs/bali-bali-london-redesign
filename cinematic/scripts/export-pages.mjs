@@ -2,7 +2,11 @@ import { spawnSync } from "node:child_process";
 import { cpSync, mkdirSync, rmSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 const root = fileURLToPath(new URL("../", import.meta.url));
-const result = spawnSync("npm", ["run", "build"], {
+// Use the active Node runtime; a global npm binary is not needed for export.
+const nextCli = fileURLToPath(
+  new URL("../node_modules/next/dist/bin/next", import.meta.url),
+);
+const result = spawnSync(process.execPath, [nextCli, "build", "--webpack"], {
   cwd: root,
   stdio: "inherit",
   env: {

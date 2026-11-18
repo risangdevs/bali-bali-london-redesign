@@ -7,6 +7,8 @@ export type JourneyState = {
   prepare?: (progress: number) => void;
 };
 export const journey: JourneyState = { progress: 0, time: 0 };
+export const cameraFov = (mobile: boolean, aspect: number) =>
+  mobile && aspect < 1 ? 51 : 43;
 type Stop = {
   t: number;
   position: number[];
@@ -51,8 +53,16 @@ function createCameraStops(mobile: boolean): Stop[] {
     gateStop(0.07, "gateway", mobile ? 7 : 9),
     gateStop(0.125, "gateway", 0.8, 100),
     gateStop(0.145, "gateway", -1.2, 100),
-    { t: 0.2, position: [-1, 2, 1], target: [2, 0, -8] },
-    { t: 0.29, position: [1, 0.8, -8.5], target: gates.penjor.point.toArray() },
+    {
+      t: 0.2,
+      position: [mobile ? 0 : -1, mobile ? 1.2 : 2, 1],
+      target: [mobile ? 0.2 : 2, 0, -13],
+    },
+    {
+      t: 0.29,
+      position: [mobile ? 0.1 : 1, 0.8, -8.5],
+      target: gates.penjor.point.toArray(),
+    },
     gateStop(0.37, "penjor", 0.8, 80),
     gateStop(0.395, "penjor", -1.2, 80),
     { t: 0.445, position: [0, 12, -23], target: [0, 0, -26] },

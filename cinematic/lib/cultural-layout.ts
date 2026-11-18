@@ -1,6 +1,7 @@
 import { Euler, Vector3 } from "three";
 import gateway from "./gateway-model.json";
 import flower from "./flower-model.json";
+import penjor from "./penjor-model.json";
 import type { CulturalSymbol } from "./cultural-geometry";
 
 export type CulturalLayout = {
@@ -37,7 +38,7 @@ export function culturalLayout<T extends CulturalSymbol>(
       rotation: [0, 0.08, 0],
       from: 0.25,
       to: 0.435,
-      gate: [0, 0.02],
+      gate: [penjor.gate[0], penjor.gate[1]],
     },
     foliage: {
       symbol,

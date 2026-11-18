@@ -62,7 +62,7 @@ export default function CulturalSculpture({
             attach={`material-${i}`}
             color={color}
             vertexColors
-            roughness={symbol === "foliage" ? 0.66 : 0.82}
+            roughness={0.66}
             metalness={symbol === "foliage" && i === 1 ? 0.2 : 0}
             side={DoubleSide}
             transparent

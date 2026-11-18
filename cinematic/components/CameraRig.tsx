@@ -2,7 +2,7 @@
 import { useMemo } from "react";
 import { useFrame, useThree } from "@react-three/fiber";
 import { PerspectiveCamera, Vector3 } from "three";
-import { journey, sampleCamera } from "@/lib/journey";
+import { journey, sampleCamera, cameraFov } from "@/lib/journey";
 
 export function frameCamera(
   camera: PerspectiveCamera,
@@ -14,7 +14,7 @@ export function frameCamera(
   camera.position.copy(position);
   // A wider portrait lens retains the plate and negative space for the copy.
   // Direct and offscreen cameras use the same responsive route and lens.
-  const fov = mobile && aspect < 1 ? 51 : 43;
+  const fov = cameraFov(mobile, aspect);
   if (camera.fov !== fov) {
     camera.fov = fov;
     camera.updateProjectionMatrix();

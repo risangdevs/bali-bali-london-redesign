@@ -5,6 +5,7 @@ import { type Quality } from "@/lib/effects";
 import DepthLayer from "./DepthLayer";
 import CulturalSculpture from "./CulturalSculpture";
 import { culturalLayout } from "@/lib/cultural-layout";
+import { heritagePhotos } from "@/lib/photo-layout";
 // Abstract photographic installation, deliberately not a fabricated restaurant interior.
 export default function HeritageScene({
   quality,
@@ -15,24 +16,9 @@ export default function HeritageScene({
 }) {
   return (
     <group>
-      <DepthLayer
-        quality={quality}
-        start={0.49}
-        src="sate.webp"
-        end={0.74}
-        position={[mobile ? 3.2 : 7.5, 1, -44]}
-        size={mobile ? [3.2, 4.2] : [5, 6.5]}
-        rotation={[0, -0.22, 0]}
-      />
-      <DepthLayer
-        quality={quality}
-        start={0.49}
-        src="sharing.webp"
-        end={0.74}
-        position={[mobile ? -2.2 : -0.6, -0.6, -47]}
-        size={mobile ? [3.6, 2.88] : [5, 4]}
-        rotation={[0, -0.35, 0]}
-      />
+      {heritagePhotos(mobile).map((photo) => (
+        <DepthLayer key={photo.id} {...photo} quality={quality} />
+      ))}
       <CulturalSculpture
         {...culturalLayout("foliage", mobile)}
         quality={quality}

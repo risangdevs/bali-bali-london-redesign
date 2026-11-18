@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { HOME } from "@/lib/content";
 import gateway from "@/lib/gateway-model.json";
 import flower from "@/lib/flower-model.json";
+import penjor from "@/lib/penjor-model.json";
 export const metadata: Metadata = { title: "3D asset credits | Bali Bali" };
 export default function CreditsPage() {
   return (
@@ -37,11 +38,20 @@ export default function CreditsPage() {
         </p>
         <p>Adaptations for this website: {flower.modifications}</p>
       </section>
+      <section aria-labelledby="penjor-credit">
+        <h2 id="penjor-credit">Balinese Penjor</h2>
+        <p>
+          <a href={penjor.source}>{penjor.title}</a> by{" "}
+          <a href={penjor.authorUrl}>{penjor.author}</a>, licensed under{" "}
+          <a href={penjor.licenseUrl}>{penjor.license}</a>.
+        </p>
+        <p>Adaptations for this website: {penjor.modifications}</p>
+      </section>
       <section>
         <h2>Other sculptures</h2>
         <p>
-          The ornamental penjor and foliage frame are original procedural
-          geometry created for this website.
+          The foliage frame is original procedural geometry created for this
+          website.
         </p>
       </section>
     </main>

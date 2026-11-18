@@ -14,7 +14,6 @@ const { culturalSymbols, makeCulturalGeometry } = loadTS(
 // An open aperture alone could pass camera tests even if the sculpture were empty.
 // Verify its defining solid surfaces too, independently of the layout constants.
 const solid = {
-  penjor: [-0.42, -0.5],
   foliage: [0.34, 0],
 };
 const vertices = {};
@@ -77,6 +76,6 @@ for (const symbol of culturalSymbols) {
   vertices[symbol] = counts;
 }
 console.log(
-  "PASS: two procedural cultural sculptures, solid surfaces, finite spatial geometry, batched materials, detail budgets and disposal.",
+  "PASS: procedural foliage sculpture, solid surfaces, finite spatial geometry, batched materials, detail budgets and disposal.",
   vertices,
 );

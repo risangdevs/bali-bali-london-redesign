@@ -1,34 +1,41 @@
 "use client";
 import { useMemo, useRef } from "react";
 import { useTexture } from "@react-three/drei";
-import { DoubleSide, SRGBColorSpace, ShaderMaterial, Vector2 } from "three";
-import { journey } from "@/lib/journey";
+import { useThree } from "@react-three/fiber";
+import {
+  DoubleSide,
+  Group,
+  PerspectiveCamera,
+  SRGBColorSpace,
+  ShaderMaterial,
+  Vector2,
+  Vector3,
+} from "three";
+import { journey, sampleCamera, cameraFov } from "@/lib/journey";
 import { asset } from "@/lib/content";
 import {
   atmosphereVisibility,
   qualitySettings,
   type Quality,
 } from "@/lib/effects";
-import { photoVisibility } from "@/lib/motion";
+import {
+  photoVisibility,
+  photoFramingVisibility,
+  photoFitScale,
+} from "@/lib/motion";
+import type { PhotoLayout } from "@/lib/photo-layout";
 import { smooth } from "@/lib/effects";
 import { photoFragment, photoVertex } from "@/lib/shaders";
 import useSceneSample from "./useSceneSample";
 import useOwnedTexture from "./useOwnedTexture";
 import SteamParticles from "./SteamParticles";
 
-type Props = {
-  src: string;
-  position: [number, number, number];
-  size?: [number, number];
-  rotation?: [number, number, number];
-  round?: number;
-  start?: number;
-  end?: number;
-  hot?: boolean;
+type Props = PhotoLayout & {
   quality?: Quality;
 };
 /** Analytic plate relief, not an invented food depth map. Cover UVs preserve photo aspect. */
 export default function DepthLayer({
+  id,
   src,
   position,
   size = [6, 4.8],
@@ -37,8 +44,33 @@ export default function DepthLayer({
   start = -1,
   end = 2,
   hot = false,
+  fit = false,
   quality = "high",
 }: Props) {
+  const group = useRef<Group>(null);
+  const viewport = useThree((s) => s.size);
+  const view = useMemo(
+    () =>
+      new PerspectiveCamera(
+        cameraFov(viewport.width < 768, viewport.width / viewport.height),
+        viewport.width / viewport.height,
+        0.04,
+        110,
+      ),
+    [viewport.width, viewport.height],
+  );
+  const vectors = useMemo(
+    () => ({
+      camera: new Vector3(),
+      target: new Vector3(),
+      center: new Vector3(),
+      normal: new Vector3(),
+      toLens: new Vector3(),
+      scale: new Vector3(),
+      projected: new Vector3(),
+    }),
+    [],
+  );
   const texture = useTexture(asset(src));
   texture.colorSpace = SRGBColorSpace;
   useOwnedTexture(texture, asset(src));
@@ -69,13 +101,66 @@ export default function DepthLayer({
     }),
     [texture, round, photoAspect, planeAspect, quality, size[0]],
   );
-  const visibility = (p: number) => photoVisibility(p, start, end);
+  const visibility = (p: number) => {
+    const opacity = photoVisibility(p, start, end);
+    if (!opacity || !group.current) return 0;
+    const mobile = viewport.width < 768;
+    sampleCamera(p, vectors.camera, vectors.target, mobile);
+    if (fit) group.current.scale.setScalar(1);
+    group.current.updateWorldMatrix(true, false);
+    group.current.getWorldPosition(vectors.center);
+    group.current.getWorldScale(vectors.scale);
+    vectors.normal.set(0, 0, 1).transformDirection(group.current.matrixWorld);
+    vectors.toLens.copy(vectors.camera).sub(vectors.center);
+    const facing =
+      vectors.normal.dot(vectors.toLens) /
+      Math.max(0.001, vectors.toLens.length());
+    const depth = vectors.toLens
+      .negate()
+      .dot(vectors.target.sub(vectors.camera).normalize());
+    view.position.copy(vectors.camera);
+    view.lookAt(vectors.toLens.copy(vectors.camera).add(vectors.target));
+    view.updateMatrixWorld();
+    vectors.projected.copy(vectors.center).project(view);
+    const fitScale = fit
+      ? photoFitScale(
+          depth,
+          size[0] * vectors.scale.x,
+          size[1] * vectors.scale.y,
+          viewport.width / viewport.height,
+          cameraFov(mobile, viewport.width / viewport.height),
+          vectors.projected.x,
+          vectors.projected.y,
+          Array.isArray(fit) ? fit[0] : undefined,
+          Array.isArray(fit) ? fit[1] : undefined,
+        )
+      : 1;
+    if (fit) {
+      group.current.scale.setScalar(fitScale);
+      group.current.updateWorldMatrix(false, false);
+    }
+    return (
+      opacity *
+      photoFramingVisibility(
+        depth,
+        size[0] * vectors.scale.x * fitScale,
+        size[1] * vectors.scale.y * fitScale,
+        viewport.width / viewport.height,
+        cameraFov(mobile, viewport.width / viewport.height),
+        facing,
+        vectors.projected.x,
+        vectors.projected.y,
+      )
+    );
+  };
   useSceneSample((p) => {
+    const opacity = visibility(p);
+    if (group.current) group.current.visible = opacity > 0.001;
     if (shadowMaterial.current)
-      shadowMaterial.current.uniforms.visibility.value = visibility(p);
+      shadowMaterial.current.uniforms.visibility.value = opacity;
     if (!material.current) return;
     const u = material.current.uniforms;
-    u.visibility.value = visibility(p);
+    u.visibility.value = opacity;
     u.uTime.value = journey.time;
     u.uScroll.value = p;
     u.uScene.value = (p * 6) % 1;
@@ -86,10 +171,10 @@ export default function DepthLayer({
         (quality === "high" ? 1 : 0.55)
       : 0;
     u.uWarmth.value = 1 + smooth(0.5, 0.7, p) * 0.25;
-  });
+  }, -10);
   const segments = round ? qualitySettings[quality].segments : 1;
   return (
-    <group position={position} rotation={rotation}>
+    <group ref={group} name={id} position={position} rotation={rotation}>
       {!!round && quality !== "low" && (
         <mesh position={[0.04, -0.06, -0.035]}>
           <planeGeometry args={[size[0] * 1.06, size[1] * 1.06]} />

@@ -38,3 +38,5 @@ The gateway now uses the complete Candi Bentar scan by nusaheritage.id, Sketchfa
 - Gateway-first landing: frontal zero-yaw Candi Bentar centred on desktop/mobile; fully visible at progress 0, lightweight gateway loading poster, physical entry crossing at 0.125–0.145, food and photo shadows deferred until entry. Compact centred title leaves the carved halves visible.
 
 - Imported the selected CC0 Frangipani Flower by elkid (BlendSwap 14800), retaining five curved/thick petals and original photographed texture. Adaptive local GLBs are 616/179/60 KB; measured outer-petal passage [0.20, 0.42] keeps the centre intact. Credits and actual-triangle camera checks updated.
+
+- Imported the selected Balinese Penjor by alterego.visual (CC BY 4.0), preserving the full bow/ornaments and original materials, with 2.40/1.54/1.00 MB local tiers. Corrected chapter photo timings, portrait placement/aspect and close-camera/backface fades; sharing parent transforms now sample before photo framing. Camera and photo tests updated.
