@@ -1,5 +1,6 @@
 import { Euler, Vector3 } from "three";
 import gateway from "./gateway-model.json";
+import flower from "./flower-model.json";
 import type { CulturalSymbol } from "./cultural-geometry";
 
 export type CulturalLayout = {
@@ -52,9 +53,9 @@ export function culturalLayout<T extends CulturalSymbol>(
       scale: mobile ? 3.2 : 4.2,
       position: [mobile ? 0.8 : 3, mobile ? -0.5 : -0.3, -51.5],
       rotation: [0, 0.12, 0],
-      from: 0.635,
+      from: mobile ? 0.6 : 0.635,
       to: 0.78,
-      gate: [0.19, 0.42],
+      gate: [flower.gate[0], flower.gate[1]],
     },
   };
   return layouts[symbol] as CulturalLayout & { symbol: T };

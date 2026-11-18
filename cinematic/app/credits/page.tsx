@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { HOME } from "@/lib/content";
 import gateway from "@/lib/gateway-model.json";
+import flower from "@/lib/flower-model.json";
 export const metadata: Metadata = { title: "3D asset credits | Bali Bali" };
 export default function CreditsPage() {
   return (
@@ -27,11 +28,20 @@ export default function CreditsPage() {
           depict the restaurant entrance.
         </p>
       </section>
+      <section aria-labelledby="flower-credit">
+        <h2 id="flower-credit">Frangipani / Jepun</h2>
+        <p>
+          <a href={flower.source}>{flower.title}</a> by{" "}
+          <a href={flower.authorUrl}>{flower.author}</a>, released under{" "}
+          <a href={flower.licenseUrl}>{flower.license}</a>.
+        </p>
+        <p>Adaptations for this website: {flower.modifications}</p>
+      </section>
       <section>
         <h2>Other sculptures</h2>
         <p>
-          The ornamental penjor, foliage frame and jepun petals are original
-          procedural geometry created for this website.
+          The ornamental penjor and foliage frame are original procedural
+          geometry created for this website.
         </p>
       </section>
     </main>

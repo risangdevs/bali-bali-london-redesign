@@ -1,0 +1,45 @@
+{
+  "title": "Frangipani Flower",
+  "author": "elkid",
+  "authorUrl": "https://blendswap.com/profile/168722",
+  "source": "https://blendswap.com/blend/14800",
+  "license": "CC0 1.0",
+  "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+  "modifications": "Kept the five original petals, UVs and photographed petal texture; evaluated subdivision and thickness; removed source cameras/lights; centred and scaled the mesh, converted its legacy material to PBR, and resized/compressed the texture for three web detail levels.",
+  "blender": "4.5.16 LTS",
+  "normalisation": {
+    "origin": [
+      0.00810539722442627,
+      0.17596769332885742,
+      0.336733341217041
+    ],
+    "height": 6.290221691131592
+  },
+  "gate": [
+    0.2,
+    0.42
+  ],
+  "variants": {
+    "high": {
+      "file": "frangipani-high.glb",
+      "triangles": 24880,
+      "vertices": 12520,
+      "textureResolution": 1024,
+      "bytes": 616196
+    },
+    "medium": {
+      "file": "frangipani-medium.glb",
+      "triangles": 6520,
+      "vertices": 3310,
+      "textureResolution": 768,
+      "bytes": 178532
+    },
+    "low": {
+      "file": "frangipani-low.glb",
+      "triangles": 1780,
+      "vertices": 900,
+      "textureResolution": 512,
+      "bytes": 60200
+    }
+  }
+}

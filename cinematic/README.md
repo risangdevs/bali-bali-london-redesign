@@ -90,9 +90,9 @@ Stone cornices have rounded edges on Medium/High; leaves curl in depth; the carv
 
 ## Imported Candi Bentar gateway
 
-The gateway now uses **Candi Bentar by nusaheritage.id**, downloaded from https://sketchfab.com/3d-models/candi-bentar-9051dc244c984da8a1a4ec7e90e1a567 under **CC BY 4.0**. The source is a scan of a complete split gateway with its stairs, not the restaurant entrance. Creator/source/licence and modifications are shown on `/credits/`, linked from the visit footer, and recorded in `public/models/ATTRIBUTION.txt`. Penjor, foliage and jepun remain the existing procedural assets.
+The gateway now uses **Candi Bentar by nusaheritage.id**, downloaded from https://sketchfab.com/3d-models/candi-bentar-9051dc244c984da8a1a4ec7e90e1a567 under **CC BY 4.0**. The source is a scan of a complete split gateway with its stairs, not the restaurant entrance. Creator/source/licence and modifications are shown on `/credits/`, linked from the visit footer, and recorded in `public/models/ATTRIBUTION.txt`. Penjor and foliage remain the existing procedural assets; the flower is also imported (see below).
 
-`components/GatewayModel.tsx` loads local GLB files, clones instance fade materials and counts ownership of cached geometry/textures. Cleanup disposes GPU resources and clears the loader cache after the last owner, including reading-mode switches. The opening scene waits for the gateway so its frontal composition is the first WebGL view; a 34 KB rendered gateway poster covers loading. Deferred quality changes retain the current model until the next tier is ready.
+`components/ImportedSculpture.tsx`, shared by the gateway and flower wrappers, loads local GLB files, clones instance fade materials and counts ownership of cached geometry/textures. Cleanup disposes GPU resources and clears the loader cache after the last owner, including reading-mode switches. The opening scene waits for the gateway so its frontal composition is the first WebGL view; a 34 KB rendered gateway poster covers loading. Deferred quality changes retain the current model until the next tier is ready.
 
 `lib/gateway-model.json` records the exact source, preparation, passage position and tier statistics. `lib/cultural-layout.ts` uses that measured opening for the same reversible camera route. Camera clearance tests now use triangles decoded from the actual prepared gateway GLBs; the former procedural gateway geometry has been removed.
 
@@ -107,3 +107,24 @@ The 62,367,236-byte 4K source remains locally in the ignored `asset-source/candi
 ## Gateway landing composition
 
 Candi Bentar is centred at Z=4 with zero yaw, fully opaque at progress 0. The desktop and mobile opening cameras share its split centreline and use level frontal views. Compact centred titles leave both carved halves visible. The first physical camera crossing now runs at 0.125–0.145; food and its shadows fade in behind the gateway from 0.10, then the route continues to the penjor and remaining chapters. The first transition uses the authoritative physical camera rather than offscreen compositing. The reading shade blends in as the camera enters the food scene. Camera tests cover landing alignment and the moved passage on every device/tier.
+
+## Imported frangipani / jepun flower
+
+The flower uses **Frangipani Flower by elkid**, https://blendswap.com/blend/14800, released under **CC0 1.0**. The original five `Leaf.*` meshes, UVs and packed photographed petal texture are retained. Source cameras and the mesh used as a studio light are excluded. Blender 4.5 evaluates the original subdivision and Solidify modifiers; the legacy material is converted to a double-sided, nonmetallic PBR material. The flower is centred and scaled without cutting a hole or rearranging petals. `/credits/` and `public/models/frangipani-ATTRIBUTION.txt` record the source and changes.
+
+The original `.blend`, packed image and intermediate mesh JSON are in ignored `asset-source/frangipani/`. To rebuild locally with Blender Foundation's `bpy` 4.5 Python module (Python 3.11):
+
+```sh
+python scripts/prepare-flower.py /path/to/source.blend asset-source/frangipani
+npm run assets:flower
+```
+
+The converter disables embedded file scripts. It evaluates three subdivision levels and retains petal thickness/UVs. The packing step welds matching attributes, embeds a shared JPEG texture, and emits self-contained GLBs with no external decoders:
+
+| Tier | Triangles | Vertices | Texture | GLB bytes |
+| --- | ---: | ---: | ---: | ---: |
+| High | 24,880 | 12,520 | 1024 px | 616,196 |
+| Medium | 6,520 | 3,310 | 768 px | 178,532 |
+| Low | 1,780 | 900 | 512 px | 60,200 |
+
+`lib/flower-model.json` records source, normalisation, variants and the measured natural negative space between outer petal tips. The camera crosses `[0.20, 0.42]` in local coordinates at the existing 0.705–0.73 timing. Tests raycast the actual flower triangles at every quality on desktop/mobile, verify the intact centre, all five petals, embedded photo, UVs, curvature/thickness and file budgets. Portrait mode begins revealing the flower at 0.60, before the close approach, so the complete blossom is visible in the narrow frame. `FlowerModel` defers quality updates and shares the imported-model fade and counted GPU resource cleanup with the gateway. The old procedural jepun is removed.

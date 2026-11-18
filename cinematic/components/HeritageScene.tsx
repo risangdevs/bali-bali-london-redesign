@@ -1,4 +1,6 @@
 "use client";
+import { Suspense } from "react";
+import FlowerModel from "./FlowerModel";
 import { type Quality } from "@/lib/effects";
 import DepthLayer from "./DepthLayer";
 import CulturalSculpture from "./CulturalSculpture";
@@ -31,13 +33,13 @@ export default function HeritageScene({
         size={mobile ? [3.6, 2.88] : [5, 4]}
         rotation={[0, -0.35, 0]}
       />
-      {(["foliage", "jepun"] as const).map((symbol) => (
-        <CulturalSculpture
-          key={symbol}
-          {...culturalLayout(symbol, mobile)}
-          quality={quality}
-        />
-      ))}
+      <CulturalSculpture
+        {...culturalLayout("foliage", mobile)}
+        quality={quality}
+      />
+      <Suspense fallback={null}>
+        <FlowerModel mobile={mobile} quality={quality} />
+      </Suspense>
     </group>
   );
 }

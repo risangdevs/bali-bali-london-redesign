@@ -16,7 +16,6 @@ const { culturalSymbols, makeCulturalGeometry } = loadTS(
 const solid = {
   penjor: [-0.42, -0.5],
   foliage: [0.34, 0],
-  jepun: [0.22, 0.09],
 };
 const vertices = {};
 for (const symbol of culturalSymbols) {
@@ -62,13 +61,6 @@ for (const symbol of culturalSymbols) {
       ray.intersectObject(mesh).length > 0,
       `${symbol}: defining surface remains solid`,
     );
-    if (symbol === "jepun") {
-      ray.set(new Vector3(0, 0, 1), new Vector3(0, 0, -1));
-      assert(
-        ray.intersectObject(mesh).length > 0,
-        "jepun: golden centre stays closed",
-      );
-    }
     material.dispose();
     counts.push(positions.count);
     let disposed = false;
@@ -85,6 +77,6 @@ for (const symbol of culturalSymbols) {
   vertices[symbol] = counts;
 }
 console.log(
-  "PASS: three procedural cultural sculptures, solid surfaces, finite spatial geometry, batched materials, detail budgets and disposal.",
+  "PASS: two procedural cultural sculptures, solid surfaces, finite spatial geometry, batched materials, detail budgets and disposal.",
   vertices,
 );

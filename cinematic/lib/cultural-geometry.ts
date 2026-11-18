@@ -1,7 +1,6 @@
 import {
   BufferGeometry,
   CatmullRomCurve3,
-  Color,
   CubicBezierCurve3,
   CylinderGeometry,
   ExtrudeGeometry,
@@ -10,24 +9,21 @@ import {
   Path,
   Quaternion,
   Shape,
-  SphereGeometry,
   TubeGeometry,
   Vector3,
 } from "three";
-import { smootherstep } from "./motion";
 import { mergeGeometries } from "three/addons/utils/BufferGeometryUtils.js";
 import type { Quality } from "./effects";
 
-export const culturalSymbols = ["penjor", "foliage", "jepun"] as const;
+export const culturalSymbols = ["penjor", "foliage"] as const;
 export type ProceduralSymbol = (typeof culturalSymbols)[number];
-export type CulturalSymbol = "gateway" | ProceduralSymbol;
+export type CulturalSymbol = "gateway" | "jepun" | ProceduralSymbol;
 export const culturalPalettes: Record<
   ProceduralSymbol,
   [string, string, string]
 > = {
   penjor: ["#b88a4c", "#e2c68d", "#72805a"],
   foliage: ["#60372a", "#b18a51", "#815641"],
-  jepun: ["#ffffff", "#dfb456", "#d3c2a7"],
 };
 /** Original stylised sculptures, not scans or replicas of ceremonial objects.
  * Three material buckets keep each complete sculpture to at most three draw calls.
@@ -291,76 +287,8 @@ export function makeCulturalGeometry(
     }
     leaf(0, 0.37, 0.2, 0.07, 0, 0, 0.04, true);
     leaf(0, -0.37, 0.17, 0.065, Math.PI, 0, 0.04, true);
-  } else {
-    // Five overlapping, cupped frangipani petals. An off-centre gap between
-    // two tips is the camera passage; the flower's golden throat stays intact.
-    add(
-      new SphereGeometry(0.064, radial * 2, radial)
-        .scale(1, 1, 0.35)
-        .translate(0, 0, -0.035),
-      1,
-    );
-    const rows = detail,
-      columns = Math.max(6, detail / 2);
-    for (let petal = 0; petal < 5; petal++) {
-      const positions: number[] = [],
-        colors: number[] = [],
-        uvs: number[] = [],
-        indices: number[] = [];
-      const angle = (petal * Math.PI * 2) / 5 + 0.2;
-      for (let row = 0; row <= rows; row++) {
-        const u = row / rows,
-          radius = 0.045 + u * 0.49;
-        const width = 0.008 + 0.185 * Math.pow(Math.sin(Math.PI * u), 0.8);
-        const twist = angle + u * 0.32;
-        for (let col = 0; col <= columns; col++) {
-          const v = (col / columns) * 2 - 1;
-          const x = radius,
-            y = v * width;
-          positions.push(
-            x * Math.cos(twist) - y * Math.sin(twist),
-            x * Math.sin(twist) + y * Math.cos(twist),
-            -0.035 +
-              Math.sin(u * Math.PI) * 0.095 +
-              v * v * 0.045 +
-              v * u * 0.035,
-          );
-          const color = new Color("#dfb456").lerp(
-            new Color("#fff5e4"),
-            smootherstep((u - 0.02) / 0.56),
-          );
-          colors.push(color.r, color.g, color.b);
-          uvs.push(u, col / columns);
-        }
-      }
-      for (let row = 0; row < rows; row++)
-        for (let col = 0; col < columns; col++) {
-          const a = row * (columns + 1) + col,
-            b = a + columns + 1;
-          indices.push(a, b, a + 1, b, b + 1, a + 1);
-        }
-      const g = new BufferGeometry();
-      g.setAttribute("position", new Float32BufferAttribute(positions, 3));
-      g.setAttribute("uv", new Float32BufferAttribute(uvs, 2));
-      g.setAttribute("color", new Float32BufferAttribute(colors, 3));
-      g.setIndex(indices);
-      g.computeVertexNormals();
-      add(g, 0);
-    }
-    // Back-side botanical veins accent the sculpted surfaces without closing gaps.
-    for (let i = 0; i < 5; i++) {
-      const a = (i * Math.PI * 2) / 5 + 0.2;
-      tube(
-        [
-          [Math.cos(a) * 0.07, Math.sin(a) * 0.07, -0.04],
-          [Math.cos(a + 0.15) * 0.25, Math.sin(a + 0.15) * 0.25, 0.015],
-          [Math.cos(a + 0.28) * 0.43, Math.sin(a + 0.28) * 0.43, 0.015],
-        ],
-        0.0025,
-        2,
-      );
-    }
   }
+
   const merged = buckets.map((parts) => {
     // Every symbol has all three materials; combine per material before final merge.
     const result = mergeGeometries(parts, false)!;

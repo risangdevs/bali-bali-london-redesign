@@ -1,0 +1,4 @@
+Frangipani Flower by elkid
+https://blendswap.com/blend/14800
+CC0 1.0: https://creativecommons.org/publicdomain/zero/1.0/
+Changes: Kept the five original petals, UVs and photographed petal texture; evaluated subdivision and thickness; removed source cameras/lights; centred and scaled the mesh, converted its legacy material to PBR, and resized/compressed the texture for three web detail levels.

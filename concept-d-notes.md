@@ -36,3 +36,5 @@ Refined the four cultural sculptures with rounded stone, curved leaves, carved s
 The gateway now uses the complete Candi Bentar scan by nusaheritage.id, Sketchfab `9051dc244c984da8a1a4ec7e90e1a567`, licensed CC BY 4.0. Prepared local GLB variants replace the procedural gate; the real opening drives the camera passage. Creator/source/licence and modifications appear on the credits page linked from the visit footer. The penjor, carved frame and jepun remain procedural.
 
 - Gateway-first landing: frontal zero-yaw Candi Bentar centred on desktop/mobile; fully visible at progress 0, lightweight gateway loading poster, physical entry crossing at 0.125–0.145, food and photo shadows deferred until entry. Compact centred title leaves the carved halves visible.
+
+- Imported the selected CC0 Frangipani Flower by elkid (BlendSwap 14800), retaining five curved/thick petals and original photographed texture. Adaptive local GLBs are 616/179/60 KB; measured outer-petal passage [0.20, 0.42] keeps the centre intact. Credits and actual-triangle camera checks updated.

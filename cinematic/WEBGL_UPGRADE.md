@@ -105,3 +105,9 @@ Camera tests now raycast the actual prepared GLB triangles on desktop/mobile at 
 ## Gateway first landing
 
 The gateway now opens the journey head-on, centred symmetrically around the camera axis with zero yaw. Responsive camera distances and centred compact titles reveal both halves before scrolling. Its physical crossing moves to 0.125–0.145; food imagery and photo shadows remain invisible at landing and enter behind it. The first transition stays on the physical camera, and the reading shade fades in continuously. Later sculptures and chapter destinations keep their existing timings.
+
+## Imported frangipani flower
+
+Replaced the procedural jepun with the user-selected CC0 Frangipani Flower by elkid (BlendSwap 14800). The actual five petals and packed photographed texture are converted locally with Blender 4.5, retaining their original arrangement, UVs, subdivision and thickness. Source camera/light objects are excluded; the legacy material is mapped to double-sided PBR. High/Medium/Low GLBs are 616/179/60 KB with 24,880/6,520/1,780 triangles and embedded 1024/768/512 px JPEG textures. Source and adaptations appear on the credits page.
+
+The natural outer-petal passage is measured at local [0.20, 0.42], preserving the flower centre and existing crossing timing. Camera tests now use actual flower triangles at every tier/device; new asset checks cover its provenance, five textured petals, intact centre, curvature/thickness and budgets. Gateway and flower share a counted resource loader with cloned fade materials; the remaining procedural assets are penjor and foliage.
