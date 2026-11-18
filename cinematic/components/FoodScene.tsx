@@ -21,6 +21,7 @@ export default function FoodScene({
         size={mobile ? [7.8, 6.24] : [10, 8]}
         round={1}
         rotation={[0, -0.12, -0.12]}
+        start={0.1}
         end={0.2}
       />
       <Suspense fallback={null}>
@@ -32,7 +33,7 @@ export default function FoodScene({
           size={[5.5, 4.4]}
           round={1}
           rotation={[0.12, 0.35, 0.12]}
-          start={0.07}
+          start={0.115}
           end={0.3}
         />
         <DepthLayer
@@ -42,7 +43,7 @@ export default function FoodScene({
           size={[5.3, 4.2]}
           round={1}
           rotation={[-0.1, -0.3, -0.18]}
-          start={0.08}
+          start={0.12}
           end={0.33}
         />
         {!mobile && (
@@ -53,7 +54,7 @@ export default function FoodScene({
             size={[4, 3.2]}
             round={1}
             rotation={[0.15, 0.25, -0.2]}
-            start={0.1}
+            start={0.125}
             end={0.35}
           />
         )}

@@ -43,6 +43,7 @@ export default function DepthLayer({
   texture.colorSpace = SRGBColorSpace;
   useOwnedTexture(texture, asset(src));
   const material = useRef<ShaderMaterial>(null);
+  const shadowMaterial = useRef<ShaderMaterial>(null);
   const image = texture.image as { width: number; height: number };
   const photoAspect = image.width / image.height;
   const planeAspect = size[0] / size[1];
@@ -70,6 +71,8 @@ export default function DepthLayer({
   );
   const visibility = (p: number) => photoVisibility(p, start, end);
   useSceneSample((p) => {
+    if (shadowMaterial.current)
+      shadowMaterial.current.uniforms.visibility.value = visibility(p);
     if (!material.current) return;
     const u = material.current.uniforms;
     u.visibility.value = visibility(p);
@@ -91,6 +94,7 @@ export default function DepthLayer({
         <mesh position={[0.04, -0.06, -0.035]}>
           <planeGeometry args={[size[0] * 1.06, size[1] * 1.06]} />
           <shaderMaterial
+            ref={shadowMaterial}
             uniforms={uniforms}
             transparent
             side={DoubleSide}

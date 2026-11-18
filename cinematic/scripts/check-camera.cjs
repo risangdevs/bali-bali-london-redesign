@@ -23,6 +23,23 @@ const { makeCulturalGeometry } = loadTS(
 const { smooth, transitionAt } = loadTS(path.join(root, "effects.ts"));
 for (const mobile of [false, true]) {
   const stops = mobile ? mobileCameraStops : cameraStops;
+  const opening = culturalGate(culturalLayout("gateway", mobile));
+  assert.equal(
+    stops[0].position[0],
+    opening.point.x,
+    "landing lens centred on split",
+  );
+  assert.equal(
+    stops[0].target[0],
+    opening.point.x,
+    "landing view has no sideways yaw",
+  );
+  assert.equal(
+    stops[0].position[1],
+    stops[0].target[1],
+    "level frontal landing view",
+  );
+  assert.equal(culturalLayout("gateway", mobile).rotation[1], 0);
   for (const stop of stops) {
     const p = new Vector3(),
       t = new Vector3();
@@ -64,7 +81,7 @@ for (const mobile of [false, true]) {
       assert(left.length() > 60, "camera keeps travelling through the passage");
   }
   for (const [symbol, from, to] of [
-    ["gateway", 0.325, 0.34],
+    ["gateway", 0.125, 0.145],
     ["penjor", 0.37, 0.395],
     ["foliage", 0.625, 0.65],
     ["jepun", 0.705, 0.73],

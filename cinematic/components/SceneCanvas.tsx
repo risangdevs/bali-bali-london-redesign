@@ -162,7 +162,7 @@ export default function SceneCanvas({
         <SceneWindow from={0} to={0.36}>
           <FoodScene mobile={mobile} quality={quality} />
         </SceneWindow>
-        <SceneWindow from={0.085} to={0.45}>
+        <SceneWindow from={0} to={0.45}>
           <CulturalPassage mobile={mobile} quality={quality} />
         </SceneWindow>
         <Ready onReady={onReady} />

@@ -160,6 +160,7 @@ export default function ScrollDirector({
         panel.setAttribute("aria-hidden", String(opacity < 0.8));
       });
       root.style.setProperty("--journey", String(p));
+      root.style.setProperty("--entry-shade", String(smooth(0.07, 0.18, p)));
       root.style.setProperty(
         "--table-shade",
         String(smooth(0.29, 0.36, p) * (1 - smooth(0.47, 0.54, p))),

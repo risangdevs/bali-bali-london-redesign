@@ -70,7 +70,7 @@ export const transitions = [
     to: 0.205,
     center: [0.7, 0.47] as const,
     approach: 0.62,
-    mode: "shader",
+    mode: "physical",
   },
   {
     from: 0.255,

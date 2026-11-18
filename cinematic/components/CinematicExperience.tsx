@@ -171,8 +171,12 @@ export default function CinematicExperience() {
               </div>
               {!ready && (
                 <div className="loading-scene">
-                  <img src={asset("sate.webp")} alt="" />
-                  <span role="status">Setting the table…</span>
+                  <img
+                    src={asset("gateway-opening.webp")}
+                    alt=""
+                    fetchPriority="high"
+                  />
+                  <span role="status">Opening the gateway…</span>
                 </div>
               )}
               <div className="reading-shade" />

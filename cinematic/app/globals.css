@@ -1625,3 +1625,80 @@ button:focus-visible {
     scroll-behavior: smooth;
   }
 }
+
+/* A centred, frontal gateway welcomes visitors before the food journey. */
+.cinematic-mode .loading-scene img {
+  left: 50%;
+  right: auto;
+  top: 29%;
+  transform: translateX(-50%);
+  width: auto;
+  height: 62%;
+  object-fit: contain;
+  border-radius: 0;
+}
+.cinematic-mode .loading-scene span {
+  right: 6%;
+}
+.cinematic-mode[data-chapter="0"] .reading-shade {
+  opacity: var(--entry-shade, 0);
+}
+.cinematic-mode .hero-location {
+  justify-content: center;
+}
+.cinematic-mode .hero-scene {
+  top: 88px;
+  padding-top: 12px;
+}
+.cinematic-mode .hero-scene h1 {
+  width: 100%;
+  text-align: center;
+  font-size: clamp(68px, 7vw, 120px);
+}
+.cinematic-mode .hero-script {
+  font-size: clamp(28px, 2.4vw, 40px);
+  margin: 8px 0 0;
+}
+.cinematic-mode .hero-bottom {
+  width: min(31%, 380px);
+}
+.cinematic-mode .hero-bottom > .small-caps {
+  display: none;
+}
+.cinematic-mode .hero-bottom .intro {
+  font-size: 21px;
+  background: rgba(244, 235, 221, 0.94);
+  padding: 8px 10px;
+  margin-left: -10px;
+}
+.cinematic-mode .hero-actions {
+  flex-wrap: wrap;
+}
+@media (max-width: 767px) {
+  .cinematic-mode .hero-scene {
+    top: 80px;
+    padding-top: 20px;
+  }
+  .cinematic-mode .hero-scene h1 {
+    font-size: 17vw;
+  }
+  .cinematic-mode .hero-script {
+    font-size: 7vw;
+  }
+  .cinematic-mode .hero-bottom {
+    width: 100%;
+  }
+  .cinematic-mode .hero-bottom .intro {
+    font-size: 18px;
+    margin-bottom: 0;
+  }
+  .cinematic-mode .hero-seal {
+    width: 65px;
+    height: 65px;
+    right: 2%;
+    bottom: 28%;
+  }
+  .cinematic-mode .hero-seal .seal-flower {
+    font-size: 21px;
+  }
+}

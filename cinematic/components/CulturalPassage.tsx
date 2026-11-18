@@ -1,5 +1,5 @@
 "use client";
-import { Suspense, useDeferredValue } from "react";
+import { useDeferredValue } from "react";
 import GatewayModel from "./GatewayModel";
 import { type Quality } from "@/lib/effects";
 import { culturalLayout } from "@/lib/cultural-layout";
@@ -15,9 +15,7 @@ export default function CulturalPassage({
   const detail = useDeferredValue(quality);
   return (
     <>
-      <Suspense fallback={null}>
-        <GatewayModel mobile={mobile} quality={detail} />
-      </Suspense>
+      <GatewayModel mobile={mobile} quality={detail} />
       <CulturalSculpture
         {...culturalLayout("penjor", mobile)}
         symbol="penjor"

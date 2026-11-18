@@ -22,10 +22,11 @@ export function culturalLayout<T extends CulturalSymbol>(
     gateway: {
       symbol,
       scale: mobile ? 4.5 : 7.2,
-      position: [mobile ? 0.2 : 1.5, mobile ? -0.25 : 0.2, -13],
-      rotation: [0, -0.09, 0],
-      from: 0.085,
-      to: 0.375,
+      position: [0, mobile ? -0.25 : 0.2, 4],
+      rotation: [0, 0, 0],
+      // The opening sculpture is already opaque at the landing position.
+      from: -0.025,
+      to: 0.195,
       gate: [gateway.gate[0], gateway.gate[1]],
     },
     penjor: {

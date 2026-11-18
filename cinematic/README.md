@@ -92,7 +92,7 @@ Stone cornices have rounded edges on Medium/High; leaves curl in depth; the carv
 
 The gateway now uses **Candi Bentar by nusaheritage.id**, downloaded from https://sketchfab.com/3d-models/candi-bentar-9051dc244c984da8a1a4ec7e90e1a567 under **CC BY 4.0**. The source is a scan of a complete split gateway with its stairs, not the restaurant entrance. Creator/source/licence and modifications are shown on `/credits/`, linked from the visit footer, and recorded in `public/models/ATTRIBUTION.txt`. Penjor, foliage and jepun remain the existing procedural assets.
 
-`components/GatewayModel.tsx` loads local GLB files, clones instance fade materials and counts ownership of cached geometry/textures. Cleanup disposes GPU resources and clears the loader cache after the last owner, including reading-mode switches. A nested Suspense boundary keeps the opening food scene available while the scan loads. Deferred quality changes retain the current model until the next tier is ready.
+`components/GatewayModel.tsx` loads local GLB files, clones instance fade materials and counts ownership of cached geometry/textures. Cleanup disposes GPU resources and clears the loader cache after the last owner, including reading-mode switches. The opening scene waits for the gateway so its frontal composition is the first WebGL view; a 34 KB rendered gateway poster covers loading. Deferred quality changes retain the current model until the next tier is ready.
 
 `lib/gateway-model.json` records the exact source, preparation, passage position and tier statistics. `lib/cultural-layout.ts` uses that measured opening for the same reversible camera route. Camera clearance tests now use triangles decoded from the actual prepared gateway GLBs; the former procedural gateway geometry has been removed.
 
@@ -103,3 +103,7 @@ The gateway now uses **Candi Bentar by nusaheritage.id**, downloaded from https:
 | Low | 27,382 | 768 px | 1,951,040 |
 
 The 62,367,236-byte 4K source remains locally in the ignored `asset-source/candi-bentar/` folder. Rebuild with `npm run assets:gateway -- /path/to/source.glb`. The offline preparation removes disconnected scan fragments, crops peripheral vegetation/ground, normalises the mesh around its passage, simplifies with locked material boundaries, compacts vertices and recompresses embedded JPEG atlases. It uses the pinned `meshoptimizer` development dependency and existing Sharp; no external decoder or model host is needed at runtime.
+
+## Gateway landing composition
+
+Candi Bentar is centred at Z=4 with zero yaw, fully opaque at progress 0. The desktop and mobile opening cameras share its split centreline and use level frontal views. Compact centred titles leave both carved halves visible. The first physical camera crossing now runs at 0.125–0.145; food and its shadows fade in behind the gateway from 0.10, then the route continues to the penjor and remaining chapters. The first transition uses the authoritative physical camera rather than offscreen compositing. The reading shade blends in as the camera enters the food scene. Camera tests cover landing alignment and the moved passage on every device/tier.

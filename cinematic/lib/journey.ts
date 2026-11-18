@@ -42,13 +42,17 @@ function createCameraStops(mobile: boolean): Stop[] {
       target: point.clone().addScaledVector(normal, -8).toArray(),
     };
   };
+  const opening = gateStop(0, "gateway", mobile ? 12.5 : 18.5);
+  // Keep the split on the horizontal centreline, with space above for the title.
+  opening.position[1] += mobile ? 0.25 : 1.2;
+  opening.target = opening.position.map((v, axis) => (axis === 2 ? v - 8 : v));
   return [
-    { t: 0, position: [0, 1, 13], target: [0, 0, 0] },
-    { t: 0.11, position: [1, 0.7, 9], target: [2, 0, 0] },
-    { t: 0.2, position: [-1, 2, 1], target: gates.gateway.point.toArray() },
-    gateStop(0.29, "gateway", 4.5),
-    gateStop(0.325, "gateway", 0.8, 2 / 0.015),
-    gateStop(0.34, "gateway", -1.2, 2 / 0.015),
+    opening,
+    gateStop(0.07, "gateway", mobile ? 7 : 9),
+    gateStop(0.125, "gateway", 0.8, 100),
+    gateStop(0.145, "gateway", -1.2, 100),
+    { t: 0.2, position: [-1, 2, 1], target: [2, 0, -8] },
+    { t: 0.29, position: [1, 0.8, -8.5], target: gates.penjor.point.toArray() },
     gateStop(0.37, "penjor", 0.8, 80),
     gateStop(0.395, "penjor", -1.2, 80),
     { t: 0.445, position: [0, 12, -23], target: [0, 0, -26] },
