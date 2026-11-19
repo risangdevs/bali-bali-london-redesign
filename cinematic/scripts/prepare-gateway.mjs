@@ -101,7 +101,7 @@ const manifest = {
   variants: {},
 };
 for (const [quality, ratio, error, resolution] of [
-  ["high", 0.7, 0.001, 1536],
+  ["high", 0.7, 0.001, 4096],
   ["medium", 0.45, 0.002, 1024],
   ["low", 0.25, 0.004, 768],
 ]) {
@@ -218,7 +218,7 @@ for (const [quality, ratio, error, resolution] of [
         fit: "inside",
         withoutEnlargement: true,
       })
-      .jpeg({ quality: quality === "high" ? 84 : 78, mozjpeg: true })
+      .jpeg({ quality: quality === "high" ? 86 : 78, mozjpeg: true })
       .toBuffer();
     j.images.push({ bufferView: addView(jpeg), mimeType: "image/jpeg" });
   }
@@ -238,7 +238,11 @@ for (const [quality, ratio, error, resolution] of [
   binHeader.writeUInt32LE(offset);
   binHeader.writeUInt32LE(0x004e4942, 4);
   const result = Buffer.concat([header, json, binHeader, ...chunks]);
-  const file = `candi-bentar-${quality}.glb`;
+  // A new URL prevents browsers/CDNs from retaining the former 1536px model.
+  const file =
+    quality === "high"
+      ? "candi-bentar-high-4k.glb"
+      : `candi-bentar-${quality}.glb`;
   await writeFile(new URL(file, directory), result);
   manifest.variants[quality] = {
     file,

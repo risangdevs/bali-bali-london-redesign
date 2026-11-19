@@ -21,11 +21,11 @@
   ],
   "variants": {
     "high": {
-      "file": "candi-bentar-high.glb",
+      "file": "candi-bentar-high-4k.glb",
       "triangles": 60095,
       "vertices": 50534,
-      "textureResolution": 1536,
-      "bytes": 5365960
+      "textureResolution": 4096,
+      "bytes": 20032004
     },
     "medium": {
       "file": "candi-bentar-medium.glb",

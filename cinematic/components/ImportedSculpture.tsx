@@ -1,5 +1,6 @@
 "use client";
-import { useEffect, useMemo, useRef } from "react";
+import { useEffect, useLayoutEffect, useMemo, useRef } from "react";
+import { useThree } from "@react-three/fiber";
 import { useGLTF } from "@react-three/drei";
 import {
   DoubleSide,
@@ -53,6 +54,7 @@ export default function ImportedSculpture({
   const url = `${HOME}models/${manifest.variants[quality].file}`;
   const { scene } = useGLTF(url, false, false);
   const group = useRef<Group>(null);
+  const { gl, invalidate } = useThree();
   const layout = culturalLayout(symbol, mobile);
   const owned = useMemo(() => {
     const root = scene.clone(true),
@@ -72,6 +74,25 @@ export default function ImportedSculpture({
     });
     return { root, materials, owners: 0 };
   }, [scene]);
+  useLayoutEffect(() => {
+    if (symbol !== "gateway") return;
+    const anisotropy = Math.min(
+      gl.capabilities.getMaxAnisotropy(),
+      mobile || quality === "low" ? 1 : quality === "high" ? 8 : 4,
+    );
+    const textures = new Set<Texture>();
+    owned.materials.forEach((material) =>
+      Object.values(material).forEach((value) => {
+        if (value instanceof Texture) textures.add(value);
+      }),
+    );
+    textures.forEach((texture) => {
+      if (texture.anisotropy === anisotropy) return;
+      texture.anisotropy = anisotropy;
+      texture.needsUpdate = true;
+    });
+    invalidate();
+  }, [owned, gl, invalidate, mobile, quality, symbol]);
   useEffect(() => {
     owned.owners++;
     owners.set(scene, (owners.get(scene) || 0) + 1);

@@ -33,16 +33,16 @@ The cultural sequence is Candi Bentar → Balinese Penjor → Dwarapala guardian
 
 ## 3D assets and credits
 
-| Asset                        | Creator / source                                                                                                             | Licence   | High / Medium / Low   |
-| ---------------------------- | ---------------------------------------------------------------------------------------------------------------------------- | --------- | --------------------- |
-| Candi Bentar                 | [nusaheritage.id / Sketchfab](https://sketchfab.com/3d-models/candi-bentar-9051dc244c984da8a1a4ec7e90e1a567)                 | CC BY 4.0 | 5.37 / 2.83 / 1.95 MB |
-| Balinese Penjor              | [alterego.visual / Sketchfab](https://sketchfab.com/3d-models/balinese-penjor-7aca638e85d04c1699c04918cdc36a9e)              | CC BY 4.0 | 2.40 / 1.54 / 1.00 MB |
-| Patung Dwarapala Pintu Utara | [nusaheritage.id / Sketchfab](https://sketchfab.com/3d-models/patung-dwarapala-pintu-utara-75a1945e6b9e4a62866b13479fb48e1b) | CC BY 4.0 | 1.54 / 0.81 / 0.47 MB |
-| Frangipani Flower / Jepun    | [elkid / BlendSwap](https://blendswap.com/blend/14800)                                                                       | CC0 1.0   | 616 / 179 / 60 KB     |
+| Asset                        | Creator / source                                                                                                             | Licence   | High / Medium / Low    |
+| ---------------------------- | ---------------------------------------------------------------------------------------------------------------------------- | --------- | ---------------------- |
+| Candi Bentar                 | [nusaheritage.id / Sketchfab](https://sketchfab.com/3d-models/candi-bentar-9051dc244c984da8a1a4ec7e90e1a567)                 | CC BY 4.0 | 20.03 / 2.83 / 1.95 MB |
+| Balinese Penjor              | [alterego.visual / Sketchfab](https://sketchfab.com/3d-models/balinese-penjor-7aca638e85d04c1699c04918cdc36a9e)              | CC BY 4.0 | 2.40 / 1.54 / 1.00 MB  |
+| Patung Dwarapala Pintu Utara | [nusaheritage.id / Sketchfab](https://sketchfab.com/3d-models/patung-dwarapala-pintu-utara-75a1945e6b9e4a62866b13479fb48e1b) | CC BY 4.0 | 1.54 / 0.81 / 0.47 MB  |
+| Frangipani Flower / Jepun    | [elkid / BlendSwap](https://blendswap.com/blend/14800)                                                                       | CC0 1.0   | 616 / 179 / 60 KB      |
 
 All GLBs/textures are locally served with no external decoder or model host at runtime. Creator/source/licence/modifications appear on `/credits/`, in each `lib/*-model.json` manifest and in `public/models/*ATTRIBUTION.txt`. The opening gateway poster is rendered from the credited Candi Bentar model. Cultural assets do not depict the restaurant entrance or interior.
 
-Gateway preparation removes detached fragments and peripheral ground/vegetation, retaining the split gate/stairs. Penjor preparation keeps its complete bamboo bow, ten ornament groups and source colours. Flower conversion retains its five original petals, thickness, photographed texture and UVs. Dwarapala preparation removes one detached 83-triangle fragment far below/behind the statue, keeps the full statue/pedestal, smooths duplicate scan normals without merging UV seams, and prepares 31,558 / 20,512 / 11,048-triangle tiers. Its solid centre remains intact.
+Gateway preparation removes detached fragments and peripheral ground/vegetation, retaining the split gate/stairs. Desktop High uses five native 4096 × 4096 photographed atlases with 8× anisotropic filtering (limited by the GPU). The Medium gateway renders first and stays visible while the 4K version loads; mobile continues using the unchanged 1024 px Medium or 768 px Low textures. The versioned `candi-bentar-high-4k.glb` URL avoids stale browser caches. Penjor preparation keeps its complete bamboo bow, ten ornament groups and source colours. Flower conversion retains its five original petals, thickness, photographed texture and UVs. Dwarapala preparation removes one detached 83-triangle fragment far below/behind the statue, keeps the full statue/pedestal, smooths duplicate scan normals without merging UV seams, and prepares 31,558 / 20,512 / 11,048-triangle tiers. Its solid centre remains intact.
 
 Ignored source downloads remain in `asset-source/`. Rebuild with:
 

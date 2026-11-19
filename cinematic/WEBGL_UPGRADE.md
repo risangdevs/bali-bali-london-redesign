@@ -1,5 +1,9 @@
 # Concept D WebGL upgrade
 
+## Desktop gateway texture upgrade
+
+Desktop High now uses the original five 4096 px texture atlases, replacing the 1536 px export. JPEG quality 86 retains photographed surface detail; GPU-limited 8× anisotropic filtering sharpens angled stone/stair surfaces. The Medium gateway appears first while the High model loads in a deferred render. Mobile GLBs are byte-for-byte unchanged. Geometry, camera paths and composition are retained; the versioned High filename avoids stale asset caches. Checks read the dimensions of every embedded image.
+
 ## Current mobile page and third asset
 
 Mobile now uses native restaurant-page scrolling, complete food photos and a compact opening gateway only. MobileGateway/GatewayCanvas replace the four model interludes and MobileDirector; no model fades, pinned stages or animation spacers remain on phones. Desktop keeps its cinematic layout, with the selected CC BY Patung Dwarapala Pintu Utara by nusaheritage.id replacing the third procedural foliage asset. Its camera lane passes beside the intact statue/pedestal. Source credits, local model tiers and triangle clearance checks are included. See README.md for current architecture; entries below describe earlier iterations.
