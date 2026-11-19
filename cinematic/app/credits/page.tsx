@@ -3,6 +3,7 @@ import { HOME } from "@/lib/content";
 import gateway from "@/lib/gateway-model.json";
 import flower from "@/lib/flower-model.json";
 import penjor from "@/lib/penjor-model.json";
+import dwarapala from "@/lib/dwarapala-model.json";
 export const metadata: Metadata = { title: "3D asset credits | Bali Bali" };
 export default function CreditsPage() {
   return (
@@ -47,18 +48,20 @@ export default function CreditsPage() {
         </p>
         <p>Adaptations for this website: {penjor.modifications}</p>
       </section>
+      <section aria-labelledby="dwarapala-credit">
+        <h2 id="dwarapala-credit">Dwarapala guardian</h2>
+        <p>
+          <a href={dwarapala.source}>{dwarapala.title}</a> by{" "}
+          <a href={dwarapala.authorUrl}>{dwarapala.author}</a>, licensed under{" "}
+          <a href={dwarapala.licenseUrl}>{dwarapala.license}</a>.
+        </p>
+        <p>Adaptations for this website: {dwarapala.modifications}</p>
+      </section>
       <section>
         <h2>Loading images</h2>
         <p>
-          The mobile loading images are rendered from the models credited above
-          and retain their respective licences.
-        </p>
-      </section>
-      <section>
-        <h2>Other sculptures</h2>
-        <p>
-          The foliage frame is original procedural geometry created for this
-          website.
+          The mobile gateway image is rendered from the credited Candi Bentar
+          model and retains its CC BY 4.0 licence.
         </p>
       </section>
     </main>

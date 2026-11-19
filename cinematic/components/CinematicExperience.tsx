@@ -4,7 +4,6 @@ import {
   ReactNode,
   useCallback,
   useEffect,
-  useLayoutEffect,
   useRef,
   useState,
 } from "react";
@@ -13,10 +12,7 @@ import Navigation from "./Navigation";
 import ScrollProgress from "./ScrollProgress";
 import ScrollDirector from "./ScrollDirector";
 import ReservationActions from "./ReservationActions";
-import SculptureInterlude from "./SculptureInterlude";
-const MobileDirector = dynamic(() => import("./MobileDirector"), {
-  ssr: false,
-});
+import MobileGateway from "./MobileGateway";
 import {
   anchors,
   asset,
@@ -57,7 +53,6 @@ function Photo({ name, alt }: { name: string; alt: string }) {
 }
 export default function CinematicExperience() {
   const [mobile, setMobile] = useState(false);
-  const [preferencesReady, setPreferencesReady] = useState(false);
   const [staticMode, setStaticMode] = useState(true);
   const [chapter, setChapter] = useState(0);
   const [ready, setReady] = useState(false);
@@ -65,7 +60,6 @@ export default function CinematicExperience() {
   const [canAnimate, setCanAnimate] = useState(false);
   const readingPreference = useRef(false);
   const pendingSection = useRef<string | null>(null);
-  const pendingView = useRef<{ id: string; offset: number } | null>(null);
   useEffect(() => {
     const media = window.matchMedia("(max-width: 767px)");
     const update = () => setMobile(media.matches);
@@ -89,7 +83,6 @@ export default function CinematicExperience() {
     setFailed(!supported);
     setCanAnimate(supported && !media.matches);
     setStaticMode(readingPreference.current || media.matches || !supported);
-    setPreferencesReady(true);
     const change = () => {
       setCanAnimate(supported && !media.matches);
       setStaticMode(readingPreference.current || media.matches || !supported);
@@ -120,17 +113,6 @@ export default function CinematicExperience() {
   const onChapter = useCallback((n: number) => setChapter(n), []);
   const onModeChange = () => {
     if (mobile) {
-      const current = anchors.reduce((chosen, id) => {
-        const section = document.getElementById(id);
-        return section &&
-          section.getBoundingClientRect().top < innerHeight * 0.35
-          ? section
-          : chosen;
-      }, document.getElementById(anchors[0])!);
-      pendingView.current = {
-        id: current.id,
-        offset: current.getBoundingClientRect().top,
-      };
       readingPreference.current = !staticMode;
       try {
         sessionStorage.setItem("bali-reading", String(!staticMode));
@@ -151,17 +133,6 @@ export default function CinematicExperience() {
     } catch {}
     setStaticMode(!staticMode);
   };
-  useLayoutEffect(() => {
-    const saved = pendingView.current;
-    if (!saved) return;
-    pendingView.current = null;
-    const section = document.getElementById(saved.id);
-    if (section)
-      window.scrollBy({
-        top: section.getBoundingClientRect().top - saved.offset,
-        behavior: "instant",
-      });
-  }, [staticMode]);
   useEffect(() => {
     if (!pendingSection.current) return;
     const id = pendingSection.current;
@@ -187,13 +158,9 @@ export default function CinematicExperience() {
         staticMode={staticMode}
         canAnimate={canAnimate}
         onModeChange={onModeChange}
-        chapter={chapter}
         mobile={mobile}
       />
       <ScrollDirector enabled={!staticMode && !mobile} onChapter={onChapter} />
-      {mobile && preferencesReady && (
-        <MobileDirector animated={!staticMode} onChapter={onChapter} />
-      )}
       <main
         className="scroll-track"
         aria-label="A journey to the Indonesian table"
@@ -247,13 +214,7 @@ export default function CinematicExperience() {
                 BALI BALI
                 <span className="hero-script">a taste of Indonesia.</span>
               </h1>
-              {mobile && (
-                <SculptureInterlude
-                  symbol="gateway"
-                  enabled={!staticMode}
-                  hero
-                />
-              )}
+              <MobileGateway enabled={mobile && !staticMode} />
               <div className="hero-bottom">
                 <p className="small-caps">
                   150 SHAFTESBURY
@@ -322,9 +283,6 @@ export default function CinematicExperience() {
                 name={mobile ? "sate.webp" : "sharing.webp"}
                 alt="Bali Bali's sate, rice, vegetables and sauces served together"
               />
-              {mobile && (
-                <SculptureInterlude symbol="penjor" enabled={!staticMode} />
-              )}
             </section>
             <section
               className="scene-copy sharing-scene"
@@ -385,12 +343,6 @@ export default function CinematicExperience() {
                 name="rendang.webp"
                 alt="Bali Bali's beef in a dark sauce, served on a wooden table"
               />
-              {mobile && (
-                <>
-                  <SculptureInterlude symbol="foliage" enabled={!staticMode} />
-                  <SculptureInterlude symbol="jepun" enabled={!staticMode} />
-                </>
-              )}
             </section>
             <section
               className="scene-copy evening-scene"
@@ -437,12 +389,6 @@ export default function CinematicExperience() {
                   Get directions <span aria-hidden="true">↗</span>
                 </a>
               </div>
-              {mobile && (
-                <Photo
-                  name="vegetables.webp"
-                  alt="Bali Bali's vegetables served on a ceramic plate"
-                />
-              )}
             </section>
             <section
               className="scene-copy booking-scene"
@@ -525,7 +471,7 @@ export default function CinematicExperience() {
         </div>
       </main>
       {!staticMode && !mobile && <ScrollProgress chapter={chapter} />}
-      {failed && (
+      {failed && !mobile && (
         <div className="fallback-notice" role="status">
           Showing the photo version because animation is unavailable.
         </div>

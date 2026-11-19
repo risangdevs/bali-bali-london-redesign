@@ -2,6 +2,7 @@ import { Euler, Vector3 } from "three";
 import gateway from "./gateway-model.json";
 import flower from "./flower-model.json";
 import penjor from "./penjor-model.json";
+import dwarapala from "./dwarapala-model.json";
 import type { CulturalSymbol } from "./cultural-geometry";
 
 export type CulturalLayout = {
@@ -13,8 +14,8 @@ export type CulturalLayout = {
   to: number;
   gate: [number, number];
 };
-/** Mesh transforms and camera openings share one source. Gates are in sculpture
- * coordinates: central split, beneath the bamboo bow, carved aperture, petal gap.
+/** Mesh transforms and camera lanes share one source: the split gate,
+ * bamboo bow, an exterior guardian lane, and the natural petal gap.
  */
 export function culturalLayout<T extends CulturalSymbol>(
   symbol: T,
@@ -39,6 +40,16 @@ export function culturalLayout<T extends CulturalSymbol>(
       from: 0.25,
       to: 0.435,
       gate: [penjor.gate[0], penjor.gate[1]],
+    },
+    dwarapala: {
+      symbol,
+      scale: mobile ? 3.6 : 4.8,
+      position: [mobile ? 2.8 : 3.8, mobile ? -0.1 : -0.6, -42.5],
+      rotation: [0, 0, 0],
+      from: 0.49,
+      to: 0.69,
+      // An exterior lane beside the intact statue, rather than an aperture.
+      gate: [dwarapala.gate[0], dwarapala.gate[1]],
     },
     foliage: {
       symbol,

@@ -45,3 +45,8 @@ The gateway now uses the complete Candi Bentar scan by nusaheritage.id, Sketchfa
 ## Mobile refinement — desktop preserved
 
 Below 768 px, reading sections use native document scrolling and complete rectangular food photographs. Four mobile-only sculpture stages frame the whole gateway, penjor, foliage and flower, with a frontal gateway landing and rendered posters for loading/reduced motion. Chapter links retain smooth interruption, retargeting, history and destination focus through MobileDirector. A compact Visit shortcut and top progress reclaim room above the one booking/menu dock. Visit hours/footer scroll normally. Desktop keeps its original camera, composition, transitions and controller.
+
+
+## Simple mobile page and Dwarapala replacement
+
+Mobile is now a native-scrolling restaurant page, with a compact 3D Candi Bentar opening and complete food photographs below headings. Removed the isolated penjor/foliage/flower interludes, animation spacers, chapter counter and repeated address display. Desktop retains its cinematic composition; its third asset is now Patung Dwarapala Pintu Utara by nusaheritage.id (CC BY 4.0). The complete statue/pedestal uses local 1.54/0.81/0.47 MB tiers; the camera passes beside its solid silhouette. All source credits and modifications are recorded.

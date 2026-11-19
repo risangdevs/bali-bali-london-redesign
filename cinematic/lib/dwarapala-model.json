@@ -1,0 +1,46 @@
+{
+  "title": "Patung Dwarapala Pintu Utara",
+  "author": "nusaheritage.id",
+  "authorUrl": "https://sketchfab.com/nusaheritage",
+  "source": "https://sketchfab.com/3d-models/patung-dwarapala-pintu-utara-75a1945e6b9e4a62866b13479fb48e1b",
+  "license": "CC BY 4.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+  "modifications": "Baked source node transforms; removed one detached 83-triangle scan fragment below/behind the statue; retained the complete statue and pedestal; centred/scaled the mesh, smoothed duplicate scan normals while retaining UV seams, simplified geometry and resized/recompressed the original photographed textures into three web detail levels. No opening was cut into the statue.",
+  "sourceTriangles": 31558,
+  "normalisation": {
+    "origin": [
+      0.01157628744840622,
+      0.5472144375391761,
+      -0.37604737281799316
+    ],
+    "height": 1.0924371017103547
+  },
+  "gate": [
+    -0.75,
+    0
+  ],
+  "passage": "Camera passes beside the statue, outside its solid silhouette.",
+  "variants": {
+    "high": {
+      "file": "dwarapala-high.glb",
+      "triangles": 31558,
+      "vertices": 19016,
+      "bytes": 1538044,
+      "textureResolution": 1536
+    },
+    "medium": {
+      "file": "dwarapala-medium.glb",
+      "triangles": 20512,
+      "vertices": 13187,
+      "bytes": 811080,
+      "textureResolution": 1024
+    },
+    "low": {
+      "file": "dwarapala-low.glb",
+      "triangles": 11048,
+      "vertices": 7897,
+      "bytes": 471336,
+      "textureResolution": 768
+    }
+  }
+}

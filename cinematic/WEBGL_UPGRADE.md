@@ -1,5 +1,9 @@
 # Concept D WebGL upgrade
 
+## Current mobile page and third asset
+
+Mobile now uses native restaurant-page scrolling, complete food photos and a compact opening gateway only. MobileGateway/GatewayCanvas replace the four model interludes and MobileDirector; no model fades, pinned stages or animation spacers remain on phones. Desktop keeps its cinematic layout, with the selected CC BY Patung Dwarapala Pintu Utara by nusaheritage.id replacing the third procedural foliage asset. Its camera lane passes beside the intact statue/pedestal. Source credits, local model tiers and triangle clearance checks are included. See README.md for current architecture; entries below describe earlier iterations.
+
 ## Mobile refinement — 19 November 2026
 
 The desktop WebGL journey remains intact. Mobile now uses normal-flow reading sections and full food photos, with separate locally framed model stages, demand rendering and rendered loading posters. `MobileDirector` controls mobile anchors/history/progress without nested text-panel scrolling. The compact top navigation incorporates progress, while the single booking/menu dock remains. See the current mobile section in `README.md`; the global timeline, photo effects and controller described below continue to apply to desktop.

@@ -8,13 +8,11 @@ export default function Navigation({
   staticMode,
   canAnimate,
   onModeChange,
-  chapter = 0,
   mobile = false,
 }: {
   staticMode: boolean;
   canAnimate: boolean;
   onModeChange: () => void;
-  chapter?: number;
   mobile?: boolean;
 }) {
   const [open, setOpen] = useState(false);
@@ -65,9 +63,6 @@ export default function Navigation({
             >
               <span aria-hidden="true">{open ? "×" : "+"}</span>
               {open ? "Close" : "Explore"}
-              <span className="mobile-navigation-count" aria-hidden="true">
-                {String(chapter + 1).padStart(2, "0")} / 06
-              </span>
             </button>
             {open && (
               <motion.nav
@@ -109,8 +104,8 @@ export default function Navigation({
                   >
                     {mobile
                       ? staticMode
-                        ? "Enable 3D motion"
-                        : "Pause 3D motion"
+                        ? "Show the 3D gateway"
+                        : "Use the gateway image"
                       : staticMode
                         ? "Watch the journey"
                         : "Read the full page"}

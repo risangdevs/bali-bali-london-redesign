@@ -13,7 +13,8 @@ import type { Quality } from "./effects";
 
 export const culturalSymbols = ["foliage"] as const;
 export type ProceduralSymbol = (typeof culturalSymbols)[number];
-export type CulturalSymbol = "gateway" | "penjor" | "jepun" | ProceduralSymbol;
+export type CulturalSymbol =
+  "gateway" | "penjor" | "dwarapala" | "jepun" | ProceduralSymbol;
 export const culturalPalettes: Record<
   ProceduralSymbol,
   [string, string, string]

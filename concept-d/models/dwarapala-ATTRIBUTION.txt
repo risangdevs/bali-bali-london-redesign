@@ -1,0 +1,5 @@
+Patung Dwarapala Pintu Utara by nusaheritage.id
+https://sketchfab.com/nusaheritage
+https://sketchfab.com/3d-models/patung-dwarapala-pintu-utara-75a1945e6b9e4a62866b13479fb48e1b
+CC BY 4.0: https://creativecommons.org/licenses/by/4.0/
+Changes: Baked source node transforms; removed one detached 83-triangle scan fragment below/behind the statue; retained the complete statue and pedestal; centred/scaled the mesh, smoothed duplicate scan normals while retaining UV seams, simplified geometry and resized/recompressed the original photographed textures into three web detail levels. No opening was cut into the statue.

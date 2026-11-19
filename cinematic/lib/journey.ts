@@ -18,12 +18,12 @@ type Stop = {
 };
 function createCameraStops(mobile: boolean): Stop[] {
   const gates = Object.fromEntries(
-    (["gateway", "penjor", "foliage", "jepun"] as const).map((symbol) => [
+    (["gateway", "penjor", "dwarapala", "jepun"] as const).map((symbol) => [
       symbol,
       culturalGate(culturalLayout(symbol, mobile)),
     ]),
   ) as Record<
-    "gateway" | "penjor" | "foliage" | "jepun",
+    "gateway" | "penjor" | "dwarapala" | "jepun",
     ReturnType<typeof culturalGate>
   >;
   const gateStop = (
@@ -67,9 +67,9 @@ function createCameraStops(mobile: boolean): Stop[] {
     gateStop(0.395, "penjor", -1.2, 80),
     { t: 0.445, position: [0, 12, -23], target: [0, 0, -26] },
     { t: 0.47, position: [0, 14, -25.9], target: [0, 0, -26] },
-    gateStop(0.54, "foliage", 12),
-    gateStop(0.625, "foliage", 0.8, 80),
-    gateStop(0.65, "foliage", -1.2, 80),
+    gateStop(0.54, "dwarapala", 12),
+    gateStop(0.625, "dwarapala", 0.8, 80),
+    gateStop(0.65, "dwarapala", -1.2, 80),
     gateStop(0.705, "jepun", 0.8, 80),
     gateStop(0.73, "jepun", -1.2, 80),
     { t: 0.81, position: [0, 1, -55], target: [0, 0, -65] },

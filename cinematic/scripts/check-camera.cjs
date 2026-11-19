@@ -1,6 +1,7 @@
 const gatewayGeometry = require("./gateway-mesh.cjs");
 const flowerGeometry = require("./flower-mesh.cjs");
 const penjorGeometry = require("./penjor-mesh.cjs");
+const dwarapalaGeometry = require("./dwarapala-mesh.cjs");
 const loadTS = require("./load-ts.cjs");
 const path = require("node:path");
 const assert = require("node:assert/strict");
@@ -85,7 +86,7 @@ for (const mobile of [false, true]) {
   for (const [symbol, from, to] of [
     ["gateway", 0.125, 0.145],
     ["penjor", 0.37, 0.395],
-    ["foliage", 0.625, 0.65],
+    ["dwarapala", 0.625, 0.65],
     ["jepun", 0.705, 0.73],
   ]) {
     const layout = culturalLayout(symbol, mobile),
@@ -128,7 +129,7 @@ for (const mobile of [false, true]) {
               ? flowerGeometry(quality)
               : symbol === "penjor"
                 ? penjorGeometry(quality)
-                : makeCulturalGeometry(symbol, quality),
+                : dwarapalaGeometry(quality),
         material = new MeshBasicMaterial({ side: DoubleSide });
       const mesh = new Mesh(geometry, material);
       mesh.position.fromArray(layout.position);
@@ -162,5 +163,5 @@ for (const mobile of [false, true]) {
   }
 }
 console.log(
-  "PASS: desktop/mobile keyframes, continuous reversible flight, split gateway, bamboo bow, carved aperture and petal-gap crossings, lens clearance at every quality, opaque geometry and authoritative camera rendering.",
+  "PASS: desktop/mobile keyframes, continuous reversible flight, split gateway, bamboo bow, Dwarapala side passage and petal-gap crossings, lens clearance at every quality, opaque geometry and authoritative camera rendering.",
 );

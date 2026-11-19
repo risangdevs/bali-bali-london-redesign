@@ -47,7 +47,7 @@ export default function ImportedSculpture({
 }: {
   mobile: boolean;
   quality: Quality;
-  symbol: "gateway" | "penjor" | "jepun";
+  symbol: "gateway" | "penjor" | "dwarapala" | "jepun";
   manifest: { variants: Record<Quality, { file: string }> };
 }) {
   const url = `${HOME}models/${manifest.variants[quality].file}`;

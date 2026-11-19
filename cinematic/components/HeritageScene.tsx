@@ -3,8 +3,7 @@ import { Suspense } from "react";
 import FlowerModel from "./FlowerModel";
 import { type Quality } from "@/lib/effects";
 import DepthLayer from "./DepthLayer";
-import CulturalSculpture from "./CulturalSculpture";
-import { culturalLayout } from "@/lib/cultural-layout";
+import DwarapalaModel from "./DwarapalaModel";
 import { heritagePhotos } from "@/lib/photo-layout";
 // Abstract photographic installation, deliberately not a fabricated restaurant interior.
 export default function HeritageScene({
@@ -19,10 +18,9 @@ export default function HeritageScene({
       {heritagePhotos(mobile).map((photo) => (
         <DepthLayer key={photo.id} {...photo} quality={quality} />
       ))}
-      <CulturalSculpture
-        {...culturalLayout("foliage", mobile)}
-        quality={quality}
-      />
+      <Suspense fallback={null}>
+        <DwarapalaModel mobile={mobile} quality={quality} />
+      </Suspense>
       <Suspense fallback={null}>
         <FlowerModel mobile={mobile} quality={quality} />
       </Suspense>
