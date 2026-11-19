@@ -12,7 +12,15 @@ npm run dev
 
 Open http://127.0.0.1:3000. `npm test` checks camera continuity/reversibility and adaptive quality/transition contracts; `npm run typecheck` checks TypeScript; `npm run build` makes a standalone static export in `out/`. `npm run export:pages` builds with the GitHub Pages base path and copies the generated files into the repository's `concept-d/` directory. The existing Pages configuration publishes that directory from `main`.
 
-## Architecture
+## Mobile layout refinement
+
+Below 768 px, the page now uses normally scrolling reading sections instead of fixed, internally scrolling text panels. Each chapter keeps its existing content; complete 5:4 food photographs sit below the copy. Visit details, hours, group information and footer remain in document flow. The single safe-area booking/menu dock is retained. Progress moves into the compact top navigation, beside Explore and the shorter Visit shortcut.
+
+`MobileDirector` handles chapter anchors, destination focus, interruption, retargeting, browser history and chapter progress independently of the desktop scroll timeline. `SculptureInterlude` / `SculptureCanvas` provide mobile-only stages for the frontal Candi Bentar, complete penjor, carved foliage and jepun. Bounds unioned across all quality tiers fit each complete asset inside the available screen area. The model holds, approaches gently and fades before the final close passage; reverse scrolling follows the same samples. Rendering is on demand, canvases mount near the viewport and imported resources are reference-counted and disposed after their final owner. Local rendered posters cover loading, context loss and reduced motion. Explore can pause 3D motion without hiding reading content.
+
+Desktop still uses the original `ScrollDirector`, `SceneCanvas`, camera route, photo layouts and compositor described below; those files and desktop CSS rules are unchanged by this refinement. `npm test` includes mobile full-model framing, camera continuity, reverse sampling, real-triangle passage clearance and poster dimensions. Browser verification covers 390 × 844 and 320 × 568 phones plus the original desktop view. Model-loading posters are derived from the credited source models; `/credits/` records this use.
+
+## Architecture (desktop)
 
 `CinematicExperience` provides semantic HTML for all six scenes, including a complete server-rendered photographic edition. WebGL is progressive enhancement; reduced motion selects the photographic edition automatically. Explore offers a reading edition and a return to the camera journey. The choice lasts for the current browser session, and switching preserves the current section. Context loss, canvas errors or a 15-second loading timeout return to the static edition.
 
@@ -30,9 +38,9 @@ Targets are capped at 1.25 megapixels each on High and 0.72 megapixels on Medium
 
 There is no full-width header or repeated navigation wordmark. A floating Explore disclosure opens all six chapters, the menu and a reading-view switch on every screen size. Hours & directions and Call shortcuts remain available beside it. Desktop keeps a separate floating Book a Table link in the opposite corner; mobile uses the bottom booking bar. Controls and the navigation panel have opaque backgrounds. Escape closes the panel and returns focus to its button; clicking outside or tabbing away also dismisses it. The hero remains the primary brand introduction.
 
-On mobile, the safe-area-aware persistent bottom bar keeps Book a Table and View Menu available throughout the journey. Inline hero and other contextual booking actions are hidden at this breakpoint to avoid duplicate controls, including in reading mode. Desktop retains its inline hero actions. Portrait uses a wider camera lens, fewer photo planes, simpler sculpture geometry and a shorter 610svh track (700svh desktop). Touch scrolling remains native, with no touch synchronization or scroll trapping.
+On mobile, the safe-area-aware persistent bottom bar keeps Book a Table and View Menu available throughout the journey. Inline hero and other contextual booking actions are hidden at this breakpoint to avoid duplicate controls, including in reading mode. Desktop retains its inline hero actions. Mobile uses complete HTML photos and independently framed model stages rather than the desktop track. Touch scrolling remains native, with no touch synchronization or scroll trapping.
 
-Book a Table is the primary action; View Menu is secondary. Booking copy explains that the restaurant replies to confirm a request. Both appear in the desktop hero and final scene, with contextual menu links in food scenes. Desktop floating controls and the mobile safe-area-aware bottom bar sit outside the canvas and scene transitions. Booking remains a regular link, independent of scroll progress or WebGL readiness. Controls have at least 44-pixel touch targets and visible keyboard focus. Every cinematic scene can scroll locally as content grows; window height does not choose the photographic edition. Reduced-motion preferences and unavailable graphics select the photographic edition automatically. The final mobile scene can also scroll if enlarged text exceeds its available space.
+Book a Table is the primary action; View Menu is secondary. Booking copy explains that the restaurant replies to confirm a request. Both appear in the desktop hero and final scene, with contextual menu links in food scenes. Desktop floating controls and the mobile safe-area-aware bottom bar sit outside the canvas and scene transitions. Booking remains a regular link, independent of scroll progress or WebGL readiness. Controls have at least 44-pixel touch targets and visible keyboard focus. Desktop cinematic scenes can scroll locally as content grows. Mobile reading sections use document scrolling with no nested panel scroll. Window height does not choose the photographic edition. Reduced-motion preferences and unavailable graphics select the photographic edition automatically.
 
 ## Assets and facts
 
@@ -96,11 +104,11 @@ The gateway now uses **Candi Bentar by nusaheritage.id**, downloaded from https:
 
 `lib/gateway-model.json` records the exact source, preparation, passage position and tier statistics. `lib/cultural-layout.ts` uses that measured opening for the same reversible camera route. Camera clearance tests now use triangles decoded from the actual prepared gateway GLBs; the former procedural gateway geometry has been removed.
 
-| Tier | Triangles | Texture size per atlas | GLB bytes |
-| --- | ---: | ---: | ---: |
-| High | 60,095 | 1536 px | 5,365,960 |
-| Medium | 38,629 | 1024 px | 2,830,528 |
-| Low | 27,382 | 768 px | 1,951,040 |
+| Tier   | Triangles | Texture size per atlas | GLB bytes |
+| ------ | --------: | ---------------------: | --------: |
+| High   |    60,095 |                1536 px | 5,365,960 |
+| Medium |    38,629 |                1024 px | 2,830,528 |
+| Low    |    27,382 |                 768 px | 1,951,040 |
 
 The 62,367,236-byte 4K source remains locally in the ignored `asset-source/candi-bentar/` folder. Rebuild with `npm run assets:gateway -- /path/to/source.glb`. The offline preparation removes disconnected scan fragments, crops peripheral vegetation/ground, normalises the mesh around its passage, simplifies with locked material boundaries, compacts vertices and recompresses embedded JPEG atlases. It uses the pinned `meshoptimizer` development dependency and existing Sharp; no external decoder or model host is needed at runtime.
 
@@ -121,11 +129,11 @@ npm run assets:flower
 
 The converter disables embedded file scripts. It evaluates three subdivision levels and retains petal thickness/UVs. The packing step welds matching attributes, embeds a shared JPEG texture, and emits self-contained GLBs with no external decoders:
 
-| Tier | Triangles | Vertices | Texture | GLB bytes |
-| --- | ---: | ---: | ---: | ---: |
-| High | 24,880 | 12,520 | 1024 px | 616,196 |
-| Medium | 6,520 | 3,310 | 768 px | 178,532 |
-| Low | 1,780 | 900 | 512 px | 60,200 |
+| Tier   | Triangles | Vertices | Texture | GLB bytes |
+| ------ | --------: | -------: | ------: | --------: |
+| High   |    24,880 |   12,520 | 1024 px |   616,196 |
+| Medium |     6,520 |    3,310 |  768 px |   178,532 |
+| Low    |     1,780 |      900 |  512 px |    60,200 |
 
 `lib/flower-model.json` records source, normalisation, variants and the measured natural negative space between outer petal tips. The camera crosses `[0.20, 0.42]` in local coordinates at the existing 0.705–0.73 timing. Tests raycast the actual flower triangles at every quality on desktop/mobile, verify the intact centre, all five petals, embedded photo, UVs, curvature/thickness and file budgets. Portrait mode begins revealing the flower at 0.60, before the close approach, so the complete blossom is visible in the narrow frame. `FlowerModel` defers quality updates and shares the imported-model fade and counted GPU resource cleanup with the gateway. The old procedural jepun is removed.
 

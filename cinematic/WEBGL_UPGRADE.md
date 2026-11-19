@@ -1,5 +1,9 @@
 # Concept D WebGL upgrade
 
+## Mobile refinement — 19 November 2026
+
+The desktop WebGL journey remains intact. Mobile now uses normal-flow reading sections and full food photos, with separate locally framed model stages, demand rendering and rendered loading posters. `MobileDirector` controls mobile anchors/history/progress without nested text-panel scrolling. The compact top navigation incorporates progress, while the single booking/menu dock remains. See the current mobile section in `README.md`; the global timeline, photo effects and controller described below continue to apply to desktop.
+
 Implemented in the existing Next.js project. The six chapters, Cormorant Garamond/DM Sans typography, ivory/burgundy/terracotta/brass palette, editorial layouts, authentic food photographs and original booking/menu destinations are retained. Concepts A–C are unchanged.
 
 ## Audit and integration

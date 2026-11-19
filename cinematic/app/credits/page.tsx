@@ -48,6 +48,13 @@ export default function CreditsPage() {
         <p>Adaptations for this website: {penjor.modifications}</p>
       </section>
       <section>
+        <h2>Loading images</h2>
+        <p>
+          The mobile loading images are rendered from the models credited above
+          and retain their respective licences.
+        </p>
+      </section>
+      <section>
         <h2>Other sculptures</h2>
         <p>
           The foliage frame is original procedural geometry created for this

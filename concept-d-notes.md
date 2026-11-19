@@ -40,3 +40,8 @@ The gateway now uses the complete Candi Bentar scan by nusaheritage.id, Sketchfa
 - Imported the selected CC0 Frangipani Flower by elkid (BlendSwap 14800), retaining five curved/thick petals and original photographed texture. Adaptive local GLBs are 616/179/60 KB; measured outer-petal passage [0.20, 0.42] keeps the centre intact. Credits and actual-triangle camera checks updated.
 
 - Imported the selected Balinese Penjor by alterego.visual (CC BY 4.0), preserving the full bow/ornaments and original materials, with 2.40/1.54/1.00 MB local tiers. Corrected chapter photo timings, portrait placement/aspect and close-camera/backface fades; sharing parent transforms now sample before photo framing. Camera and photo tests updated.
+
+
+## Mobile refinement — desktop preserved
+
+Below 768 px, reading sections use native document scrolling and complete rectangular food photographs. Four mobile-only sculpture stages frame the whole gateway, penjor, foliage and flower, with a frontal gateway landing and rendered posters for loading/reduced motion. Chapter links retain smooth interruption, retargeting, history and destination focus through MobileDirector. A compact Visit shortcut and top progress reclaim room above the one booking/menu dock. Visit hours/footer scroll normally. Desktop keeps its original camera, composition, transitions and controller.

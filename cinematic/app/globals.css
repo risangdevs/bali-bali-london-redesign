@@ -1702,3 +1702,85 @@ button:focus-visible {
     font-size: 21px;
   }
 }
+
+/* Mobile choreography is independent of the unchanged desktop camera journey. */
+.mobile-navigation-count, .navigation-label-short { display: none; }
+@media (max-width: 767px) {
+  .experience { --nav-height: 64px; --mobile-dock: calc(68px + env(safe-area-inset-bottom, 0px)); }
+  .experience .floating-navigation { inset: 0 0 auto; min-height: var(--nav-height); padding: 10px 20px; background: var(--ivory); border-bottom: 1px solid var(--line); }
+  .experience .floating-navigation::after { content: ""; position: absolute; inset: auto 0 -1px; height: 2px; background: var(--burgundy); transform-origin: left; transform: scaleX(var(--mobile-progress, 0)); }
+  .experience .navigation-tools { gap: 8px; }
+  .experience .menu-toggle { min-width: 0; gap: 8px; }
+  .experience .menu-toggle .mobile-navigation-count { display: inline; font-size: 9px; letter-spacing: .04em; opacity: .7; }
+  .navigation-label-long { display: none; }
+  .navigation-label-short { display: inline; }
+  .experience .utility-link { min-height: 44px; padding: 10px 14px; }
+  .experience .mobile-booking-bar { padding: 9px 20px calc(9px + env(safe-area-inset-bottom, 0px)); }
+  .experience .mobile-booking-bar .button { min-height: 48px; font-size: 12px; padding: 10px; }
+  .experience .scroll-track { height: auto; padding-top: var(--nav-height); }
+  .experience .stage { position: relative; top: auto; height: auto; overflow: visible; background: var(--ivory); transition: none; }
+  .experience[data-chapter] .stage { background: var(--ivory); }
+  .experience .scene-panels { position: relative; inset: auto; opacity: 1; }
+  .experience[data-navigating="true"] .scene-panels { opacity: 1; pointer-events: auto; }
+  .experience:is(.cinematic-mode, .static-mode) .scene-copy {
+    position: relative; inset: auto; min-height: 0; height: auto; width: 100%;
+    padding: 44px 20px; overflow: visible; opacity: 1; pointer-events: auto;
+    transform: none; justify-content: flex-start; gap: 0; isolation: auto;
+    border-bottom: 1px solid var(--line); scroll-margin-top: 84px;
+  }
+  .experience .scene-copy > * { flex-shrink: 0; }
+  .experience .scene-copy h2 { font-size: clamp(36px, 10.7vw, 44px); line-height: 1.06; margin: 0 0 24px; overflow-wrap: normal; }
+  .experience .eyebrow { font-size: 10px; margin-bottom: 20px; }
+  .experience .body-copy { font-size: 16px; line-height: 1.75; width: 100%; max-width: none; margin: 0 0 24px; padding: 0; background: none; }
+  .experience .text-link { font-size: 14px; min-height: 44px; }
+  .experience .dish-notes { width: 100%; padding: 16px 0; font-size: 14px; letter-spacing: 0; gap: 14px; background: none; margin: 0; }
+  .experience .dish-notes > span { display: flex; justify-content: space-between; gap: 16px; }
+  .experience .dietary { padding: 0; font-size: 14px; line-height: 1.75; background: none; margin: 24px 0 12px; }
+  .experience .static-photo { display: block; position: static; inset: auto; width: 100%; height: auto; max-width: none; margin: 28px 0 0; object-fit: contain; border-radius: 2px; border: 1px solid var(--line); z-index: auto; opacity: 1; filter: none; mask-image: none; transform: none; }
+  .experience:is(.cinematic-mode, .static-mode) .hero-scene { padding-top: 24px; }
+  .experience .hero-location { justify-content: center; font-size: 10px; letter-spacing: .08em; margin: 0 0 18px; }
+  .experience .hero-location span { padding: 0 4px; }
+  .experience .hero-scene h1 { width: 100%; text-align: center; font-size: 17vw; }
+  .experience .hero-script { font-size: 7vw; margin: 10px 0 0; }
+  .experience .hero-bottom { width: 100%; margin: 24px 0 0; padding: 0; display: block; }
+  .experience .hero-bottom > .small-caps { display: none; }
+  .experience .hero-bottom .intro { font: 400 23px/1.45 Editorial, Georgia, serif; padding: 0; margin: 0; background: none; }
+  .experience .hero-seal { position: static; width: auto; height: auto; border: 0; border-radius: 0; flex-direction: row; gap: 12px; transform: none; margin: 20px 0 0; background: none; }
+  .experience .hero-seal .seal-flower { font-size: 18px; }
+  .experience .sharing-note { position: static; max-width: none; margin: 28px 0 0; padding: 8px 0 8px 18px; background: none; }
+  .experience .sharing-note p { font-size: 22px; line-height: 1.5; }
+  .experience .heritage-year { display: none; }
+  .experience .heritage-detail { max-width: none; font-size: 22px; line-height: 1.5; margin: 0; }
+  .experience .address-art { position: static; width: 100%; margin-top: 28px; padding: 24px 0 0; }
+  .experience .street-number { font-size: 90px; }
+  .experience .street-name { font-size: 25px; }
+  .experience .address-art .small-caps { font-size: 10px; }
+  .experience .booking-scene { padding-bottom: calc(var(--mobile-dock) + 32px); }
+  .experience .booking-scene .visit-details { display: grid; grid-template-columns: minmax(0, 1fr); width: 100%; max-width: none; gap: 32px; margin: 12px 0 0; padding: 24px 0 0; border: 0; border-top: 1px solid var(--line); background: none; }
+  .experience .visit-details > div { min-width: 0; }
+  .experience .visit-details h3 { margin: 0 0 20px; font-size: 11px; }
+  .experience .visit-details address { font-size: 20px; line-height: 1.6; }
+  .experience .visit-details a { display: block; width: fit-content; padding: 10px 0; min-height: 44px; font-size: 16px; }
+  .experience .visit-details dl > div { flex-wrap: wrap; gap: 4px 16px; font-size: 15px; }
+  .experience .visit-details dd { white-space: nowrap; }
+  .experience .visit-details small { display: block; font-size: 14px; line-height: 1.75; margin-top: 16px; }
+  .experience .group-note { margin: 28px 0; font-size: 14px; line-height: 1.75; }
+  .experience .booking-scene footer { position: static; display: flex; width: 100%; flex-direction: column; align-items: flex-start; gap: 8px; font-size: 10px; margin: 8px 0 0; padding: 20px 0 0; border-top: 1px solid var(--line); }
+  .experience .booking-scene footer a { display: flex; align-items: center; min-height: 44px; font-size: 12px; }
+  .sculpture-interlude { --model-height: min(58svh, calc(100svh - 160px)); width: 100%; margin: 36px 0 0; padding: 0; }
+  .gateway-interlude { --model-height: min(43svh, calc(100svh - 180px)); margin-top: 22px; }
+  .interlude-track { height: var(--model-height); }
+  .has-motion .interlude-track { height: calc(var(--model-height) + 36svh); }
+  .interlude-viewport { position: sticky; top: calc(var(--nav-height) + 12px); height: var(--model-height); }
+  .interlude-layer { position: absolute; inset: 0; overflow: hidden; }
+  .interlude-canvas, .model-poster { position: absolute; inset: 0; width: 100%; height: 100%; }
+  .interlude-canvas { opacity: 0; pointer-events: none; transition: opacity .4s; }
+  .interlude-canvas.is-loaded { opacity: 1; }
+  .model-poster { display: block; object-fit: contain; transition: opacity .4s; inset: auto; left: 50%; top: 50%; width: var(--poster-size, 100%); height: var(--poster-size, 100%); max-width: none; transform: translate(-50%, -50%); }
+  .model-poster.is-replaced { opacity: 0; }
+  .sculpture-interlude > figcaption { display: flex; justify-content: space-between; border-top: 1px solid var(--line); margin: 0; padding: 12px 0; font-size: 10px; line-height: 1.6; letter-spacing: .12em; text-transform: uppercase; }
+  .gateway-interlude > figcaption { border: 0; }
+}
+@media (max-width: 767px) and (prefers-reduced-motion: reduce) {
+  .interlude-canvas, .model-poster { transition: none; }
+}
