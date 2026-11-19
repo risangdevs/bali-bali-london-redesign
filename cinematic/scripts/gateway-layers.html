@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><title>Gateway layer renderer</title>
+<style>body{margin:24px;background:#f4ebdd;font:16px system-ui;color:#602b27}canvas{display:block;width:600px;max-width:100%;height:auto}a{display:inline-block;padding:16px;border:1px solid;margin:16px 16px 16px 0}img{width:280px;background:repeating-conic-gradient(#ddd 0 25%,#fff 0 50%) 0/20px 20px}</style>
+<script type="importmap">{"imports":{"three":"/cinematic/node_modules/three/build/three.module.js","three/addons/":"/cinematic/node_modules/three/examples/jsm/"}}</script></head>
+<body><h1>Gateway layer renderer</h1><p id="status">Rendering original Candi Bentar model…</p><div id="downloads"></div><div id="previews"></div>
+<script type="module">
+import * as T from 'three';
+import {GLTFLoader} from 'three/addons/loaders/GLTFLoader.js';
+const renderer=new T.WebGLRenderer({antialias:true,alpha:true,preserveDrawingBuffer:true});
+renderer.setPixelRatio(1);renderer.setSize(1000,800);renderer.setClearColor(0x000000,0);renderer.toneMapping=T.ACESFilmicToneMapping;
+document.body.append(renderer.domElement);
+const scene=new T.Scene();scene.add(new T.AmbientLight(0xffffff,1.8));
+const key=new T.DirectionalLight('#fff3df',2.4);key.position.set(5,8,10);scene.add(key);
+const model=(await new GLTFLoader().loadAsync('/cinematic/public/models/candi-bentar-high-4k.glb')).scene;
+model.traverse(o=>{if(o.isMesh)for(const m of Array.isArray(o.material)?o.material:[o.material]){m.side=T.DoubleSide;for(const v of Object.values(m))if(v instanceof T.Texture)v.anisotropy=Math.min(8,renderer.capabilities.getMaxAnisotropy());}});
+scene.add(model);
+const bounds=await(await fetch('/cinematic/lib/sculpture-bounds.json')).json();
+const {min,max}=bounds.gateway;const center=new T.Vector3(...min.map((v,i)=>(v+max[i])/2));
+const size=max.map((v,i)=>v-min[i]);const tangent=Math.tan(38*Math.PI/360);
+const distance=size[2]/2+Math.max(size[1]/(2*tangent*.84),size[0]/(2*tangent*1.25*.84));
+const camera=new T.PerspectiveCamera(38,1.25,.01,30);camera.position.copy(center).add(new T.Vector3(0,0,distance));camera.lookAt(center);
+for(const [name,normal] of [['left',-1],['right',1]]){
+ renderer.clippingPlanes=[new T.Plane(new T.Vector3(normal,0,0),0)];renderer.render(scene,camera);
+ const blob=await new Promise(resolve=>renderer.domElement.toBlob(resolve,'image/png'));
+ const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download=`gateway-${name}.png`;a.textContent=`Download ${name} layer`;document.querySelector('#downloads').append(a);
+ const img=document.createElement('img');img.src=url;img.alt=`Transparent ${name} gateway layer`;document.querySelector('#previews').append(img);
+}
+renderer.clippingPlanes=[];renderer.render(scene,camera);
+document.querySelector('#status').textContent='Ready: two transparent 1000 × 800 layers, rendered from the credited native 4K model.';
+</script></body></html>

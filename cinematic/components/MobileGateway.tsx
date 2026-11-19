@@ -2,12 +2,14 @@
 import { useEffect, useRef, useState } from "react";
 import { asset } from "@/lib/content";
 import { fitGateway } from "@/lib/gateway-framing";
-import { smootherstep } from "@/lib/motion";
+import { sampleGatewayEntrance } from "@/lib/mobile-gateway-motion";
 
 export default function MobileGateway({ enabled }: { enabled: boolean }) {
   const frame = useRef<HTMLElement>(null);
   const poster = useRef<HTMLImageElement>(null);
   const food = useRef<HTMLImageElement>(null);
+  const left = useRef<HTMLImageElement>(null);
+  const right = useRef<HTMLImageElement>(null);
   const [decoded, setDecoded] = useState(false);
   const [phase, setPhase] = useState<"idle" | "playing" | "complete">("idle");
 
@@ -23,12 +25,17 @@ export default function MobileGateway({ enabled }: { enabled: boolean }) {
     });
     resize.observe(element);
     let cancelled = false;
-    Promise.all([poster.current!.decode(), food.current!.decode()])
+    Promise.all([
+      poster.current!.decode(),
+      food.current!.decode(),
+      left.current!.decode(),
+      right.current!.decode(),
+    ])
       .then(() => {
         if (!cancelled) setDecoded(true);
       })
       .catch(() => {
-        /* Keep the complete gateway if either image fails. */
+        /* Keep the complete gateway if any entrance image fails. */
       });
     return () => {
       cancelled = true;
@@ -39,7 +46,8 @@ export default function MobileGateway({ enabled }: { enabled: boolean }) {
   useEffect(() => {
     const element = frame.current!;
     if (!enabled || !decoded) {
-      element.style.setProperty("--gateway-progress", "0");
+      for (const [name, value] of Object.entries(sampleGatewayEntrance(0)))
+        element.style.setProperty(`--entrance-${name}`, String(value));
       setPhase("idle");
       return;
     }
@@ -49,11 +57,16 @@ export default function MobileGateway({ enabled }: { enabled: boolean }) {
     let previousPhase = "";
     const update = () => {
       raf = 0;
-      // Dissolve while the complete visual is still below the fixed header.
-      const progress = smootherstep((window.scrollY - 16) / (end - 16));
+      // Complete the entrance while the visual is still below the fixed header.
+      const progress = Math.max(
+        0,
+        Math.min(1, (window.scrollY - 16) / (end - 16)),
+      );
       if (progress === previous) return;
       previous = progress;
-      element.style.setProperty("--gateway-progress", String(progress));
+      const view = sampleGatewayEntrance(progress);
+      for (const [name, value] of Object.entries(view))
+        element.style.setProperty(`--entrance-${name}`, String(value));
       const nextPhase =
         progress === 0 ? "idle" : progress === 1 ? "complete" : "playing";
       if (nextPhase !== previousPhase) {
@@ -90,23 +103,43 @@ export default function MobileGateway({ enabled }: { enabled: boolean }) {
   return (
     <figure
       ref={frame}
-      className={`mobile-gateway ${enabled ? `is-${phase}` : "is-static"}`}
+      className={`mobile-gateway ${decoded ? "has-layers" : ""} ${enabled ? `is-${phase}` : "is-static"}`}
       aria-label={
         enabled && phase === "complete"
           ? "Bali Bali's dishes arranged to share"
           : enabled && phase === "playing"
-            ? "A Candi Bentar gateway fading into a photograph of Bali Bali's dishes"
+            ? "Passing through a Candi Bentar gateway towards Bali Bali's dishes"
             : "A rendering of a Candi Bentar gateway"
       }
     >
-      <img
-        ref={food}
-        className="gateway-food"
-        src={asset("sharing.webp")}
-        alt=""
-        width={550}
-        height={440}
-      />
+      <div className="gateway-reveal">
+        <img
+          ref={food}
+          className="gateway-food"
+          src={asset("sharing.webp")}
+          alt=""
+          width={550}
+          height={440}
+        />
+      </div>
+      <div className="gateway-stones" aria-hidden="true">
+        <img
+          ref={left}
+          className="gateway-layer gateway-left"
+          src={asset("gateway-left.webp")}
+          alt=""
+          width={1000}
+          height={800}
+        />
+        <img
+          ref={right}
+          className="gateway-layer gateway-right"
+          src={asset("gateway-right.webp")}
+          alt=""
+          width={1000}
+          height={800}
+        />
+      </div>
       <img
         ref={poster}
         className="gateway-poster"

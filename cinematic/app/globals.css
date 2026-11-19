@@ -1764,15 +1764,24 @@ button:focus-visible {
   .experience .booking-scene footer { position: static; display: flex; width: 100%; flex-direction: column; align-items: flex-start; gap: 8px; font-size: 10px; margin: 8px 0 0; padding: 20px 0 0; border-top: 1px solid var(--line); order: 6; }
   .experience .booking-scene footer a { display: flex; align-items: center; min-height: 44px; font-size: 12px; }
   .mobile-gateway { position: relative; display: block; width: 100%; aspect-ratio: 5 / 4; margin: 16px 0 0; order: 2; overflow: hidden; background: var(--ivory); }
-  .gateway-food { display: block; position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; opacity: 0; }
+  .gateway-reveal, .gateway-stones { position: absolute; inset: 0; opacity: 0; pointer-events: none; }
+  .gateway-reveal { transform-origin: 50% 55%; mask-image: radial-gradient(ellipse 28% 43% at 50% 55%, #000 65%, transparent 100%); }
+  .gateway-food { display: block; position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; transform-origin: 50% 55%; }
+  .gateway-stones { mask-image: linear-gradient(to right, transparent, #000 10%, #000 90%, transparent), linear-gradient(to bottom, transparent, #000 12%, #000 85%, transparent); mask-composite: intersect; }
+  .gateway-layer { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; transform-origin: 50% 62%; }
   .gateway-poster { position: absolute; left: 50%; top: 50%; width: var(--gateway-poster-size, 100%); height: var(--gateway-poster-size, 100%); max-width: none; transform: translate(-50%, -50%); object-fit: contain; opacity: 1; }
-  .mobile-gateway:not(.is-static) .gateway-poster { opacity: calc(1 - var(--gateway-progress, 0)); transform: translate(-50%, -50%) scale(calc(1 + var(--gateway-progress, 0) * .045)); }
-  .mobile-gateway:not(.is-static) .gateway-food { opacity: var(--gateway-progress, 0); }
+  .mobile-gateway.has-layers:not(.is-static) .gateway-poster { opacity: 0; }
+  .mobile-gateway.has-layers:not(.is-static) .gateway-reveal { opacity: var(--entrance-photoOpacity, 0); transform: scale(var(--entrance-aperture, .08)); }
+  .mobile-gateway.has-layers:not(.is-static) .gateway-food { transform: scale(var(--entrance-photoScale, 12)); }
+  .mobile-gateway.has-layers:not(.is-static) .gateway-stones { opacity: var(--entrance-stoneOpacity, 1); }
+  .gateway-left { transform: translateX(calc(var(--entrance-shift, 0) * -100%)) scale(var(--entrance-scale, 1)); }
+  .gateway-right { transform: translateX(calc(var(--entrance-shift, 0) * 100%)) scale(var(--entrance-scale, 1)); }
 }
 @media (max-width: 767px) and (prefers-reduced-motion: no-preference) {
   html:has(.experience) { scroll-behavior: smooth; }
 }
 @media (max-width: 767px) and (prefers-reduced-motion: reduce) {
-  .mobile-gateway:not(.is-static) .gateway-poster { opacity: 1; transform: translate(-50%, -50%); }
-  .mobile-gateway:not(.is-static) .gateway-food { opacity: 0; }
+  .mobile-gateway.has-layers:not(.is-static) .gateway-poster { opacity: 1; }
+  .mobile-gateway.has-layers:not(.is-static) .gateway-reveal,
+  .mobile-gateway.has-layers:not(.is-static) .gateway-stones { opacity: 0; }
 }

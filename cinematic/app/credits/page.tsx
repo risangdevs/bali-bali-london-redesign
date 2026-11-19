@@ -58,10 +58,10 @@ export default function CreditsPage() {
         <p>Adaptations for this website: {dwarapala.modifications}</p>
       </section>
       <section>
-        <h2>Gateway image</h2>
+        <h2>Gateway images</h2>
         <p>
-          The mobile gateway image is rendered from the credited Candi Bentar
-          model and retains its CC BY 4.0 licence.
+          The mobile gateway image and transparent entrance layers are rendered
+          from the credited Candi Bentar model and retain its CC BY 4.0 licence.
         </p>
       </section>
     </main>

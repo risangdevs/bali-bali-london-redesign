@@ -1,5 +1,10 @@
 # Concept D WebGL upgrade
 
+## Layered mobile gate entrance — 19 November 2026
+
+Replaced the whole-image dissolve with a perspective illusion from two transparent renders of the original gateway. The stone halves grow and pass towards the edges as the viewpoint approaches; a widening soft aperture reveals the food behind them. Edge masks soften exiting stone, and counter-scaling keeps the photograph uncropped. Local alpha WebPs add about 55 KB. The normal-flow scroll sampling, reversibility, static/reduced-motion poster and desktop scene are retained. The developer-only layer renderer records the original model, frontal camera and lighting used for reproducibility.
+
+
 ## Scroll-controlled mobile dissolve — 19 November 2026
 
 The mobile gateway/photo dissolve now follows native document scrolling instead of playing on a timer. It starts after 16 px and completes while the visual is still below the fixed header. Scrolling back restores the gateway; pausing holds the exact blend. A passive, animation-frame-coalesced listener changes only opacity and gentle scale, with cached resize measurements and no mobile WebGL, pinning or additional scroll space. Reduced motion and the still-image preference keep the frontal gateway. Desktop and unnumbered section labels are retained.
