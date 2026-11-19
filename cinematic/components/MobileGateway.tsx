@@ -2,22 +2,17 @@
 import { useEffect, useRef, useState } from "react";
 import { asset } from "@/lib/content";
 import { fitGateway } from "@/lib/gateway-framing";
+import { smootherstep } from "@/lib/motion";
 
 export default function MobileGateway({ enabled }: { enabled: boolean }) {
   const frame = useRef<HTMLElement>(null);
   const poster = useRef<HTMLImageElement>(null);
   const food = useRef<HTMLImageElement>(null);
-  const [visible, setVisible] = useState(false);
   const [decoded, setDecoded] = useState(false);
   const [phase, setPhase] = useState<"idle" | "playing" | "complete">("idle");
 
   useEffect(() => {
     const element = frame.current!;
-    const observer = new IntersectionObserver(
-      ([entry]) => setVisible(entry.intersectionRatio >= 0.55),
-      { threshold: 0.55 },
-    );
-    observer.observe(element);
     const resize = new ResizeObserver(() => {
       const { width, height } = element.getBoundingClientRect();
       if (!width || !height) return;
@@ -37,20 +32,60 @@ export default function MobileGateway({ enabled }: { enabled: boolean }) {
       });
     return () => {
       cancelled = true;
-      observer.disconnect();
       resize.disconnect();
     };
   }, []);
 
   useEffect(() => {
-    if (!enabled && phase === "playing") {
-      setPhase("complete");
+    const element = frame.current!;
+    if (!enabled || !decoded) {
+      element.style.setProperty("--gateway-progress", "0");
+      setPhase("idle");
       return;
     }
-    if (!enabled || !visible || !decoded || phase !== "idle") return;
-    const timer = setTimeout(() => setPhase("playing"), 450);
-    return () => clearTimeout(timer);
-  }, [enabled, visible, decoded, phase]);
+    let raf = 0;
+    let end = 120;
+    let previous = -1;
+    let previousPhase = "";
+    const update = () => {
+      raf = 0;
+      // Dissolve while the complete visual is still below the fixed header.
+      const progress = smootherstep((window.scrollY - 16) / (end - 16));
+      if (progress === previous) return;
+      previous = progress;
+      element.style.setProperty("--gateway-progress", String(progress));
+      const nextPhase =
+        progress === 0 ? "idle" : progress === 1 ? "complete" : "playing";
+      if (nextPhase !== previousPhase) {
+        previousPhase = nextPhase;
+        setPhase(nextPhase);
+      }
+    };
+    const request = () => {
+      if (!raf) raf = requestAnimationFrame(update);
+    };
+    const measure = () => {
+      const top = element.getBoundingClientRect().top + window.scrollY;
+      const header =
+        document.querySelector(".floating-navigation")?.getBoundingClientRect()
+          .height ?? 65;
+      end = Math.max(120, top - header - 16);
+      request();
+    };
+    const resize = new ResizeObserver(measure);
+    resize.observe(element);
+    const hero = element.closest(".hero-scene");
+    if (hero) resize.observe(hero);
+    window.addEventListener("scroll", request, { passive: true });
+    window.addEventListener("resize", measure);
+    measure();
+    return () => {
+      resize.disconnect();
+      window.removeEventListener("scroll", request);
+      window.removeEventListener("resize", measure);
+      cancelAnimationFrame(raf);
+    };
+  }, [enabled, decoded]);
 
   return (
     <figure
@@ -80,9 +115,6 @@ export default function MobileGateway({ enabled }: { enabled: boolean }) {
         width={600}
         height={600}
         fetchPriority="high"
-        onAnimationEnd={(event) => {
-          if (event.animationName === "gateway-dissolve") setPhase("complete");
-        }}
       />
     </figure>
   );

@@ -1,5 +1,10 @@
 # Concept D WebGL upgrade
 
+## Scroll-controlled mobile dissolve — 19 November 2026
+
+The mobile gateway/photo dissolve now follows native document scrolling instead of playing on a timer. It starts after 16 px and completes while the visual is still below the fixed header. Scrolling back restores the gateway; pausing holds the exact blend. A passive, animation-frame-coalesced listener changes only opacity and gentle scale, with cached resize measurements and no mobile WebGL, pinning or additional scroll space. Reduced motion and the still-image preference keep the frontal gateway. Desktop and unnumbered section labels are retained.
+
+
 ## Mobile entrance dissolve — 19 November 2026
 
 Replaced the mobile scroll-driven camera passage with one compositor-only gateway-to-food dissolve. The complete gateway poster gently scales 4.5% while fading into the full sharing photograph, after both images decode and the hero enters view. It plays once in a fixed 5:4 normal-flow block; no mobile WebGL, pinning, scroll listeners, introduction fading or overlapping track remains. Static and reduced-motion modes keep the gateway. Removed section indices and numbered chapter links across both viewports. Desktop models, 4K gateway textures and camera journey are retained. Earlier entries below describe superseded mobile experiments.
