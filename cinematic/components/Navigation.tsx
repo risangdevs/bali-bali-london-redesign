@@ -104,8 +104,8 @@ export default function Navigation({
                   >
                     {mobile
                       ? staticMode
-                        ? "Show the 3D gateway"
-                        : "Use the gateway image"
+                        ? "Animate the gateway"
+                        : "Keep the gateway still"
                       : staticMode
                         ? "Watch the journey"
                         : "Read the full page"}

@@ -1763,20 +1763,27 @@ button:focus-visible {
   .experience .group-note { margin: 28px 0; font-size: 14px; line-height: 1.75; order: 5; }
   .experience .booking-scene footer { position: static; display: flex; width: 100%; flex-direction: column; align-items: flex-start; gap: 8px; font-size: 10px; margin: 8px 0 0; padding: 20px 0 0; border-top: 1px solid var(--line); order: 6; }
   .experience .booking-scene footer a { display: flex; align-items: center; min-height: 44px; font-size: 12px; }
-  .mobile-gateway { --gateway-height: calc((100vw - 40px) * .8); --gateway-travel: 0px; position: relative; display: block; width: 100%; margin: 16px 0 calc(-1 * var(--gateway-travel)); order: 2; }
-  .mobile-gateway.has-transition { --gateway-travel: 22svh; }
-  .gateway-track { height: calc(var(--gateway-height) + var(--gateway-travel)); }
-  .gateway-stage { position: sticky; top: calc(var(--nav-height) + 12px); height: var(--gateway-height); overflow: hidden; background: var(--ivory); z-index: 3; }
-  .gateway-food { display: block; position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; opacity: var(--gateway-photo-opacity, 0); }
-  .experience .hero-bottom, .experience .hero-seal { opacity: var(--gateway-intro-opacity, 1); }
-  .gateway-canvas { position: absolute; inset: 0; opacity: 0; transition: opacity .35s; }
-  .gateway-canvas.is-loaded { opacity: 1; }
-  .gateway-poster { position: absolute; left: 50%; top: 50%; width: var(--gateway-poster-size, 100%); height: var(--gateway-poster-size, 100%); max-width: none; transform: translate(-50%, -50%); object-fit: contain; opacity: var(--gateway-poster-opacity, 1); transition: opacity .35s; }
-  .gateway-poster.is-replaced { opacity: 0; }
+  .mobile-gateway { position: relative; display: block; width: 100%; aspect-ratio: 5 / 4; margin: 16px 0 0; order: 2; overflow: hidden; background: var(--ivory); }
+  .gateway-food { display: block; position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; opacity: 0; }
+  .gateway-poster { position: absolute; left: 50%; top: 50%; width: var(--gateway-poster-size, 100%); height: var(--gateway-poster-size, 100%); max-width: none; transform: translate(-50%, -50%); object-fit: contain; opacity: 1; }
+  .mobile-gateway.is-playing .gateway-poster { animation: gateway-dissolve 2.2s cubic-bezier(.25, .1, .25, 1) both; }
+  .mobile-gateway.is-playing .gateway-food { animation: gateway-reveal 2.2s cubic-bezier(.25, .1, .25, 1) both; }
+  .mobile-gateway.is-complete .gateway-poster { opacity: 0; }
+  .mobile-gateway.is-complete .gateway-food { opacity: 1; }
+  @keyframes gateway-dissolve {
+    0% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+    100% { opacity: 0; transform: translate(-50%, -50%) scale(1.045); }
+  }
+  @keyframes gateway-reveal {
+    0% { opacity: 0; }
+    100% { opacity: 1; }
+  }
 }
 @media (max-width: 767px) and (prefers-reduced-motion: no-preference) {
   html:has(.experience) { scroll-behavior: smooth; }
 }
 @media (max-width: 767px) and (prefers-reduced-motion: reduce) {
-  .gateway-canvas, .gateway-poster { transition: none; }
+  .mobile-gateway .gateway-poster, .mobile-gateway .gateway-food { animation: none; }
+  .mobile-gateway .gateway-poster { opacity: 1; }
+  .mobile-gateway .gateway-food { opacity: 0; }
 }

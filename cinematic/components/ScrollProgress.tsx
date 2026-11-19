@@ -11,16 +11,15 @@ export default function ScrollProgress({ chapter }: { chapter: number }) {
           <a
             href={`#${anchors[i]}`}
             key={name}
-            aria-label={`${i + 1}. ${name}`}
+            aria-label={name}
             aria-current={chapter === i ? "step" : undefined}
           >
-            <span>0{i + 1}</span>
             <span className="chapter-name">{name}</span>
           </a>
         ))}
       </div>
       <p className="mobile-chapter" aria-label="Journey progress">
-        {chapter + 1} of {chapters.length} · {chapters[chapter]}
+        {chapters[chapter]}
       </p>
     </aside>
   );

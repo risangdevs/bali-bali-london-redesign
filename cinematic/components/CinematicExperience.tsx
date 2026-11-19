@@ -253,7 +253,7 @@ export default function CinematicExperience() {
               tabIndex={-1}
               aria-labelledby="table-title"
             >
-              <p className="eyebrow">02 / The food</p>
+              <p className="eyebrow">The food</p>
               <h2 id="table-title">
                 Start with <em>sate.</em>
               </h2>
@@ -290,7 +290,7 @@ export default function CinematicExperience() {
               tabIndex={-1}
               aria-labelledby="sharing-title"
             >
-              <p className="eyebrow">03 / Rijsttafel</p>
+              <p className="eyebrow">Rijsttafel</p>
               <h2 id="sharing-title">
                 A rice table
                 <br />
@@ -323,7 +323,7 @@ export default function CinematicExperience() {
               tabIndex={-1}
               aria-labelledby="heritage-title"
             >
-              <p className="eyebrow">04 / Our story</p>
+              <p className="eyebrow">Our story</p>
               <span className="heritage-year" aria-hidden="true">
                 1986
               </span>
@@ -350,7 +350,7 @@ export default function CinematicExperience() {
               tabIndex={-1}
               aria-labelledby="evening-title"
             >
-              <p className="eyebrow">05 / Pre-theatre dining</p>
+              <p className="eyebrow">Pre-theatre dining</p>
               <h2 id="evening-title">
                 Before the
                 <br />
@@ -396,7 +396,7 @@ export default function CinematicExperience() {
               tabIndex={-1}
               aria-labelledby="booking-title"
             >
-              <p className="eyebrow">06 / Visit and booking</p>
+              <p className="eyebrow">Visit and booking</p>
               <h2 id="booking-title">
                 Join us on
                 <br />

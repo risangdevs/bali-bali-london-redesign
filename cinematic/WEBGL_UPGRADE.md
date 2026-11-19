@@ -1,5 +1,10 @@
 # Concept D WebGL upgrade
 
+## Mobile entrance dissolve — 19 November 2026
+
+Replaced the mobile scroll-driven camera passage with one compositor-only gateway-to-food dissolve. The complete gateway poster gently scales 4.5% while fading into the full sharing photograph, after both images decode and the hero enters view. It plays once in a fixed 5:4 normal-flow block; no mobile WebGL, pinning, scroll listeners, introduction fading or overlapping track remains. Static and reduced-motion modes keep the gateway. Removed section indices and numbered chapter links across both viewports. Desktop models, 4K gateway textures and camera journey are retained. Earlier entries below describe superseded mobile experiments.
+
+
 ## One mobile gateway transition
 
 Mobile retains the simple restaurant page, with one short opening passage through Candi Bentar. The camera follows the measured split and reveals the sharing-table photo; that image fills the final frame instead of fading into empty stage space. The 22svh range overlaps the departing hero introduction, adding no extra document height. Passive scroll sampling and demand rendering preserve native scrolling. Other mobile chapters remain ordinary sections; reduced motion and the image preference stay static. Desktop and its 4K texture upgrade are unchanged.
