@@ -1715,7 +1715,7 @@ button:focus-visible {
   .experience .utility-link { min-height: 44px; padding: 10px 14px; }
   .experience .mobile-booking-bar { padding: 9px 20px calc(9px + env(safe-area-inset-bottom, 0px)); }
   .experience .mobile-booking-bar .button { min-height: 48px; font-size: 12px; padding: 10px; }
-  .experience .scroll-track { height: auto; padding-top: var(--nav-height); }
+  .experience .scroll-track { height: auto; padding-top: var(--nav-height); padding-bottom: 0; }
   .experience .stage { position: relative; top: auto; height: auto; overflow: visible; background: var(--ivory); transition: none; }
   .experience[data-chapter] .stage { background: var(--ivory); }
   .experience .scene-panels { position: relative; inset: auto; opacity: 1; }
@@ -1763,10 +1763,15 @@ button:focus-visible {
   .experience .group-note { margin: 28px 0; font-size: 14px; line-height: 1.75; order: 5; }
   .experience .booking-scene footer { position: static; display: flex; width: 100%; flex-direction: column; align-items: flex-start; gap: 8px; font-size: 10px; margin: 8px 0 0; padding: 20px 0 0; border-top: 1px solid var(--line); order: 6; }
   .experience .booking-scene footer a { display: flex; align-items: center; min-height: 44px; font-size: 12px; }
-  .mobile-gateway { position: relative; display: block; width: 100%; height: clamp(180px, 31svh, 280px); margin: 16px 0 0; overflow: hidden; order: 2; }
+  .mobile-gateway { --gateway-height: calc((100vw - 40px) * .8); --gateway-travel: 0px; position: relative; display: block; width: 100%; margin: 16px 0 calc(-1 * var(--gateway-travel)); order: 2; }
+  .mobile-gateway.has-transition { --gateway-travel: 22svh; }
+  .gateway-track { height: calc(var(--gateway-height) + var(--gateway-travel)); }
+  .gateway-stage { position: sticky; top: calc(var(--nav-height) + 12px); height: var(--gateway-height); overflow: hidden; background: var(--ivory); z-index: 3; }
+  .gateway-food { display: block; position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; opacity: var(--gateway-photo-opacity, 0); }
+  .experience .hero-bottom, .experience .hero-seal { opacity: var(--gateway-intro-opacity, 1); }
   .gateway-canvas { position: absolute; inset: 0; opacity: 0; transition: opacity .35s; }
   .gateway-canvas.is-loaded { opacity: 1; }
-  .gateway-poster { position: absolute; left: 50%; top: 50%; width: var(--gateway-poster-size, 100%); height: var(--gateway-poster-size, 100%); max-width: none; transform: translate(-50%, -50%); object-fit: contain; transition: opacity .35s; }
+  .gateway-poster { position: absolute; left: 50%; top: 50%; width: var(--gateway-poster-size, 100%); height: var(--gateway-poster-size, 100%); max-width: none; transform: translate(-50%, -50%); object-fit: contain; opacity: var(--gateway-poster-opacity, 1); transition: opacity .35s; }
   .gateway-poster.is-replaced { opacity: 0; }
 }
 @media (max-width: 767px) and (prefers-reduced-motion: no-preference) {

@@ -2,11 +2,19 @@
 import { Suspense, useEffect } from "react";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import { HOME } from "@/lib/content";
-import { fitGateway } from "@/lib/gateway-framing";
+import { sampleMobileGateway } from "@/lib/gateway-framing";
 import gateway from "@/lib/gateway-model.json";
 import useImportedModel from "./useImportedModel";
 
-function Gateway({ onReady }: { onReady: () => void }) {
+export type GatewayMotion = { progress: number; invalidate?: () => void };
+
+function Gateway({
+  onReady,
+  motion,
+}: {
+  onReady: () => void;
+  motion: GatewayMotion;
+}) {
   const hints = navigator as Navigator & {
     connection?: { saveData?: boolean };
     deviceMemory?: number;
@@ -21,17 +29,17 @@ function Gateway({ onReady }: { onReady: () => void }) {
   );
   const { invalidate } = useThree();
   useEffect(() => {
+    motion.invalidate = invalidate;
     onReady();
     invalidate();
-  }, [onReady, invalidate]);
+    return () => {
+      motion.invalidate = undefined;
+    };
+  }, [onReady, invalidate, motion]);
   useFrame(({ camera, size }) => {
-    const view = fitGateway(size.width / size.height);
-    camera.position.set(
-      view.center[0],
-      view.center[1],
-      view.center[2] + view.distance,
-    );
-    camera.lookAt(...view.center);
+    const view = sampleMobileGateway(motion.progress, size.width / size.height);
+    camera.position.fromArray(view.position);
+    camera.lookAt(...view.target);
     camera.updateMatrixWorld();
   });
   return <primitive object={owned.root} dispose={null} />;
@@ -53,9 +61,11 @@ function Monitor({ onFailure }: { onFailure: () => void }) {
 export default function GatewayCanvas({
   onReady,
   onFailure,
+  motion,
 }: {
   onReady: () => void;
   onFailure: () => void;
+  motion: GatewayMotion;
 }) {
   return (
     <Canvas
@@ -69,7 +79,7 @@ export default function GatewayCanvas({
       <ambientLight intensity={1.8} />
       <directionalLight position={[5, 8, 10]} intensity={2.4} color="#fff3df" />
       <Suspense fallback={null}>
-        <Gateway onReady={onReady} />
+        <Gateway onReady={onReady} motion={motion} />
       </Suspense>
     </Canvas>
   );

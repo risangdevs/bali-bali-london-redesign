@@ -1,5 +1,9 @@
 # Concept D WebGL upgrade
 
+## One mobile gateway transition
+
+Mobile retains the simple restaurant page, with one short opening passage through Candi Bentar. The camera follows the measured split and reveals the sharing-table photo; that image fills the final frame instead of fading into empty stage space. The 22svh range overlaps the departing hero introduction, adding no extra document height. Passive scroll sampling and demand rendering preserve native scrolling. Other mobile chapters remain ordinary sections; reduced motion and the image preference stay static. Desktop and its 4K texture upgrade are unchanged.
+
 ## Desktop gateway texture upgrade
 
 Desktop High now uses the original five 4096 px texture atlases, replacing the 1536 px export. JPEG quality 86 retains photographed surface detail; GPU-limited 8× anisotropic filtering sharpens angled stone/stair surfaces. The Medium gateway appears first while the High model loads in a deferred render. Mobile GLBs are byte-for-byte unchanged. Geometry, camera paths and composition are retained; the versioned High filename avoids stale asset caches. Checks read the dimensions of every embedded image.
