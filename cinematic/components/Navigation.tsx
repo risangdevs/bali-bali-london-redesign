@@ -107,8 +107,8 @@ export default function Navigation({
                         ? "Animate the gateway"
                         : "Keep the gateway still"
                       : staticMode
-                        ? "Watch the journey"
-                        : "Read the full page"}
+                        ? "Use the animated view"
+                        : "Use the photo view"}
                   </button>
                 )}
               </motion.nav>

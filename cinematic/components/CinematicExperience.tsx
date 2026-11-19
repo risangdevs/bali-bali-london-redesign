@@ -228,7 +228,7 @@ export default function CinematicExperience() {
                   </p>
                   <ReservationActions className="hero-actions" />
                   <p className="booking-expectation">
-                    We’ll reply to confirm your table.
+                    Call if you need to check your booking.
                   </p>
                 </div>
               </div>
@@ -259,7 +259,7 @@ export default function CinematicExperience() {
               </h2>
               <p className="body-copy">
                 Try grilled sate with rice, and ask for sambal if you'd like
-                more heat. We'll help you find your favourites.
+                more heat.
               </p>
               <div className="dish-notes">
                 {[menuSelection[0], menuSelection[2], menuSelection[3]].map(
@@ -281,7 +281,11 @@ export default function CinematicExperience() {
               </a>
               <Photo
                 name={mobile ? "sate.webp" : "sharing.webp"}
-                alt="Bali Bali's sate, rice, vegetables and sauces served together"
+                alt={
+                  mobile
+                    ? "Sate skewers with peanut sauce, cucumber and onions on a ceramic plate"
+                    : "Bali Bali's sate, rice, vegetables and sauces served together"
+                }
               />
             </section>
             <section
@@ -308,8 +312,6 @@ export default function CinematicExperience() {
                 <p>
                   Eight dishes to share. {RIJSTTAFEL_PRICE} per person, minimum
                   two people.
-                  <br />
-                  New to Indonesian food? Ask us about each dish.
                 </p>
               </div>
               <Photo
@@ -335,10 +337,6 @@ export default function CinematicExperience() {
               <p className="body-copy">
                 We've served Indonesian food in London's West End since 1986.
               </p>
-              <p className="heritage-detail">
-                Whether you know your favourites or are trying Indonesian food
-                for the first time, ask us what to order.
-              </p>
               <Photo
                 name="rendang.webp"
                 alt="Bali Bali's beef in a dark sauce, served on a wooden table"
@@ -358,7 +356,7 @@ export default function CinematicExperience() {
               </h2>
               <p className="body-copy">
                 Eating before a show? Include your show time in your booking
-                request. We’ll reply to confirm your table.
+                request.
               </p>
               <a
                 className="button"
@@ -403,8 +401,8 @@ export default function CinematicExperience() {
                 <em>Shaftesbury Avenue.</em>
               </h2>
               <p className="body-copy">
-                Send a booking request. We’ll reply to confirm your table. Tell
-                us about any allergies or theatre plans.
+                Send a booking request and include any allergies or theatre
+                plans. Call to check your reservation.
               </p>
               <ReservationActions className="booking-actions" />
               <div className="visit-details">

@@ -15,7 +15,7 @@ export default function CreditsPage() {
       </nav>
       <header>
         <p className="eyebrow">Bali Bali · Asset credits</p>
-        <h1>Craft and credit.</h1>
+        <h1>3D asset credits</h1>
       </header>
       <section aria-labelledby="gateway-credit">
         <h2 id="gateway-credit">Candi Bentar</h2>
@@ -58,7 +58,7 @@ export default function CreditsPage() {
         <p>Adaptations for this website: {dwarapala.modifications}</p>
       </section>
       <section>
-        <h2>Loading images</h2>
+        <h2>Gateway image</h2>
         <p>
           The mobile gateway image is rendered from the credited Candi Bentar
           model and retains its CC BY 4.0 licence.

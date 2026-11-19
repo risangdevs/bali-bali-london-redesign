@@ -12,12 +12,12 @@ export const menuSelection = [
     name: "Sate",
     price: "£11.75",
     description:
-      "Chicken or beef skewers, cucumber and onions, with peanut sauce.",
+      "Chicken or beef skewers with peanut sauce, cucumber and onions.",
   },
   {
     name: "Vegetarian sate",
     price: "£11.75",
-    description: "Mock chicken skewers with peanut sauce. A vegetarian option.",
+    description: "Mock chicken skewers with peanut sauce.",
   },
   {
     name: "Rendang",
@@ -32,13 +32,12 @@ export const menuSelection = [
   {
     name: "Gado gado",
     price: "£13.95",
-    description:
-      "Indonesian salad with peanut sauce. Listed in the vegetarian section.",
+    description: "Vegetarian Indonesian salad with peanut sauce.",
   },
   {
     name: "Nasi putih",
     price: "£3.50",
-    description: "Steamed rice to accompany your meal.",
+    description: "Steamed rice.",
   },
 ];
 export const DIRECTIONS =

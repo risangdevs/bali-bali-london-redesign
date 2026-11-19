@@ -33,7 +33,7 @@ export default function MenuPage() {
         </p>
       </header>
       <section aria-labelledby="selection-title">
-        <h2 id="selection-title">Start here</h2>
+        <h2 id="selection-title">Selected dishes</h2>
         <ul className="menu-selection">
           {menuSelection.map((dish) => (
             <li key={dish.name}>
@@ -49,15 +49,19 @@ export default function MenuPage() {
       <section className="menu-rice-table" aria-labelledby="rice-table-title">
         <p className="eyebrow">For two or more</p>
         <h2 id="rice-table-title">The Special Rijsttafel</h2>
-        <p>Eight seasonal dishes served together as a rice table.</p>
+        <p>
+          Eight dishes served together as a rice table. The selection changes
+          with the season.
+        </p>
         <p className="menu-price">
           {RIJSTTAFEL_PRICE} per person · minimum two people
         </p>
       </section>
       <aside className="menu-terms" aria-label="Prices and booking information">
         <p>
-          Prices include VAT; service charge is extra. After 6pm, the minimum
-          food spend is £13.50 per person. Card payments have a £10 minimum.
+          Prices include VAT. Service charge is not included. After 6pm, the
+          minimum food spend is £13.50 per person. Card payments have a £10
+          minimum.
         </p>
         <p>
           During busy periods and weekends, bookings are limited to 90 minutes.
@@ -71,7 +75,7 @@ export default function MenuPage() {
           Book a table ↗
         </a>
         <p>
-          We’ll reply to confirm your table. For a same-day visit,{" "}
+          For a same-day visit or to check a booking,{" "}
           <a href="tel:+442078362644">call +44 20 7836 2644</a>.
         </p>
       </div>

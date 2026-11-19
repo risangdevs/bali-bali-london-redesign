@@ -58,8 +58,10 @@ export default function MobileGateway({ enabled }: { enabled: boolean }) {
       className={`mobile-gateway ${enabled ? `is-${phase}` : "is-static"}`}
       aria-label={
         enabled && phase === "complete"
-          ? "Bali Bali's sharing dishes"
-          : "Candi Bentar gateway opening onto Bali Bali's sharing dishes"
+          ? "Bali Bali's dishes arranged to share"
+          : enabled && phase === "playing"
+            ? "A Candi Bentar gateway fading into a photograph of Bali Bali's dishes"
+            : "A rendering of a Candi Bentar gateway"
       }
     >
       <img
